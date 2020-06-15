@@ -1,0 +1,90 @@
+
+CREATE DATABASE ShoppingCart;
+
+USE ShoppingCart;
+
+CREATE TABLE Users (
+UserName VARCHAR(50),
+Password VARCHAR(100),
+Role VARCHAR(20)
+);
+
+CREATE TABLE Customer(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ Name VARCHAR(50),
+ AddressLine VARCHAR(100),
+ Zipcode VARCHAR(10),
+ City VARCHAR(30),
+ State  VARCHAR(10),
+ Country VARCHAR(100),
+ Gender VARCHAR(10),
+ DOB DATETIME,
+ Phone VARCHAR(10),
+ Email VARCHAR(100)
+ );
+
+ CREATE TABLE Staff ( 
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ Name VARCHAR(50),
+ Phone VARCHAR(10),
+ Email VARCHAR(100)
+ );
+ 
+ CREATE TABLE DeliveryAddress(
+ CustomerID INT FOREIGN KEY REFERENCES Customer(ID),
+ AddressType VARCHAR(50),
+ AddressLine VARCHAR(100),
+ Zipcode VARCHAR(10),
+ City VARCHAR(30),
+ State  VARCHAR(10),
+ Country VARCHAR(100)
+ );
+
+ CREATE TABLE Orders(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ CustomerID INT FOREIGN KEY REFERENCES Customer(ID),
+ Address VARCHAR(50),
+ Discount FLOAT,
+ OrderDate DATETIME
+ );
+
+ CREATE TABLE Catergory(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ Title VARCHAR(50),
+ Keyword VARCHAR(50),
+ Description VARCHAR(50)
+ );
+
+ CREATE TABLE Products(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ CatergoryID INT FOREIGN KEY REFERENCES Catergory(ID),
+ Name VARCHAR(50),
+ Description VARCHAR(50),
+ Discount FLOAT,
+ Price FLOAT,
+ Image VARCHAR(50)
+ );
+
+ CREATE TABLE OrderDetails(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ OrdersID INT FOREIGN KEY REFERENCES Orders(ID),
+ ProductsID INT FOREIGN KEY REFERENCES Products(ID),
+ Unitprice FLOAT,
+ Quantity INT
+ );
+
+ CREATE TABLE Stocks(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ ProductsID INT FOREIGN KEY REFERENCES Products(ID),
+ InventoryAddress VARCHAR(50),
+ Quantity INT
+ );
+
+ CREATE TABLE Payment(
+ ID INT IDENTITY(1,1) PRIMARY KEY,
+ OrdersID INT FOREIGN KEY REFERENCES Orders(ID),
+ Method VARCHAR(50),
+ Note VARCHAR(50),
+ Amount FLOAT,
+ Date DATETIME
+ );
