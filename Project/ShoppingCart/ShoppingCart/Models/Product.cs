@@ -13,7 +13,7 @@ namespace ShoppingCart.Models
         // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Key]
-        [ForeignKey(Category)]
+        [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
