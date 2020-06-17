@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
-    public class DeliveryAddress
+    public class Address
     {
         [Key]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public string Address { get; set; }
+        public string AddressType { get; set; }
+        public string AddressLine { get; set; }
         public string ZipCode { get; set; }
         public string City { get; set; }
         public string State { get; set; }
