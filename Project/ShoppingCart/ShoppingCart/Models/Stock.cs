@@ -10,7 +10,7 @@ namespace ShoppingCart.Models
     public class Stock
     {
         [Key]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Key]
         [ForeignKey("Product")]

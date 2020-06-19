@@ -10,7 +10,7 @@ namespace ShoppingCart.Models
     public class Payment
     {
         [Key]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Key]
         [ForeignKey("Order")]

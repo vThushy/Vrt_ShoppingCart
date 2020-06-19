@@ -10,10 +10,11 @@ namespace ShoppingCart.Models
     public class Order
     {
         [Key]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Key]
         [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
         public string Address { get; set; }
         public string ZipCode { get; set; }
         public float Discount { get; set; }

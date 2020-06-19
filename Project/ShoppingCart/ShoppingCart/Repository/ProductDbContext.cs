@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Models
+namespace ShoppingCart.Repository
 {
     public class ProductDbContext : DbContext
     {

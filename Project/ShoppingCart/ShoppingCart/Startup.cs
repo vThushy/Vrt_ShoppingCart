@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Extensions;
 using ShoppingCart.Models;
+using ShoppingCart.Repository;
+using ShoppingCart.Service;
 
 namespace ShoppingCart
 {
@@ -31,8 +33,17 @@ namespace ShoppingCart
         {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
-            services.AddDbContext<ProductDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<AddressDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
             services.AddDbContext<CategoryDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<CustomerDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<OrderDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<OrderDetailsDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<PaymentDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            services.AddDbContext<ProductDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<StockDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+            //services.AddDbContext<UserDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
+
+            services.AddScoped<IProductRepository, ProductService>();
             services.AddControllers();
 
         }
