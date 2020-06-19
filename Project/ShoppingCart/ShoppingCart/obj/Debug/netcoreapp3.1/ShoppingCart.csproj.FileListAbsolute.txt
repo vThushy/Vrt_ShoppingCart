@@ -1,3 +1,7 @@
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfoInputs.cache
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfo.cs
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csproj.CoreCompileInputs.cache
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.MvcApplicationPartsAssemblyInfo.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\appsettings.Development.json
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\appsettings.json
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -40,10 +44,6 @@ E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\De
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfoInputs.cache
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfo.cs
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csproj.CoreCompileInputs.cache
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.MvcApplicationPartsAssemblyInfo.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.RazorTargetAssemblyInfo.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csproj.CopyComplete
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\staticwebassets\ShoppingCart.StaticWebAssets.Manifest.cache

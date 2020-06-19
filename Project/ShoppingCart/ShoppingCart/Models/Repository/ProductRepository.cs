@@ -1,16 +1,18 @@
-﻿using ShoppingCart.Models;
+﻿using ShoppingCart.Contexts;
+using ShoppingCart.Models;
+using ShoppingCart.Models.Repository;
 using ShoppingCart.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Service
+namespace ShoppingCart.Repository
 {
-    public class ProductService: IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly ProductDbContext productDbContext;
-        public ProductService(ProductDbContext _productDbContext)
+        public ProductRepository(ProductDbContext _productDbContext)
         {
             productDbContext = _productDbContext;
         }

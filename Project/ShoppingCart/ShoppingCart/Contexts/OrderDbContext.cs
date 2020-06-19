@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Repository
+namespace ShoppingCart.Contexts
 {
     public class OrderDbContext : DbContext
     {

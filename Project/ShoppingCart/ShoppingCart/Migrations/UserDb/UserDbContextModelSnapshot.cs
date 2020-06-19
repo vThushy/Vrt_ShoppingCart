@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShoppingCart.Models;
+using ShoppingCart.Contexts;
 
 namespace ShoppingCart.Migrations.UserDb
 {
@@ -31,7 +31,7 @@ namespace ShoppingCart.Migrations.UserDb
 
                     b.HasKey("UserName");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new

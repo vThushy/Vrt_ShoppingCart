@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Models
+namespace ShoppingCart.Contexts
 {
     public class UserDbContext : DbContext
     {
@@ -12,7 +13,7 @@ namespace ShoppingCart.Models
         {
 
         }
-        public DbSet<User> users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShoppingCart.Models;
+using ShoppingCart.Contexts;
 
 namespace ShoppingCart.Migrations.UserDb
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20200618073721_ShoppingCart")]
+    [Migration("20200619154340_ShoppingCart")]
     partial class ShoppingCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace ShoppingCart.Migrations.UserDb
 
                     b.HasKey("UserName");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new

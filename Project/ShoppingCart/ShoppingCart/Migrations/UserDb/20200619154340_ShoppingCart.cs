@@ -7,7 +7,7 @@ namespace ShoppingCart.Migrations.UserDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     UserName = table.Column<string>(nullable: false),
@@ -16,11 +16,11 @@ namespace ShoppingCart.Migrations.UserDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.UserName);
+                    table.PrimaryKey("PK_Users", x => x.UserName);
                 });
 
             migrationBuilder.InsertData(
-                table: "users",
+                table: "Users",
                 columns: new[] { "UserName", "Password", "UserRole" },
                 values: new object[] { "Thushy", "Thushy", "Admin" });
         }
@@ -28,7 +28,7 @@ namespace ShoppingCart.Migrations.UserDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
         }
     }
 }

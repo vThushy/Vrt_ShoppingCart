@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Repository
+namespace ShoppingCart.Contexts
 {
     public class StockDbContext : DbContext
     {
@@ -19,5 +19,6 @@ namespace ShoppingCart.Repository
             modelBuilder.Entity<Stock>()
                 .HasKey(s => new { s.Id, s.ProductId });
         }
+
     }
 }

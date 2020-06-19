@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Repository
+namespace ShoppingCart.Contexts
 {
     public class OrderDetailsDbContext : DbContext
     {
@@ -13,11 +14,11 @@ namespace ShoppingCart.Repository
 
         }
 
-        //public DbSet<OrderDetail>OrderDetails { get; set; }
+        public DbSet<OrderDetail>OrderDetails { get; set; }
 
-        //protected override void OnModelCreating()
-        //{
-
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderDetail>().HasKey(d => new { d.Id, d.OrderId });
+        }
     }
 }

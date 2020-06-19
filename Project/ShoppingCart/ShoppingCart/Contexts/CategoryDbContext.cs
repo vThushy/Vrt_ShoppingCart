@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Repository
+namespace ShoppingCart.Contexts
 {
     public class CategoryDbContext : DbContext
     {

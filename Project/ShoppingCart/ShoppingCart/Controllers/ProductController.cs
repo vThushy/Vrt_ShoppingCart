@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Models;
+using ShoppingCart.Models.Repository;
 using ShoppingCart.Repository;
-using ShoppingCart.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace ShoppingCart.Controllers
         public IActionResult Get()
         {
             var response = productRepository.GetAllProducts();
-            _logger.LogInformation($"Products list page visited at {DateTime.UtcNow.ToLongTimeString()}");
+           
             return Ok(response);
         }
 
@@ -81,6 +81,7 @@ namespace ShoppingCart.Controllers
                 return NotFound("The product not found!");
             }
             productRepository.RemoveProduct(productToDelete);
+            _logger.LogInformation($"Product {productToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
             return NoContent();
         }
 
