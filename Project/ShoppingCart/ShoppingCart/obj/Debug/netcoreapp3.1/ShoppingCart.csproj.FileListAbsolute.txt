@@ -1,3 +1,4 @@
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csprojAssemblyReference.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfoInputs.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.AssemblyInfo.cs
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csproj.CoreCompileInputs.cache
@@ -10,7 +11,6 @@ E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\De
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\ShoppingCart.runtimeconfig.json
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\ShoppingCart.runtimeconfig.dev.json
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\ShoppingCart.dll
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\ShoppingCart.pdb
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
@@ -31,9 +31,13 @@ E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\De
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
@@ -48,7 +52,11 @@ E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\De
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csproj.CopyComplete
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\staticwebassets\ShoppingCart.StaticWebAssets.Manifest.cache
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\staticwebassets\ShoppingCart.StaticWebAssets.xml
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.genruntimeconfig.cache
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\ShoppingCart.pdb
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.dll
 E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.pdb
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.genruntimeconfig.cache
-E:\VirtusaShoppingCart\Vrt_ShoppingCart\Project\ShoppingCart\ShoppingCart\obj\Debug\netcoreapp3.1\ShoppingCart.csprojAssemblyReference.cache

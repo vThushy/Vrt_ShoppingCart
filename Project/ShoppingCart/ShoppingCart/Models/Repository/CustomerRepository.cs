@@ -10,21 +10,21 @@ namespace ShoppingCart.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly CustomerDbContext customerDbContext;
+        private readonly ShoppingCartDbContext shoppingCartDbContext;
 
-        public CustomerRepository(CustomerDbContext _customerDbContext)
+        public CustomerRepository(ShoppingCartDbContext _shoppingCartDbContext)
         {
-            customerDbContext = _customerDbContext;
+            shoppingCartDbContext = _shoppingCartDbContext;
         }
    
         public Customer GetCustomer(int id)
         {
-            return customerDbContext.Customers.FirstOrDefault(c => c.Id == id);
+            return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);
         }
         public void AddCustomer(Customer customer)
         {
-            customerDbContext.Customers.Add(customer);
-            customerDbContext.SaveChanges();
+            shoppingCartDbContext.Customers.Add(customer);
+            shoppingCartDbContext.SaveChanges();
         }
         public void ModifyCustomer(Customer oldCustomer, Customer newCustomer)
         {
@@ -36,13 +36,13 @@ namespace ShoppingCart.Repository
             oldCustomer.Email = newCustomer.Email;
             oldCustomer.Phone = newCustomer.Phone;
 
-            customerDbContext.SaveChanges();
+            shoppingCartDbContext.SaveChanges();
         }
 
         public void RemoveCustomer(Customer customer)
         {
-            customerDbContext.Customers.Remove(customer);
-            customerDbContext.SaveChanges();
+            shoppingCartDbContext.Customers.Remove(customer);
+            shoppingCartDbContext.SaveChanges();
         }
     }
 }

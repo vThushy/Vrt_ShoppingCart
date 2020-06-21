@@ -11,26 +11,26 @@ namespace ShoppingCart.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductDbContext productDbContext;
-        public ProductRepository(ProductDbContext _productDbContext)
+        private readonly ShoppingCartDbContext shoppingCartDbContext;
+        public ProductRepository(ShoppingCartDbContext _shoppingCartDbContext)
         {
-            productDbContext = _productDbContext;
+            shoppingCartDbContext = _shoppingCartDbContext;
         }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return productDbContext.Products.ToList();
+            return shoppingCartDbContext.Products.ToList();
         }
 
         public Product GetProduct(int id)
         {
-            return productDbContext.Products.FirstOrDefault(p => p.Id == id);
+            return shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
         }
 
         public void AddProduct(Product product)
         {
-            productDbContext.Products.Add(product);
-            productDbContext.SaveChanges();
+            shoppingCartDbContext.Products.Add(product);
+            shoppingCartDbContext.SaveChanges();
         }
 
         public void ModifyProduct(Product oldProduct, Product newProduct)
@@ -42,13 +42,13 @@ namespace ShoppingCart.Repository
             oldProduct.Price = newProduct.Price;
             oldProduct.Image = newProduct.Image;
 
-            productDbContext.SaveChanges();
+            shoppingCartDbContext.SaveChanges();
         }
 
         public void RemoveProduct(Product product)
         {
-            productDbContext.Remove(product);
-            productDbContext.SaveChanges();
+            shoppingCartDbContext.Remove(product);
+            shoppingCartDbContext.SaveChanges();
         }
     }
 }

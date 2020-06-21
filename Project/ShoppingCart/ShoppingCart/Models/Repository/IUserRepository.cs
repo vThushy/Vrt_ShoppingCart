@@ -7,6 +7,6 @@ namespace ShoppingCart.Models.Repository
 {
     public interface IUserRepository
     {
-        void VerifyUser(string userName, string password);
+        User VerifyUser(User user);
     }
 }

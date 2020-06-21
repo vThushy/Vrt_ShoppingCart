@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart.Models.Repository
 {
-    public class UserRepository
+    public class UserRepository: IUserRepository
     {
-        private readonly UserDbContext userDbContext;
-        public UserRepository(UserDbContext _userDbContext)
+        private readonly ShoppingCartDbContext shoppingCartDbContext;
+        public UserRepository(ShoppingCartDbContext _shoppingCartDbContext)
         {
-            userDbContext = _userDbContext;
+            shoppingCartDbContext = _shoppingCartDbContext;
         }
 
-        public bool VerifyUser(string userName, string password)
+        public User VerifyUser(User _user)
         {
-            var user = userDbContext.Users.FirstOrDefault(u => (u.UserName == userName && u.Password == password));
+            var user = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == _user.UserName && u.Password == _user.Password));
             if (user == null)
             {
-                return false;
+                return null;
             }
-            return true;
+            return user;
         }
     }
 }
