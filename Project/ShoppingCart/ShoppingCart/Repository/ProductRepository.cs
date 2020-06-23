@@ -1,13 +1,12 @@
 ﻿using ShoppingCart.Contexts;
 using ShoppingCart.Models;
 using ShoppingCart.Models.Repository;
-using ShoppingCart.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Repository
+namespace ShoppingCart.Models.Repository
 {
     public class ProductRepository : IProductRepository
     {

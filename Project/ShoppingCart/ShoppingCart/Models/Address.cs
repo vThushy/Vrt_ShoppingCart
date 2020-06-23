@@ -10,6 +10,7 @@ namespace ShoppingCart.Models
     public class Address
     {
         [Key]
+        public int Id { get; set; }
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public string AddressType { get; set; }

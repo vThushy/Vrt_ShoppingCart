@@ -2,15 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
-using ShoppingCart.Repository;
+using ShoppingCart.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("product")]
     public class ProductController : ControllerBase
@@ -24,17 +21,15 @@ namespace ShoppingCart.Controllers
             productRepository = _productRepository;
         }
 
-        [HttpGet]
-        [Authorize]
-        public IActionResult Get()
+        [HttpGet]       
+        public IActionResult GetAllProducts()
         {
             var response = productRepository.GetAllProducts();
-           
             return Ok(response);
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetProduct(int id)
         {
             var response = productRepository.GetProduct(id);
             if (response == null)
@@ -45,7 +40,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Product product)
+        public IActionResult AddProduct([FromBody] Product product)
         {
             if (product == null)
             {
@@ -57,7 +52,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Product product)
+        public IActionResult ModifyProduct(int id, [FromBody] Product product)
         {
             if (product == null)
             {
@@ -75,7 +70,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult RemoveProduct(int id)
         {
             Product productToDelete = productRepository.GetProduct(id);
             if (productToDelete == null)

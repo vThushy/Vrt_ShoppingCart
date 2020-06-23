@@ -2,78 +2,44 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
+using ShoppingCart.Contracts;
+using ShoppingCart.Utility;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
 namespace ShoppingCart.Controllers
 {
     [ApiController]
     [Route("authentication")]
-    public class AuthenticationController: ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private readonly ILogger<ProductController> logger;
-        private IConfiguration configuration;
+        private readonly ILogger<AuthenticationController> logger;
         private readonly IUserRepository userRepository;
+        private readonly IConfiguration configuration;
 
-        public AuthenticationController(IUserRepository _userRepository, ILogger<ProductController> _logger,
+        public AuthenticationController(IUserRepository _userRepository, ILogger<AuthenticationController> _logger,
             IConfiguration _configuration)
         {
             logger = _logger;
-            configuration = _configuration;
             userRepository = _userRepository;
+            configuration = _configuration;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] User login)
+        public IActionResult Login([FromBody] User user)
         {
-            //IActionResult response = Unauthorized();
-            IActionResult response = null;
-            var user = AuthenticateUser(login);
+            var verifyUser = userRepository.VerifyUser(user);
 
             if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user);
+                Token token = new Token(configuration);
+                var tokenString = token.GenerateJSONWebToken(verifyUser);
+                logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
                 return Ok(new { token = tokenString });
             }
 
-            return response;
-        }
-
-        //private IActionResult Unauthorized()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        private string GenerateJSONWebToken(User userInfo)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
-              configuration["Jwt:Issuer"],
-              null,
-              expires: DateTime.Now.AddMinutes(120),
-              signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private User AuthenticateUser(User user)
-        {
-            return userRepository.VerifyUser(user);
-            
-            ////Validate the User Credentials    
-            ////Demo Purpose, I have Passed HardCoded User Information    
-            //if (login.UserName == "Jignesh")
-            //{
-            //    user = new UserModel { Username = "Jignesh Trivedi", EmailAddress = "test.btest@gmail.com" };
-            //}
-            //return user;
+            return BadRequest("Wrong username or password!");
         }
     }
 }

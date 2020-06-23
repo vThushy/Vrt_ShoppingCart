@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using ShoppingCart.Models.Repository;
 using System;
@@ -11,7 +12,7 @@ namespace ShoppingCart.Controllers
 {
     [ApiController]
     [Route("user")]
-    public class UserController
+    public class UserController: ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IUserRepository userRepository;
@@ -22,17 +23,36 @@ namespace ShoppingCart.Controllers
             userRepository = _userRepository;
         }
 
-        //[HttpPost]
-        //public IActionResult Post([FromBody] User user)
-        //{
-        ////    bool response = userRepository.VerifyUser(user);
-        ////    if (response)
-        ////    {
-        ////        return BadRequest("Product is null.");
-        ////    }
-        ////    return BadRequest("Product is null.");
-        //}
+        [HttpPost]
+        public IActionResult AddUser([FromBody] User user)
+        {
+            if (user == null)
+            {
+                return BadRequest("Product is null.");
+            }
 
-        
+            userRepository.AddUser(user);
+            return Ok("User added");
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] User user)
+        {
+            if (user == null)
+            {
+                return BadRequest("User is null.");
+            }
+
+            //User productToUpdate = userRepository.GetProduct(id);
+            //if (productToUpdate == null)
+            //{
+            //    return NotFound("The product not found!");
+            //}
+
+            //productRepository.ModifyProduct(productToUpdate, product);
+            return NoContent();
+        }
+
+
     }
 }

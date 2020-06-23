@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ShoppingCart.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Models.Repository
+namespace ShoppingCart.Contracts
 {
     public interface ICustomerRepository
     {

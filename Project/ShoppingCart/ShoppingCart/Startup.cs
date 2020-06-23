@@ -19,7 +19,6 @@ using ShoppingCart.Contexts;
 using ShoppingCart.Extensions;
 using ShoppingCart.Models;
 using ShoppingCart.Models.Repository;
-using ShoppingCart.Repository;
 
 namespace ShoppingCart
 {

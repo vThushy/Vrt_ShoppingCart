@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using ShoppingCart.Models.Repository;
 using System;
@@ -24,7 +25,7 @@ namespace ShoppingCart.Controllers
 
       
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetCustomer(int id)
         {
             var response = customerRepository.GetCustomer(id);
             if (response == null)
@@ -35,7 +36,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Customer customer)
+        public IActionResult AddCustomer([FromBody] Customer customer)
         {
             if (customer == null)
             {
@@ -47,7 +48,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Customer customer)
+        public IActionResult ModifyCustomer(int id, [FromBody] Customer customer)
         {
             if (customer == null)
             {
@@ -65,7 +66,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult RemoveCustomer(int id)
         {
             Customer customerToDelete = customerRepository.GetCustomer(id);
             if (customerToDelete == null)

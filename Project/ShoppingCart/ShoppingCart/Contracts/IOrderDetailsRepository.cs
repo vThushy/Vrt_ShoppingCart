@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Models.Repository
+namespace ShoppingCart.Contracts
 {
-    public interface IUserRepository
+    public class IOrderDetailsRepository
     {
-        User VerifyUser(User user);
     }
 }
