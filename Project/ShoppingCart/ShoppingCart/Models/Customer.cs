@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingCart.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,16 +10,37 @@ namespace ShoppingCart.Models
 {
     public class Customer
     {
-       
+        [Required]
         public int Id { get; set; } 
+
+        [Required]
+        [StringLength(100)]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string LastName { get; set; }
-        public int  Address { get; set; }
-        public string Gender { get; set; }
+
+        [Required]
+        [ForeignKey("Address")]
+        public int  AddressiD { get; set; }
+
+
+        [Required]
+        [EnumDataType(typeof(Gender),ErrorMessage ="Gender type doesn't exist within enum")]
+        public Gender Gender { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
+
+        [MaxLength(10)]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Phone Number.")]
         public string Phone { get; set; }
+
+        [Required]
+        [StringLength(25)]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }

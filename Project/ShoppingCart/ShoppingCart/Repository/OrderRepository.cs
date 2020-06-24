@@ -1,4 +1,6 @@
-﻿using ShoppingCart.Contexts;
+﻿using Microsoft.Extensions.Logging;
+using ShoppingCart.Contexts;
+using ShoppingCart.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,12 @@ namespace ShoppingCart.Models.Repository
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly ILogger logger;
         private readonly ShoppingCartDbContext shoppingCartDbContext;
 
-        public OrderRepository(ShoppingCartDbContext _shoppingCartDbContext)
+        public OrderRepository(ILogger _logger, ShoppingCartDbContext _shoppingCartDbContext)
         {
+            logger = _logger;
             shoppingCartDbContext = _shoppingCartDbContext;
         }
      

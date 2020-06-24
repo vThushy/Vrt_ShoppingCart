@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ShoppingCart.Controllers
 {
     [ApiController]
-    [Route("Customer")]
+    [Route("customer")]
     public class CustomerController: ControllerBase
     {
         private readonly ILogger<CustomerController> _logger;
