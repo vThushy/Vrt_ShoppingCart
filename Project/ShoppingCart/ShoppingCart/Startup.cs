@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Extensions;
-using ShoppingCart.Models.Repository;
+using ShoppingCart.Repository;
 
 namespace ShoppingCart
 {
@@ -47,9 +47,13 @@ namespace ShoppingCart
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddScoped<ICustomerRepository, CustomerRepository>();
-            //services.AddScoped<IAddressRepository, AddressRepository>();
-            
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+
             services.AddControllers();
 
         }

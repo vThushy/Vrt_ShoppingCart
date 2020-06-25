@@ -2,15 +2,11 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
 
 namespace ShoppingCart.Controllers
 {
@@ -48,7 +44,7 @@ namespace ShoppingCart.Controllers
 
         public IActionResult AddOrder([FromBody] Order order)
         {
-            if(order == null)
+            if (order == null)
             {
                 return BadRequest("Order is null");
             }

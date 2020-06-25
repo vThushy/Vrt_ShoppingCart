@@ -23,13 +23,13 @@ namespace ShoppingCart.Controllers
             cartRepository = _cartRepository;
         }
 
-        [HttpGet("{customerId}")]
-        public IActionResult GetCartItems(int customerId)
+        [HttpGet("{id}")]
+        public IActionResult GetCartItems(int Id)
         {
-            int orderId = cartRepository.GetOrderId(customerId);
+            int orderId = cartRepository.GetOrderId(Id);
             if (orderId > 0)
             {
-                return Ok(cartRepository.GetOrderDetails(orderId));
+                return Ok(cartRepository.GetOrderDetails(Id));
             }
             return BadRequest("Cart items not found.");
         }

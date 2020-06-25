@@ -1,10 +1,7 @@
 ﻿using ShoppingCart.Enum;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
@@ -12,17 +9,17 @@ namespace ShoppingCart.Models
     {
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
+        //[Required]
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
+        //[Key]
         [ForeignKey("Order")]
         public int OrderId { get; set; }
 
         [Required]
         [EnumDataType(typeof(Method), ErrorMessage = "Payment Method value doesn't exist within enum")]
         public Method Method { get; set; }
-
 
         [StringLength(250)]
         public string Note { get; set; }

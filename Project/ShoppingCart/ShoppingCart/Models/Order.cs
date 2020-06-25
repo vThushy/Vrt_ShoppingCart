@@ -1,30 +1,32 @@
 ﻿using ShoppingCart.Enum;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Order
     {
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
+        //[Required]
         public int Id { get; set; }
         
-        [Required]
+        //[Required]
+        //[Key]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
 
-        [Required]
+        //[Required]
+        //[Key]
         [ForeignKey("Address")]
         public int AddressId { get; set; }
 
         [Required]
-        [Range(1, 5)]
+        //[Range(1, 5)]
         //[DataType(DataType.Currency)]
         public double Discount { get; set; }
 

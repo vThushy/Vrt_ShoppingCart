@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ShoppingCart.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
@@ -12,17 +10,19 @@ namespace ShoppingCart.Models
     /// </summary>
     public class Address
     {
-
-        [Required]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Required]
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
+        //[Key]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
 
         [Required]
-        [EnumDataType(typeof(Type), ErrorMessage = "Address Type value doesn't exist within enum")]
-        public Type AddressType { get; set; }
+        [EnumDataType(typeof(AddressType), ErrorMessage = "Address Type value doesn't exist within enum")]
+        public AddressType AddressType { get; set; }
 
         [Required]
         [StringLength(100)]

@@ -21,7 +21,7 @@ namespace ShoppingCart.Controllers
             productRepository = _productRepository;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public IActionResult GetAllProducts()
         {
             var response = productRepository.GetAllProducts();
@@ -46,7 +46,7 @@ namespace ShoppingCart.Controllers
             {
                 return BadRequest("Product is null.");
             }
-            
+
             productRepository.AddProduct(product);
             return CreatedAtRoute("Get", new { id = product.Id }, product);
         }

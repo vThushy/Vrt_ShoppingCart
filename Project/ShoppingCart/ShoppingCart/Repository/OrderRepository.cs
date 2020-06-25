@@ -1,24 +1,23 @@
 ﻿using Microsoft.Extensions.Logging;
 using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Models.Repository
+namespace ShoppingCart.Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly ILogger logger;
         private readonly ShoppingCartDbContext shoppingCartDbContext;
 
-        public OrderRepository(ILogger _logger, ShoppingCartDbContext _shoppingCartDbContext)
+        public OrderRepository(ShoppingCartDbContext _shoppingCartDbContext)
         {
-            logger = _logger;
             shoppingCartDbContext = _shoppingCartDbContext;
         }
-     
+
         public IEnumerable<Order> GetAllOrders()
         {
             return shoppingCartDbContext.Orders.ToList();
@@ -26,9 +25,9 @@ namespace ShoppingCart.Models.Repository
 
         public Order GetOrder(int id)
         {
-            return shoppingCartDbContext.Orders.FirstOrDefault(p =>(p.Id == id));
+            return shoppingCartDbContext.Orders.FirstOrDefault(p => (p.Id == id));
         }
-            
+
         public void AddOrder(Order order)
         {
             shoppingCartDbContext.Orders.Add(order);

@@ -1,11 +1,12 @@
 ﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
+using ShoppingCart.Models;
 using ShoppingCart.Utility;
 using System;
 using System.Linq;
 
 
-namespace ShoppingCart.Models.Repository
+namespace ShoppingCart.Repository
 {
     public class UserRepository: IUserRepository
     {

@@ -2,11 +2,6 @@
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Controllers
 {
@@ -14,10 +9,10 @@ namespace ShoppingCart.Controllers
     [Route("user")]
     public class UserController: ControllerBase
     {
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<UserController> _logger;
         private readonly IUserRepository userRepository;
 
-        public UserController(IUserRepository _userRepository, ILogger<ProductController> logger)
+        public UserController(IUserRepository _userRepository, ILogger<UserController> logger)
         {
             _logger = logger;
             userRepository = _userRepository;
@@ -35,23 +30,23 @@ namespace ShoppingCart.Controllers
             return Ok("User added");
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User user)
-        {
-            if (user == null)
-            {
-                return BadRequest("User is null.");
-            }
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int id, [FromBody] User user)
+        ////{
+        ////    if (user == null)
+        ////    {
+        ////        return BadRequest("User is null.");
+        ////    }
 
-            //User productToUpdate = userRepository.GetProduct(id);
-            //if (productToUpdate == null)
-            //{
-            //    return NotFound("The product not found!");
-            //}
+        ////    User productToUpdate = userRepository.GetProduct(id);
+        ////    if (productToUpdate == null)
+        ////    {
+        ////        return NotFound("The product not found!");
+        ////    }
 
-            //productRepository.ModifyProduct(productToUpdate, product);
-            return NoContent();
-        }
+        ////    productRepository.ModifyProduct(productToUpdate, product);
+        ////    return NoContent();
+        ////}
 
 
     }

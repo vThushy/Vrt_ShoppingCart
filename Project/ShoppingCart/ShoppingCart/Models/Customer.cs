@@ -10,7 +10,9 @@ namespace ShoppingCart.Models
 {
     public class Customer 
     {
-        [Required]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Required]
         public int Id { get; set; } 
 
         [Required]
@@ -23,8 +25,7 @@ namespace ShoppingCart.Models
 
         [Required]
         [ForeignKey("Address")]
-        public int  AddressiD { get; set; }
-
+        public int AddressId { get; set; }
 
         [Required]
         [EnumDataType(typeof(Gender),ErrorMessage ="Gender type doesn't exist within enum")]

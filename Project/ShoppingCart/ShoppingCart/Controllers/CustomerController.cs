@@ -2,11 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Controllers
 {
@@ -23,7 +19,7 @@ namespace ShoppingCart.Controllers
             customerRepository = _customerRepository;
         }
 
-      
+
         [HttpGet("{id}")]
         public IActionResult GetCustomer(int id)
         {

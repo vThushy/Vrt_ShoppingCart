@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Migrations
 {
-    public partial class ShoppingCartDbContext : Migration
+    public partial class ShoppingCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,18 +11,19 @@ namespace ShoppingCart.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressType = table.Column<string>(nullable: true),
-                    AddressLine = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: false),
+                    AddressType = table.Column<int>(nullable: false),
+                    AddressLine = table.Column<string>(maxLength: 100, nullable: false),
+                    ZipCode = table.Column<string>(maxLength: 10, nullable: false),
+                    City = table.Column<string>(maxLength: 50, nullable: false),
+                    State = table.Column<string>(maxLength: 50, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.CustomerId);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,13 +32,32 @@ namespace ShoppingCart.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Keyword = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: false),
+                    Keyword = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    AddressId = table.Column<int>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    Phone = table.Column<string>(maxLength: 10, nullable: true),
+                    Email = table.Column<string>(maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,12 +68,12 @@ namespace ShoppingCart.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    UnitPrice = table.Column<int>(nullable: false),
+                    UnitPrice = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => new { x.Id, x.OrderId });
+                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,31 +83,31 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Discount = table.Column<float>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false),
+                    Discount = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => new { x.Id, x.CustomerId });
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "payments",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
-                    Method = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
-                    Amount = table.Column<int>(nullable: false),
+                    Method = table.Column<int>(nullable: false),
+                    Note = table.Column<string>(maxLength: 250, nullable: true),
+                    Amount = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_payments", x => new { x.Id, x.OrderId });
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,15 +117,15 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Discount = table.Column<int>(nullable: false),
-                    Price = table.Column<float>(nullable: false),
-                    Image = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: false),
+                    Discount = table.Column<double>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Image = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => new { x.Id, x.CategoryId });
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,66 +135,36 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(nullable: false),
-                    InventoryLocation = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
+                    InventoryLocation = table.Column<string>(maxLength: 100, nullable: false),
+                    Note = table.Column<string>(maxLength: 250, nullable: true),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stocks", x => new { x.Id, x.ProductId });
+                    table.PrimaryKey("PK_Stocks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserName = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: true),
-                    UserRole = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserName);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    AddressCustomerId = table.Column<int>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Phone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(maxLength: 100, nullable: false),
+                    Password = table.Column<string>(maxLength: 100, nullable: false),
+                    UserRole = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_Addresses_AddressCustomerId",
-                        column: x => x.AddressCustomerId,
-                        principalTable: "Addresses",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserName", "Password", "UserRole" },
-                values: new object[] { "Thushy", "Thushy", "Admin" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_AddressCustomerId",
-                table: "Customers",
-                column: "AddressCustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "Categories");
 
@@ -188,7 +178,7 @@ namespace ShoppingCart.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "payments");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -198,9 +188,6 @@ namespace ShoppingCart.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
         }
     }
 }

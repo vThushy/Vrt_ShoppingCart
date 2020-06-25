@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ShoppingCart.Contracts;
+using ShoppingCart.Models;
 
-namespace ShoppingCart.Models.Repository
+namespace ShoppingCart.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -15,7 +16,7 @@ namespace ShoppingCart.Models.Repository
         {
             shoppingCartDbContext = _shoppingCartDbContext;
         }
-   
+
         public Customer GetCustomer(int id)
         {
             return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);

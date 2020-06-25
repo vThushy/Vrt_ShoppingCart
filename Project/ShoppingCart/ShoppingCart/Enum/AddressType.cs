@@ -8,7 +8,7 @@ namespace ShoppingCart.Enum
     /// <summary>
     /// Address Type
     /// </summary>
-    public enum Type
+    public enum AddressType
     {
         /// <summary>
         /// Home Address
