@@ -1,4 +1,4 @@
-﻿using ShoppingCart.Models.Enum;
+﻿using ShoppingCart.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
-    public class Customer
+    public class Customer 
     {
         [Required]
         public int Id { get; set; } 

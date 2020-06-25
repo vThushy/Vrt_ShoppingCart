@@ -1,4 +1,4 @@
-﻿using ShoppingCart.Models.Enum;
+﻿using ShoppingCart.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

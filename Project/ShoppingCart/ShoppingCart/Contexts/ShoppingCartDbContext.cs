@@ -40,14 +40,14 @@ namespace ShoppingCart.Contexts
                 .HasKey(s => new { s.Id, s.ProductId });
 
             modelBuilder.Entity<Payment>()
-                .HasKey(s => new { s.Id, s.OrderId });
+                .HasKey(p => new { p.Id, p.OrderId });
 
             modelBuilder.Entity<User>()
                           .HasData(new User
                           {
                               UserName = "Thushy",
                               Password = "Thushy",
-                              UserRole = "Admin"
+                              UserRole = Enum.Role.Admin
                           });
 
         }

@@ -37,8 +37,7 @@ namespace ShoppingCart.Models.Repository
         public void ModifyOrder(Order oldOrder, Order newOrder)
         {
             oldOrder.CustomerId = newOrder.CustomerId;
-            oldOrder.Address = newOrder.Address;
-            oldOrder.ZipCode = newOrder.ZipCode;
+            oldOrder.AddressId = newOrder.AddressId;
             oldOrder.Discount = newOrder.Discount;
             oldOrder.Date = newOrder.Date;
             shoppingCartDbContext.SaveChanges();

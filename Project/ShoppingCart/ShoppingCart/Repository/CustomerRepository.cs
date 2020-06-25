@@ -1,10 +1,9 @@
-﻿using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
-using ShoppingCart.Contexts;
+﻿using ShoppingCart.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingCart.Contracts;
 
 namespace ShoppingCart.Models.Repository
 {
@@ -30,7 +29,6 @@ namespace ShoppingCart.Models.Repository
         {
             oldCustomer.FirstName = newCustomer.FirstName;
             oldCustomer.LastName = newCustomer.LastName;
-            oldCustomer.Address = newCustomer.Address;
             oldCustomer.Gender = newCustomer.Gender;
             oldCustomer.DateOfBirth = newCustomer.DateOfBirth;
             oldCustomer.Email = newCustomer.Email;

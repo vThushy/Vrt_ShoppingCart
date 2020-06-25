@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\VirtusaShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj": {}
+    "E:\\New_ShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj": {}
   },
   "projects": {
-    "E:\\VirtusaShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj": {
+    "E:\\New_ShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VirtusaShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj",
+        "projectUniqueName": "E:\\New_ShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj",
         "projectName": "ShoppingCart",
-        "projectPath": "E:\\VirtusaShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj",
+        "projectPath": "E:\\New_ShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\ShoppingCart.csproj",
         "packagesPath": "C:\\Users\\Shiya\\.nuget\\packages\\",
-        "outputPath": "E:\\VirtusaShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\obj\\",
+        "outputPath": "E:\\New_ShoppingCart\\Vrt_ShoppingCart\\Project\\ShoppingCart\\ShoppingCart\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shiya\\AppData\\Roaming\\NuGet\\NuGet.Config",

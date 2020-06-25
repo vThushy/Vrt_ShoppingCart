@@ -1,6 +1,5 @@
 ﻿using ShoppingCart.Contexts;
-using ShoppingCart.Models;
-using ShoppingCart.Models.Repository;
+using ShoppingCart.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

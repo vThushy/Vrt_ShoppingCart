@@ -13,19 +13,17 @@ namespace ShoppingCart.Repository
 {
     public class CartRepository :ICartRepository
     {
-        ILogger logger;
         private readonly ShoppingCartDbContext shoppingCartDbContext;
 
-        public CartRepository(ILogger _logger, ShoppingCartDbContext _shoppingCartDbContext)
+        public CartRepository( ShoppingCartDbContext _shoppingCartDbContext)
         {
-            logger = _logger;
             shoppingCartDbContext = _shoppingCartDbContext;
         }
 
         public int GetOrderId(int customerId)
         {
-            Status s = Status.Active;
-            var result = shoppingCartDbContext.Orders.FirstOrDefault(o => o.CustomerId == customerId && o.Status == s);
+            Status statusActive = Status.Active;
+            var result = shoppingCartDbContext.Orders.FirstOrDefault(o => o.CustomerId == customerId && o.Status == statusActive);
             return result.Id;
         }
 
