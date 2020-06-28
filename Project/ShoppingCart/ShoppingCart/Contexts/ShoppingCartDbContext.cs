@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Enum;
 using ShoppingCart.Models;
 
 namespace ShoppingCart.Contexts
@@ -22,35 +23,19 @@ namespace ShoppingCart.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Address>()
-            //    .HasKey(a => new { a.Id, a.CustomerId });
-
-            //modelBuilder.Entity<Customer>()
-            //    .HasKey(c => new { c.Id, c.AddressId });
-
-            //modelBuilder.Entity<Product>()
-            //    .HasKey(p => new { p.Id, p.CategoryId });
-
-            //modelBuilder.Entity<Order>()
-            //    .HasKey(o => new { o.Id, o.CustomerId, o.AddressId });
-
-            //modelBuilder.Entity<OrderDetail>()
-            //    .HasKey(d => new { d.Id, d.OrderId, d.ProductId });
-
-            //modelBuilder.Entity<Stock>()
-            //    .HasKey(s => new { s.Id, s.ProductId });
-
-            //modelBuilder.Entity<Payment>()
-            //    .HasKey(pmt => new { pmt.Id, pmt.OrderId });
-
             modelBuilder.Entity<User>()
-                          .HasData(new User
-                          {
-                              UserName = "Thushy",
-                              Password = "Thushy",
-                              UserRole = Enum.Role.Admin
-                          });
+                .Property(u => u.UserRole)
+                .HasConversion<int>();
 
+            //modelBuilder.Entity<User>()
+            //    .HasData(new User
+            //    {
+            //        UserName = "Thushy",
+            //        Password = "Thushy",
+            //        UserRole = Enum.Role.Admin
+            //    });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
