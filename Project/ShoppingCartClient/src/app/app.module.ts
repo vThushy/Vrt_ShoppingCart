@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NavComponent } from './nav/nav.component';
 import { SliderComponent } from './slider/slider.component';
-import { CategoryComponent } from './category/category.component';
 import { SellerComponent } from './seller/seller.component';
 import { SocialComponent } from './social/social.component';
 import { FooterComponent } from './footer/footer.component';
+import { ListProductComponent } from './list-product/list-product.component';
+import { HomeComponent } from './home/home.component';
+import { ProductRowComponent } from './product-row/product-row.component';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     NavComponent,
     SliderComponent,
-    CategoryComponent,
     SellerComponent,
     SocialComponent,
-    FooterComponent
+    FooterComponent,
+    ListProductComponent,
+    HomeComponent,
+    ProductRowComponent
   ],
   imports: [
     BrowserModule,
