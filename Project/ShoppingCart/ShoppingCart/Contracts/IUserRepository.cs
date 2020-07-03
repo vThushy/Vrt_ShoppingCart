@@ -9,6 +9,6 @@ namespace ShoppingCart.Contracts
     public interface IUserRepository
     {
         void AddUser(User user);
-        int VerifyUser(User user);
+        User VerifyUser(User user);
     }
 }

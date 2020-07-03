@@ -26,7 +26,6 @@ namespace ShoppingCart.Repository
         {
             string hashPassword = Hashing.ConvertToHash(user.Password);  //TO-DO this needs to be remove once client developed.
             var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == hashPassword));
-            foundUser.Password = null;
             if (foundUser == null)
             {
                 return null;

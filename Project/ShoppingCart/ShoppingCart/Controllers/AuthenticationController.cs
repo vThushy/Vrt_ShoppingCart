@@ -25,13 +25,13 @@ namespace ShoppingCart.Controllers
             configuration = _configuration;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPost]
         public IActionResult Login([FromBody] User user)
         {
             var verifyUser = userRepository.VerifyUser(user);
 
-            if (user != null)
+            if (verifyUser != null)
             {
                 Token token = new Token(configuration);
                 var tokenString = token.GenerateJSONWebToken(verifyUser);

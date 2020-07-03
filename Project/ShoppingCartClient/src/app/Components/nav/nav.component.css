@@ -1,4 +1,8 @@
-/* @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700); */
+/* .mega-dropdown-menu > li{
+  ;
+} */
+
+
 
 .navbar-nav>li>.dropdown-menu {
   margin-top: 20px;
@@ -52,6 +56,7 @@
 
 .mega-dropdown-menu > li > ul > li {
   list-style: none;
+  display: inline;
 }
 
 .mega-dropdown-menu > li > ul > li > a {
@@ -83,4 +88,9 @@
 
 .mega-dropdown-menu .form-group {
   margin-bottom: 3px;
+}
+
+
+ul li{
+  display: inline-block;
 }
