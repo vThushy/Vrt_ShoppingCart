@@ -1,46 +1,59 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Models/User';
-import { loginAPI } from '../Util/config';
+import { loginAPI, userAPI } from '../Util/config';
+import { Customer } from '../Models/Customer';
+import { catchError } from 'rxjs/operators';
+import { ExceptionHandlerService } from '../Util/exception-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor(private httpClient: HttpClient) { }
+  private loggedIn = false;
 
-  registerUser(){
+  constructor(
+    private httpClient: HttpClient,
+    private exceptionHandlerService: ExceptionHandlerService) {
+    this.loggedIn = !!localStorage.getItem('auth_token')
+  }
 
+  public registerUser(user: User, customer: Customer) {
+    const header = { 'content-type': 'application/json' };
+    var body = JSON.stringify(user);
+    return this.httpClient.post<any>(userAPI, body, { 'headers': header })
+      .pipe(catchError(this.exceptionHandlerService.handleError));
   }
 
   public verifyUser(user: User) {
-    console.log(user);
-    var token: string;
-    const head = {'content-type': 'application/json'};
-    var  d= '{"UserName" : "Thushy", "Password" : "Thushy"}';
-    var a = JSON.stringify(user);
-    console.log(a);
-    this.httpClient.post<any>('https://localhost:5001/Authentication', a, {'headers':  head}).subscribe(data => {
-      token = data.token;
-      console.log(data);
-      return data;
-    });
-   
-  //  var token=   this.httpClient.post<any>('http://localhost:5000/Authentication', user).toPromise();
-  //  console.log(token);
-  //  return token;
+    const header = { 'content-type': 'application/json' };
+    return this.httpClient.post<any>(loginAPI, JSON.stringify(user), { 'headers': header })
+      .pipe(catchError(this.exceptionHandlerService.handleError));
   }
 
-  updateUser(){
+  public setLoginStatus(status: boolean) {
+    this.loggedIn = status;
+  }
+
+  updateUser() {
 
   }
 
-  changePassword(){
+  changePassword() {
 
   }
 
-  forgetPassword(){
+  forgetPassword() {
 
+  }
+
+  logout() {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+  }
+
+  public isLogged() {
+    return this.loggedIn;
   }
 }

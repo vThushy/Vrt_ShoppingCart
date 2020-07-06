@@ -40,7 +40,7 @@ namespace ShoppingCart.Controllers
             }
 
             customerRepository.AddCustomer(customer);
-            return CreatedAtRoute("Get", new { id = customer.Id }, customer);
+            return Ok("Customer created.");
         }
 
         [HttpPut("{id}")]

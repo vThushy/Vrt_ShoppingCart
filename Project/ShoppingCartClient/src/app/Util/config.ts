@@ -1,2 +1,5 @@
-export const baseAPI = 'http://localhost:5000';
+export const baseAPI = 'https://localhost:5001';
 export const loginAPI = baseAPI + '/authentication';
+export const userAPI = baseAPI + '/user';
+export const customerAPI = baseAPI + '/customer';
+

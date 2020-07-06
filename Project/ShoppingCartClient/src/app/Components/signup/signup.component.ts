@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/Services/users.service';
 import { Customer } from 'src/app/Models/Customer';
+import { User } from 'src/app/Models/User';
+import { CustomerService } from 'src/app/Services/customer.service';
+import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,11 +16,13 @@ export class SignupComponent implements OnInit {
   countries = [];
   signUpForm: FormGroup;
   regExEmail = "/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
+  user = new User();
   customer = new Customer();
  
   constructor(
     private formBuilder: FormBuilder, 
-    private userService: UsersService) {
+    private customerService: CustomerService,
+    private exceptionHandlerService: ExceptionHandlerService) {
   }
 
   ngOnInit() {
@@ -25,8 +30,8 @@ export class SignupComponent implements OnInit {
   }
 
   submit() {
-    this.customer.UserName = this.registrationDetails.userName.value;
-    this.customer.Password = this.registrationDetails.password.value;
+    this.user.UserName = this.registrationDetails.userName.value;
+    this.user.Password = this.registrationDetails.password.value;
     this.customer.FirstName = this.registrationDetails.firstName.value;
     this.customer.LastName = this.registrationDetails.lastName.value;
     this.customer.Address.AddressType = this.registrationDetails.addressType.value;
@@ -39,7 +44,20 @@ export class SignupComponent implements OnInit {
     this.customer.DateOfBirth = this.registrationDetails.dateOfBirth.value;
     this.customer.Phone = this.registrationDetails.phone.value;
     this.customer.Email = this.registrationDetails.email.value;
-    this.userService.verifyUser(this.customer);
+
+    this.customerService.registerCustomer(this.customer).subscribe(
+      result => {
+        localStorage.setItem('auth_token', result.token);
+        localStorage.setItem('auth_user', this.user.UserName);
+       // this.userService.setLoginStatus(true);
+       // this.router.navigate(['']);
+      },
+      error => {
+        this.exceptionHandlerService.handleError(error);
+      }
+    );
+
+   // this.userService.registerUser(this.user)
   }
 
   createForm() {
@@ -57,7 +75,7 @@ export class SignupComponent implements OnInit {
       dob: [''],
       phone:[''],
       password: ['', Validators.required, Validators.minLength(5)],
-      repassword:[''],
+      repassword:['', Validators.required, Validators.minLength(5)],
     });
   }
 

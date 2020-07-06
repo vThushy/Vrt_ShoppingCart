@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using System;
 
 namespace ShoppingCart.Controllers
 {
@@ -9,12 +10,12 @@ namespace ShoppingCart.Controllers
     [Route("user")]
     public class UserController: ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UserController> logger;
         private readonly IUserRepository userRepository;
 
-        public UserController(IUserRepository _userRepository, ILogger<UserController> logger)
+        public UserController(IUserRepository _userRepository, ILogger<UserController> _logger)
         {
-            _logger = logger;
+            logger = _logger;
             userRepository = _userRepository;
         }
 
@@ -23,10 +24,10 @@ namespace ShoppingCart.Controllers
         {
             if (user == null)
             {
-                return BadRequest("Product is null.");
+                return BadRequest("User is null.");
             }
-
             userRepository.AddUser(user);
+            logger.LogInformation($"User {user.UserName} added on {DateTime.UtcNow.ToLongTimeString()}");
             return Ok("User added");
         }
 

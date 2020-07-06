@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   accountStatus: string = "My Account";
-  constructor() { }
+  loggedIn = false;
+  cartTotal = 0;
+  changeRef: ChangeDetectorRef;
+
+  constructor(
+    private router: Router,
+    private usersService: UsersService) { }
 
   ngOnInit(): void {
+    console.log(this.usersService.isLogged());
+    if (this.usersService.isLogged()){
+      this.loggedIn = true;
+      this.accountStatus = localStorage.getItem('auth_user')
+    }
   }
 
+  logout(){
+    this.usersService.logout();
+    this.changeRef.checkNoChanges();
+  }
 }

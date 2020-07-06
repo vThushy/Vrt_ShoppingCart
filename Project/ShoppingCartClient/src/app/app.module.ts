@@ -13,9 +13,9 @@ import { HomeComponent } from './Components/home/home.component';
 import { ProductRowComponent } from './Components/product-row/product-row.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { CategoryComponent } from './Components/category/category.component';
-import { HttpClientModule } from '@angular/common/http';
 import { UsersService } from './Services/users.service';
 import { LoginComponent } from './Components/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

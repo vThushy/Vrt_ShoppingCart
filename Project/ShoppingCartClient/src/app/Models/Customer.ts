@@ -1,8 +1,6 @@
 import { Address } from './Address';
 
 export class Customer{
-    UserName: string;
-    Password: string;
     FirstName: string;
     LastName: string;
     Address: Address;

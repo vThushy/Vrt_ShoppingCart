@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { UsersService } from 'src/app/Services/users.service';
+import { Router } from '@angular/router';
+import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +14,13 @@ import { UsersService } from 'src/app/Services/users.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   user = new User();
+  loading = false;
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private userService: UsersService) {
+    private formBuilder: FormBuilder,
+    private userService: UsersService,
+    private exceptionHandlerService: ExceptionHandlerService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -23,9 +28,22 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.loading = true;
     this.user.UserName = this.loginDetails.userName.value;
     this.user.Password = this.loginDetails.password.value;
-    this.userService.verifyUser(this.user);
+
+    this.userService.verifyUser(this.user).subscribe(
+      result => {
+        localStorage.setItem('auth_token', result.token);
+        localStorage.setItem('auth_user', this.user.UserName);
+        this.userService.setLoginStatus(true);
+        this.router.navigate(['']);
+      },
+      error => {
+        this.loading = false;
+        this.exceptionHandlerService.handleError(error);
+      }
+    );
   }
 
   createForm() {
@@ -35,6 +53,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get loginDetails() { return this.loginForm.controls}
+  get loginDetails() { return this.loginForm.controls }
 
 }
