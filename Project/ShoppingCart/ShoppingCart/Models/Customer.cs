@@ -24,10 +24,6 @@ namespace ShoppingCart.Models
         public string LastName { get; set; }
 
         [Required]
-        [ForeignKey("Address")]
-        public int AddressId { get; set; }
-
-        [Required]
         [EnumDataType(typeof(Gender),ErrorMessage ="Gender type doesn't exist within enum")]
         public Gender Gender { get; set; }
 
