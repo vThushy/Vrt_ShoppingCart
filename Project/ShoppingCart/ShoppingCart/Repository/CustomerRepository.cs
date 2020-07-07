@@ -26,8 +26,9 @@ namespace ShoppingCart.Repository
         {
             return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);
         }
-        public void AddCustomer(Customer customer)
+        public void AddCustomer(Customer customer, User user)
         {
+            shoppingCartDbContext.Users.Add(user);
             shoppingCartDbContext.Customers.Add(customer);
             shoppingCartDbContext.SaveChanges();
         }

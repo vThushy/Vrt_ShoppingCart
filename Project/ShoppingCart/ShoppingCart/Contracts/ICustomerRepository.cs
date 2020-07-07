@@ -9,7 +9,7 @@ namespace ShoppingCart.Contracts
     public interface ICustomerRepository
     {
         Customer GetCustomer(int id);
-        void AddCustomer(Customer customer);
+        void AddCustomer(Customer customer, User user);
 
         void ModifyCustomer(Customer oldCustomer, Customer newCustomer);
         void RemoveCustomer(Customer customer);

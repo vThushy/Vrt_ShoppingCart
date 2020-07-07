@@ -22,6 +22,15 @@ namespace ShoppingCart.Repository
             shoppingCartDbContext.SaveChanges();
         }
 
+        public User GetUser(string userName)
+        {
+            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == userName));
+            if (foundUser == null)
+            {
+                return null;
+            }
+            return foundUser;
+        }
         public User VerifyUser(User user)
         {
             var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));

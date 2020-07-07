@@ -10,5 +10,8 @@ namespace ShoppingCart.Contracts
     {
         void AddUser(User user);
         User VerifyUser(User user);
+        void ChangePassword(User user);
+        User GetUser(string userName);
+
     }
 }

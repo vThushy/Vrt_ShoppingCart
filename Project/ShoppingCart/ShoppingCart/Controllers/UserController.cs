@@ -19,35 +19,23 @@ namespace ShoppingCart.Controllers
             userRepository = _userRepository;
         }
 
-        [HttpPost]
-        public IActionResult AddUser([FromBody] User user)
+        [HttpPut("{id}")]
+        public IActionResult ChangePassword([FromBody] User user)
         {
             if (user == null)
             {
                 return BadRequest("User is null.");
             }
-            userRepository.AddUser(user);
-            logger.LogInformation($"User {user.UserName} added on {DateTime.UtcNow.ToLongTimeString()}");
-            return Ok("User added");
+
+            User userToBeUpdate = userRepository.GetUser(user.UserName);
+            if (userToBeUpdate == null)
+            {
+                return NotFound("The product not found!");
+            }
+
+            userRepository.ChangePassword(userToBeUpdate);
+            return NoContent();
         }
-
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, [FromBody] User user)
-        ////{
-        ////    if (user == null)
-        ////    {
-        ////        return BadRequest("User is null.");
-        ////    }
-
-        ////    User productToUpdate = userRepository.GetProduct(id);
-        ////    if (productToUpdate == null)
-        ////    {
-        ////        return NotFound("The product not found!");
-        ////    }
-
-        ////    productRepository.ModifyProduct(productToUpdate, product);
-        ////    return NoContent();
-        ////}
 
 
     }

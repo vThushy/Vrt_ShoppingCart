@@ -11,14 +11,13 @@ export class HeaderComponent implements OnInit {
   accountStatus: string = "My Account";
   loggedIn = false;
   cartTotal = 0;
-  changeRef: ChangeDetectorRef;
 
   constructor(
     private router: Router,
-    private usersService: UsersService) { }
+    private usersService: UsersService,
+    private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    console.log(this.usersService.isLogged());
     if (this.usersService.isLogged()){
       this.loggedIn = true;
       this.accountStatus = localStorage.getItem('auth_user')
@@ -27,6 +26,7 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.usersService.logout();
-    this.changeRef.checkNoChanges();
+    this.loggedIn = false;
+    this.accountStatus = "My Account";
   }
 }

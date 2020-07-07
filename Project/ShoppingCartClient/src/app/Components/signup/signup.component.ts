@@ -5,6 +5,7 @@ import { Customer } from 'src/app/Models/Customer';
 import { User } from 'src/app/Models/User';
 import { CustomerService } from 'src/app/Services/customer.service';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
+import { AddCustomerObj } from 'src/app/Models/AddCustomerObj';
 
 @Component({
   selector: 'app-signup',
@@ -16,8 +17,7 @@ export class SignupComponent implements OnInit {
   countries = [];
   signUpForm: FormGroup;
   regExEmail = "/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
-  user = new User();
-  customer = new Customer();
+  customer = new AddCustomerObj();
  
   constructor(
     private formBuilder: FormBuilder, 
@@ -30,13 +30,14 @@ export class SignupComponent implements OnInit {
   }
 
   submit() {
-    this.user.UserName = this.registrationDetails.userName.value;
-    this.user.Password = this.registrationDetails.password.value;
-    this.customer.FirstName = this.registrationDetails.firstName.value;
-    this.customer.LastName = this.registrationDetails.lastName.value;
-    this.customer.Address.AddressType = this.registrationDetails.addressType.value;
-    this.customer.Address.AddressLine = this.registrationDetails.address.value;
-    this.customer.Address.ZipCode = this.registrationDetails.zipCode.value;
+    this.customer.User.UserName = this.registrationDetails.userName.value;
+    this.customer.User.Password = this.registrationDetails.password.value;
+    this.customer.Customer.UserName = this.registrationDetails.firstName.value;
+    this.customer.Customer.FirstName = this.registrationDetails.firstName.value;
+    this.customer.Customer.LastName = this.registrationDetails.lastName.value;
+    this.customer.Customer.Address.AddressType = this.registrationDetails.addressType.value;
+    this.customer.Customer.Address.AddressLine = this.registrationDetails.address.value;
+    this.customer.Customer.Address.ZipCode = this.registrationDetails.zipCode.value;
     this.customer.Address.City = this.registrationDetails.city.value;
     this.customer.Address.State = this.registrationDetails.state.value;
     this.customer.Address.Country = this.registrationDetails.country.value;
