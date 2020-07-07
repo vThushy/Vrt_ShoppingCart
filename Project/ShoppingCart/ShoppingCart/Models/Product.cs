@@ -6,13 +6,8 @@ namespace ShoppingCart.Models
 {
     public class Product
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Required]
         public int Id { get; set; }
 
-        //[Required]
-        //[Key]
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
 
@@ -30,9 +25,7 @@ namespace ShoppingCart.Models
 
         [Required]
         [Range(1, 10)]
-        [DataType(DataType.Currency)]
         public double Price { get; set; }
-
 
         [StringLength(100)]
         public string Image { get; set; }

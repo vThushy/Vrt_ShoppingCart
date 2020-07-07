@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Migrations
 {
-    public partial class ShoppingCart : Migration
+    public partial class ShoppinCartDbContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(nullable: false),
-                    AddressType = table.Column<int>(nullable: false),
+                    AddressType = table.Column<int>(maxLength: 20, nullable: false),
                     AddressLine = table.Column<string>(maxLength: 100, nullable: false),
                     ZipCode = table.Column<string>(maxLength: 10, nullable: false),
                     City = table.Column<string>(maxLength: 50, nullable: false),
@@ -34,7 +34,7 @@ namespace ShoppingCart.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(maxLength: 250, nullable: false),
-                    Keyword = table.Column<string>(maxLength: 20, nullable: false)
+                    Keyword = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,6 +47,7 @@ namespace ShoppingCart.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     LastName = table.Column<string>(maxLength: 100, nullable: false),
                     AddressId = table.Column<int>(nullable: false),
@@ -86,7 +87,7 @@ namespace ShoppingCart.Migrations
                     AddressId = table.Column<int>(nullable: false),
                     Discount = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    OrderStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,7 +101,7 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
-                    Method = table.Column<int>(nullable: false),
+                    PayMethod = table.Column<int>(nullable: false),
                     Note = table.Column<string>(maxLength: 250, nullable: true),
                     Amount = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
@@ -148,15 +149,13 @@ namespace ShoppingCart.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
                     UserRole = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.UserName);
                 });
         }
 

@@ -13,6 +13,7 @@ namespace ShoppingCart.Contracts
 
         void ModifyCustomer(Customer oldCustomer, Customer newCustomer);
         void RemoveCustomer(Customer customer);
+        int GetCustomerId(string userName);
 
     }
 }

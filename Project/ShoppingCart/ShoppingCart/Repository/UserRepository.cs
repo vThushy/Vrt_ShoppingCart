@@ -24,8 +24,7 @@ namespace ShoppingCart.Repository
 
         public User VerifyUser(User user)
         {
-            string hashPassword = Hashing.ConvertToHash(user.Password);  //TO-DO this needs to be remove once client developed.
-            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == hashPassword));
+            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
             if (foundUser == null)
             {
                 return null;

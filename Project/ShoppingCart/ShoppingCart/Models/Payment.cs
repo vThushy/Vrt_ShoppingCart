@@ -7,19 +7,14 @@ namespace ShoppingCart.Models
 {
     public class Payment
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Required]
         public int Id { get; set; }
 
-        //[Required]
-        //[Key]
         [ForeignKey("Order")]
         public int OrderId { get; set; }
 
         [Required]
-        [EnumDataType(typeof(Method), ErrorMessage = "Payment Method value doesn't exist within enum")]
-        public Method Method { get; set; }
+        [EnumDataType(typeof(PaymentMethod), ErrorMessage = "Payment Method value doesn't exist within enum")]
+        public PaymentMethod PayMethod { get; set; }
 
         [StringLength(250)]
         public string Note { get; set; }

@@ -10,10 +10,10 @@ namespace ShoppingCart.Models
 {
     public class Customer 
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Required]
-        public int Id { get; set; } 
+        public int Id { get; set; }
+
+        [ForeignKey("User")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -32,7 +32,6 @@ namespace ShoppingCart.Models
         public Gender Gender { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
 
         [MaxLength(10)]

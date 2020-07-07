@@ -14,25 +14,25 @@ namespace ShoppingCart.Controllers
     [Route("cart")]
     public class CartController : ControllerBase
     {
-        private readonly ILogger<CartController> _logger;
-        private readonly ICartRepository cartRepository;
+    //    private readonly ILogger<CartController> _logger;
+    //    private readonly ICartRepository cartRepository;
 
-        public CartController(ICartRepository _cartRepository, ILogger<CartController> logger)
-        {
-            _logger = logger;
-            cartRepository = _cartRepository;
-        }
+    //    public CartController(ICartRepository _cartRepository, ILogger<CartController> logger)
+    //    {
+    //        _logger = logger;
+    //        cartRepository = _cartRepository;
+    //    }
 
-        [HttpGet("{id}")]
-        public IActionResult GetCartItems(int Id)
-        {
-            int orderId = cartRepository.GetOrderId(Id);
-            if (orderId > 0)
-            {
-                return Ok(cartRepository.GetOrderDetails(Id));
-            }
-            return BadRequest("Cart items not found.");
-        }
+    //    [HttpGet("{id}")]
+    //    public IActionResult GetCartItems(int Id)
+    //    {
+    //        int orderId = cartRepository.GetOrderId(Id);
+    //        if (orderId > 0)
+    //        {
+    //            return Ok(cartRepository.GetOrderDetails(Id));
+    //        }
+    //        return BadRequest("Cart items not found.");
+    //    }
 
     }
 }

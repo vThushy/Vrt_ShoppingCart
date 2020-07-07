@@ -6,11 +6,7 @@ namespace ShoppingCart.Models
 {
     public class User
     {
-        //[Key]
-        ////[Required]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
+        [Key]
         [Required]
         [StringLength(100)]
         public string UserName { get; set; }
@@ -20,7 +16,7 @@ namespace ShoppingCart.Models
         public string Password { get; set; }
 
         [Required]
-        [EnumDataType(typeof(Role), ErrorMessage = "User Role value doesn't exist within enum")]
-        public Role UserRole { get; set; }
+        [EnumDataType(typeof(AccessRole), ErrorMessage = "User Role value doesn't exist within enum")]
+        public AccessRole UserRole { get; set; }
     }
 }

@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingCart.Models
 {
     public class Category
     {
-        // [Key]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Required]
         public int Id { get; set; }
 
         [Required]
@@ -19,7 +17,8 @@ namespace ShoppingCart.Models
         public string Description { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(500)]
         public string Keyword { get; set; }
+
     }
 }

@@ -10,19 +10,14 @@ namespace ShoppingCart.Models
     /// </summary>
     public class Address
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Required]
         public int Id { get; set; }
 
-        //[Required]
-        //[Key]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
 
         [Required]
-        [EnumDataType(typeof(AddressType), ErrorMessage = "Address Type value doesn't exist within enum")]
-        public AddressType AddressType { get; set; }
+        [StringLength(20)]
+        public string AddressType { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -36,7 +31,6 @@ namespace ShoppingCart.Models
         [StringLength(50)]
         public string City { get; set; }
 
-        //[Required]
         [StringLength(50)]
         public string State { get; set; }
 

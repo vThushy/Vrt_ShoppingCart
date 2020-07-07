@@ -8,7 +8,7 @@ namespace ShoppingCart.Enum
     /// <summary>
     /// Sattus of Order
     /// </summary>
-    public enum Status
+    public enum OrderStatus
     {
         /// <summary>
         /// 

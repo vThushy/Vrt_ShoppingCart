@@ -6,6 +6,7 @@ using ShoppingCart.Models;
 using ShoppingCart.Contracts;
 using ShoppingCart.Utility;
 using System;
+using ShoppingCart.Repository;
 
 namespace ShoppingCart.Controllers
 {
@@ -15,17 +16,21 @@ namespace ShoppingCart.Controllers
     {
         private readonly ILogger<AuthenticationController> logger;
         private readonly IUserRepository userRepository;
+        private readonly ICustomerRepository customerRepository;
         private readonly IConfiguration configuration;
 
-        public AuthenticationController(IUserRepository _userRepository, ILogger<AuthenticationController> _logger,
+        public AuthenticationController(
+            IUserRepository _userRepository, 
+            ILogger<AuthenticationController> _logger,
+            ICustomerRepository _customerRepository,
             IConfiguration _configuration)
         {
             logger = _logger;
             userRepository = _userRepository;
             configuration = _configuration;
+            customerRepository = _customerRepository;
         }
 
-        //[AllowAnonymous]
         [HttpPost]
         public IActionResult Login([FromBody] User user)
         {
@@ -35,8 +40,9 @@ namespace ShoppingCart.Controllers
             {
                 Token token = new Token(configuration);
                 var tokenString = token.GenerateJSONWebToken(verifyUser);
+                int userId = customerRepository.GetCustomerId(verifyUser.UserName);
                 logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                return Ok(new { token = tokenString });
+                return Ok(new { customerId = userId, token = tokenString });
             }
 
             return BadRequest("Wrong username or password!");

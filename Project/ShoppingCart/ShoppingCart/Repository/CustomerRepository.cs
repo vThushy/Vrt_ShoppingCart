@@ -17,6 +17,11 @@ namespace ShoppingCart.Repository
             shoppingCartDbContext = _shoppingCartDbContext;
         }
 
+        public int GetCustomerId(string userName)
+        {
+            var result = shoppingCartDbContext.Customers.Where(c => c.UserName == userName).Select(c => new Customer { Id = c.Id }).SingleOrDefault();
+            return result.Id;
+        }
         public Customer GetCustomer(int id)
         {
             return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);

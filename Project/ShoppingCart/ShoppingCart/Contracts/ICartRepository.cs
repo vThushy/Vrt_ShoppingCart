@@ -5,7 +5,7 @@ namespace ShoppingCart.Contracts
 {
     public interface ICartRepository
     {
-        public int GetOrderId(int customerId);
-        public IList<OrderDetail> GetOrderDetails(int orderId);
+        //public int GetOrderId(int customerId);
+        //public IList<OrderDetail> GetOrderDetails(int orderId);
     }
 }

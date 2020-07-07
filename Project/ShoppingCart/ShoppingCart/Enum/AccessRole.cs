@@ -8,7 +8,7 @@ namespace ShoppingCart.Enum
     /// <summary>
     /// 
     /// </summary>
-    public enum Role
+    public enum AccessRole
     {
         /// <summary>
         /// Admininstrator

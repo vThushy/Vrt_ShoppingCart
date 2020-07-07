@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 namespace ShoppingCart.Enum
 {
     /// <summary>
-    /// Address Type
+    /// Payment Method
     /// </summary>
-    public enum AddressType
+    public enum PaymentMethod
     {
         /// <summary>
-        /// Home Address
+        /// Pay By Cash
         /// </summary>
-        Honme =0,
+        Cash = 0,
 
         /// <summary>
-        /// Delivery Address1
+        /// Pay By Shop Credit
         /// </summary>
-        Delivery1 = 1,
+        ShopCredit = 1,
 
         /// <summary>
-        /// Delivery Address2
+        /// Pay By Cart
         /// </summary>
-        Delivery2 = 2
+        Cart = 2
 
     }
 }

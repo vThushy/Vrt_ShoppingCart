@@ -15,24 +15,24 @@ namespace ShoppingCart.Repository
     {
         private readonly ShoppingCartDbContext shoppingCartDbContext;
 
-        public CartRepository( ShoppingCartDbContext _shoppingCartDbContext)
-        {
-            shoppingCartDbContext = _shoppingCartDbContext;
-        }
+        //public CartRepository( ShoppingCartDbContext _shoppingCartDbContext)
+        //{
+        //    shoppingCartDbContext = _shoppingCartDbContext;
+        //}
 
-        public int GetOrderId(int customerId)
-        {
-            Status statusActive = Status.Active;
-            var result = shoppingCartDbContext.Orders.FirstOrDefault(o => o.CustomerId == customerId && o.Status == statusActive);
-            return result.Id;
-        }
+        //public int GetOrderId(int customerId)
+        //{
+        //    Status statusActive = Status.Active;
+        //    var result = shoppingCartDbContext.Orders.FirstOrDefault(o => o.CustomerId == customerId && o.Status == statusActive);
+        //    return result.Id;
+        //}
 
-        public IList<OrderDetail> GetOrderDetails(int orderId)
-        {
-            var result = shoppingCartDbContext.OrderDetails.Where(o => (o.OrderId == orderId));
-            List<OrderDetail> orderDetails = result.ToList<OrderDetail>();
-            return orderDetails;
-        }
+        //public IList<OrderDetail> GetOrderDetails(int orderId)
+        //{
+        //    var result = shoppingCartDbContext.OrderDetails.Where(o => (o.OrderId == orderId));
+        //    List<OrderDetail> orderDetails = result.ToList<OrderDetail>();
+        //    return orderDetails;
+        //}
 
     }
 }
