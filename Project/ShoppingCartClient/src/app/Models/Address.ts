@@ -1,6 +1,6 @@
 export class Address {
-    CustomerId: Number;
-    AddressType: Number;
+    CustomerId: number;
+    AddressType: string;
     AddressLine: string;
     ZipCode: string;
     City: string;

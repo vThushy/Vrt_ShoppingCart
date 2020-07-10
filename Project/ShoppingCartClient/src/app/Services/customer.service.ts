@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Customer } from '../Models/Customer';
 import { customerAPI } from '../Util/config';
 import { catchError } from 'rxjs/operators';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
 import { HttpClient } from '@angular/common/http';
+import { AddCustomerObj } from '../Models/AddCustomerObj';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class CustomerService {
     private exceptionHandlerService: ExceptionHandlerService) {
   }
 
-  public registerCustomer(customer: Customer) {
+  public registerCustomer(customer: AddCustomerObj) {
     const header = { 'content-type': 'application/json' };
     var body = JSON.stringify(customer);
     return this.httpClient.post<any>(customerAPI, body, { 'headers': header })

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Models/User';
-import { loginAPI, userAPI, customerAPI } from '../Util/config';
-import { Customer } from '../Models/Customer';
+import { loginAPI, customerAPI } from '../Util/config';
 import { catchError } from 'rxjs/operators';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
-import { AddCustomrObj } from '../Models/AddCustomerObj';
+import { AddCustomerObj } from '../Models/AddCustomerObj';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ export class UsersService {
     this.loggedIn = !!localStorage.getItem('auth_token')
   }
 
-  public registerUser(regCustomer: AddCustomrObj) {
+  public registerUser(regCustomer: AddCustomerObj) {
     const header = { 'content-type': 'application/json' };
     var body = JSON.stringify(regCustomer);
     return this.httpClient.post<any>(customerAPI, body, { 'headers': header })

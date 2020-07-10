@@ -3,7 +3,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using ShoppingCart.Repository;
 using System;
+using System.Threading.Tasks;
 
 namespace ShoppingCart.Controllers
 {
@@ -11,13 +13,21 @@ namespace ShoppingCart.Controllers
     [Route("customer")]
     public class CustomerController: ControllerBase
     {
-        private readonly ILogger<CustomerController> _logger;
+        private readonly ILogger<CustomerController> logger;
         private readonly ICustomerRepository customerRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IAddressRepository addressRepository;
 
-        public CustomerController(ICustomerRepository _customerRepository, ILogger<CustomerController> logger)
+        public CustomerController(
+            ICustomerRepository _customerRepository,
+            IUserRepository _userRepository,
+            IAddressRepository _addressRepository,
+            ILogger<CustomerController> _logger)
         {
-            _logger = logger;
+            logger = _logger;
             customerRepository = _customerRepository;
+            userRepository = _userRepository;
+            addressRepository = _addressRepository;
         }
 
 
@@ -37,14 +47,25 @@ namespace ShoppingCart.Controllers
         {
             Customer customer = customerRegObj.Customer;
             User user = customerRegObj.User;
+            Address address = customerRegObj.Address;
 
             if (customer == null && user == null)
             {
                 return BadRequest("Request is null.");
             }
 
-            customerRepository.AddCustomer(customer, user);
-            return Ok("Customer created.");
+            try
+            {
+                customerRepository.AddCustomer(customer);
+                userRepository.AddUser(user);
+                addressRepository.AddAddress(address);
+                return Ok("Customer created.");
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Error in CustomerController: " + e.ToString());
+                return Problem(e.ToString());
+            }
         }
 
         [HttpPut("{id}")]
@@ -74,7 +95,7 @@ namespace ShoppingCart.Controllers
                 return NotFound("The customer not found!");
             }
             customerRepository.RemoveCustomer(customerToDelete);
-            _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+            logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
             return NoContent();
         }
     }
@@ -83,5 +104,6 @@ namespace ShoppingCart.Controllers
     {
         public Customer Customer { get; set; }
         public User User { get; set; }
+        public Address Address { get; set; }
     }
 }

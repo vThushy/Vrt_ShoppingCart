@@ -16,6 +16,7 @@ import { CategoryComponent } from './Components/category/category.component';
 import { UsersService } from './Services/users.service';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProductRowComponent,
     CategoryComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    MatProgressSpinnerModule
   ],
   imports: [
     BrowserModule,
