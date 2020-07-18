@@ -1,15 +1,17 @@
 <div class="row">
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 top-space">
         <img src="assets/images/call.jpg" /> <a routerLink="/inquiry">Online Inquiries </a>
         <img src="assets/images/store-location.png" /> <a routerLink="/map"> Store Locator </a>
     </div>
 
     <div class="col-6 col-md-4 center-align">
-        <img src="assets/images/banner.png" width="30%" />
+        <a routerLink="/">
+            <img src="assets/images/banner.png" width="40%" />
+        </a>
     </div>
 
-    <div class="col-6 col-md-4 align-right">
+    <div class="col-6 col-md-4 align-right top-space">
         <div class="dropdow show">
             <a class="dropdown-toggle" href="#" role="button" id="myAccountLink" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">{{ accountStatus }}</a>

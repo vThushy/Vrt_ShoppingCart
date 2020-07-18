@@ -34,6 +34,8 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] User user)
         {
+            try
+            {
             var verifyUser = userRepository.VerifyUser(user);
 
             if (verifyUser != null)
@@ -46,6 +48,12 @@ namespace ShoppingCart.Controllers
             }
 
             return BadRequest("Wrong username or password!");
+            }
+            catch (Exception e)
+            {
+                logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
         }
     }
 }

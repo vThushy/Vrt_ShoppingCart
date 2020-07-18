@@ -9,6 +9,6 @@ namespace ShoppingCart.Contracts
     public interface IAddressRepository
     {
         public void AddAddress(Address address);
-        public void RemoveAddress(Address address)
+        public void RemoveAddress(Address address);
     }
 }

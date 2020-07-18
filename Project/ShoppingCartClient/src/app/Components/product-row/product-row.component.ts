@@ -8,7 +8,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class ProductRowComponent implements OnChanges {
   heading: string;
   @Input() viewTitle: string;
-  // @Input() searchCriteria: String;
+  @Input() searchCriteria: String;
 
   constructor() {
     this.heading = this.viewTitle;
@@ -16,5 +16,6 @@ export class ProductRowComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.heading = this.viewTitle;
+  
   }
 }

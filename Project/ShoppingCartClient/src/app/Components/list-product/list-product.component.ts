@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -6,23 +6,22 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.css']
 })
-export class ListProductComponent implements OnInit {
+export class ListProductComponent implements OnChanges {
 
-  searchCategory: number;
-  private sub: any;
+  searchValue: string;
+  noOfResults: number;
+  noOfPages= 1;
+
 
   constructor(
     private route: ActivatedRoute,
   ) {}
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.searchCategory = params['category'];
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    this.searchValue = this.route.snapshot.paramMap.get("searchValue");   
+    this.noOfPages = this.noOfResults / 9;
   }
+ 
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
 
 }

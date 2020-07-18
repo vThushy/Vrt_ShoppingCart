@@ -16,7 +16,11 @@ import { CategoryComponent } from './Components/category/category.component';
 import { UsersService } from './Services/users.service';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import {MatProgressSpinnerModule} from '@angular/material'
+import { ListCategoryComponent } from './Components/list-category/list-category.component';
+import { FilterComponent } from './filter/filter.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import {MatProgressSpinnerModule} from '@angular/material';
+// import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,14 +36,17 @@ import {MatProgressSpinnerModule} from '@angular/material'
     CategoryComponent,
     SignupComponent,
     LoginComponent,
-    MatProgressSpinnerModule
+    ListCategoryComponent,
+    FilterComponent
+    // MatProgressSpinnerModule
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]

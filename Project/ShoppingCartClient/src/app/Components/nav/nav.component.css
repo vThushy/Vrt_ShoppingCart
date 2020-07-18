@@ -1,9 +1,3 @@
-/* .mega-dropdown-menu > li{
-  ;
-} */
-
-
-
 .navbar-nav>li>.dropdown-menu {
   margin-top: 20px;
   border-top-left-radius: 4px;
@@ -90,7 +84,11 @@
   margin-bottom: 3px;
 }
 
-
 ul li{
   display: inline-block;
+}
+
+.padding-side{
+  padding-left: 2em;
+  padding-right: 2em;
 }

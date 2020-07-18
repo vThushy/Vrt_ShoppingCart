@@ -34,12 +34,20 @@ namespace ShoppingCart.Controllers
         [HttpGet("{id}")]
         public IActionResult GetCustomer(int id)
         {
-            var response = customerRepository.GetCustomer(id);
-            if (response == null)
+            try
             {
-                return NotFound("Customer does not exist");
+                var response = customerRepository.GetCustomer(id);
+                if (response == null)
+                {
+                    return NotFound("Customer does not exist");
+                }
+                return Ok(response);
             }
-            return Ok(response);
+            catch (Exception e)
+            {
+                logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
         }
 
         [HttpPost]
@@ -71,9 +79,11 @@ namespace ShoppingCart.Controllers
         [HttpPut("{id}")]
         public IActionResult ModifyCustomer(int id, [FromBody] Customer customer)
         {
+            try
+            {
             if (customer == null)
             {
-                return BadRequest("Product is null.");
+                return BadRequest("Customer is null.");
             }
 
             Customer customerToUpdate = customerRepository.GetCustomer(id);
@@ -84,19 +94,33 @@ namespace ShoppingCart.Controllers
 
             customerRepository.ModifyCustomer(customerToUpdate, customer);
             return NoContent();
+            }
+            catch (Exception e)
+            {
+                logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult RemoveCustomer(int id)
         {
             Customer customerToDelete = customerRepository.GetCustomer(id);
-            if (customerToDelete == null)
+            try
             {
-                return NotFound("The customer not found!");
+                if (customerToDelete == null)
+                {
+                    return NotFound("The customer not found!");
+                }
+                customerRepository.RemoveCustomer(customerToDelete);
+                logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+                return NoContent();
             }
-            customerRepository.RemoveCustomer(customerToDelete);
-            logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-            return NoContent();
+            catch (Exception e)
+            {
+                logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
         }
     }
 

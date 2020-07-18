@@ -1,0 +1,13 @@
+<app-header></app-header>
+<app-nav></app-nav>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>
+            {{ heading }}
+        </h1>
+    </div>
+
+    <app-category [InputUrlCategory]="urlCategory" [InputCategories]='categories'></app-category>
+</div>
+

@@ -22,6 +22,8 @@ namespace ShoppingCart.Controllers
         [HttpPut("{id}")]
         public IActionResult ChangePassword([FromBody] User user)
         {
+            try
+            {
             if (user == null)
             {
                 return BadRequest("User is null.");
@@ -35,6 +37,13 @@ namespace ShoppingCart.Controllers
 
             userRepository.ChangePassword(userToBeUpdate);
             return NoContent();
+            }
+            catch (Exception e)
+            {
+                logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
+
         }
 
 

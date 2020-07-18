@@ -6,3 +6,11 @@
     text-align: right;
     padding-right: 4rem;
 }
+
+.row{
+    border-bottom: 1px solid #000;
+}
+
+.top-space{
+    padding-top:2em;
+}

@@ -1,47 +1,58 @@
-<!-- Category View -->
 <div class="container">
+
     <div class="row">
-        <div class="col">
-            <img class="card-img-top" src="assets/images/cat_women.jpg" alt="Card image">
-            <div class="card-img-overlay">
-                <p class="card-text">NEW COLLECTION</p>
-                <h4 class="card-title">SHOP WOMEN'S</h4>
-                <a href="#" class="btn btn-primary">DISCOVER NOW</a>
-            </div>
+        <div class="col zoom">
+            <a [routerLink]="[urlCategory, categories[0][1]]">
+                <img class="card-img-top" [src]='categories[0][2]' alt="Card image">
+                <div class="card-img-overlay align-center">
+                    <p class="card-text">NEW COLLECTION</p>
+                    <h4 class="card-title">{{ categories[0][0] }}</h4>
+                    DISCOVER NOW
+                </div>
+            </a>
         </div>
-        <div class="col">
-            <img class="card-img-top" src="assets/images/cat_men.jpg" alt="Card image">
-            <div class="card-img-overlay">
-                <p class="card-text">NEW COLLECTION</p>
-                <h4 class="card-title">SHOP MEN'S</h4>
-                <a href="#" class="btn btn-primary">DISCOVER NOW</a>
-            </div>
+        <div class="col zoom">
+            <a [routerLink]="[urlCategory, categories[1][1]]">
+                <img class="card-img-top" [src]='categories[1][2]' alt="Card image">
+                <div class="card-img-overlay align-center">
+                    <p class="card-text">NEW COLLECTION</p>
+                    <h4 class="card-title">{{ categories[1][0] }}</h4>
+                    DISCOVER NOW
+                </div>
+            </a>
         </div>
     </div>
+
     <div class="row">
-        <div class="col">
-            <img class="card-img-top" src="assets/images/cat_kids.jpg" alt="Card image">
-            <div class="card-img-overlay">
-                <p class="card-text">NEW COLLECTION</p>
-                <h4 class="card-title">SHOP KID'S</h4>
-                <a href="#" class="btn btn-primary">DISCOVER NOW</a>
-            </div>
+        <div class="col zoom">
+            <a [href]='categories[2][1]'>
+                <img class="card-img-top" [src]='categories[2][2]' alt="Card image">
+                <div class="card-img-overlay align-center">
+                    <p class="card-text">NEW COLLECTION</p>
+                    <h4 class="card-title">categories[2][0]</h4>
+                    DISCOVER NOW
+                </div>
+            </a>
         </div>
-        <div class="col">
-            <img class="card-img-top" src="assets/images/cat_kids.jpg" alt="Card image">
-            <div class="card-img-overlay">
-                <p class="card-text">NEW COLLECTION</p>
-                <h4 class="card-title">LIFE STYLE</h4>
-                <a href="#" class="btn btn-light">DISCOVER NOW</a>
-            </div>
+        <div class="col zoom">
+            <a [href]='categories[3][1]'>
+                <img class="card-img-top" [src]='categories[3][2]' alt="Card image">
+                <div class="card-img-overlay align-center">
+                    <p class="card-text">NEW COLLECTION</p>
+                    <h4 class="card-title">categories[3][0]</h4>
+                    DISCOVER NOW
+                </div>
+            </a>
         </div>
-        <div class="col">
-            <img class="card-img-top" src="assets/images/cat_kids.jpg" alt="Card image">
-            <div class="card-img-overlay">
-                <p class="card-text">NEW COLLECTION</p>
-                <h4 class="card-title">GIFT VOUCHERS</h4>
-                <a href="#" class="btn btn-light">DISCOVER NOW</a>
-            </div>
+        <div class="col zoom">
+            <a [href]='categories[4][1]'>
+                <img class="card-img-top" [src]='categories[4][2]' alt="Card image">
+                <div class="card-img-overlay align-center">
+                    <p class="card-text">NEW COLLECTION</p>
+                    <h4 class="card-title">categories[4][0]</h4>
+                    DISCOVER NOW
+                </div>
+            </a>
         </div>
     </div>
 </div>

@@ -24,15 +24,31 @@ namespace ShoppingCart.Repository
         }
         public Customer GetCustomer(int id)
         {
-            return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);
+            try
+            {
+                return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         public void AddCustomer(Customer customer)
         {
-            shoppingCartDbContext.Customers.Add(customer);
-            shoppingCartDbContext.SaveChanges();
+            try
+            {
+                shoppingCartDbContext.Customers.Add(customer);
+                shoppingCartDbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
         public void ModifyCustomer(Customer oldCustomer, Customer newCustomer)
         {
+            try
+            {
             oldCustomer.FirstName = newCustomer.FirstName;
             oldCustomer.LastName = newCustomer.LastName;
             oldCustomer.Gender = newCustomer.Gender;
@@ -41,12 +57,24 @@ namespace ShoppingCart.Repository
             oldCustomer.Phone = newCustomer.Phone;
 
             shoppingCartDbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         public void RemoveCustomer(Customer customer)
         {
-            shoppingCartDbContext.Customers.Remove(customer);
-            shoppingCartDbContext.SaveChanges();
+            try
+            {
+                shoppingCartDbContext.Customers.Remove(customer);
+                shoppingCartDbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

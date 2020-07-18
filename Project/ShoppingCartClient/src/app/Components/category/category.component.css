@@ -1,3 +1,31 @@
-.container{
-    margin-bottom:3em;
+.col{
+    margin:0.5em;
 }
+
+.align-center{
+    text-align: center;
+    margin-top: 10%;
+}
+
+.zoom{
+    transition: transform .2s;
+}
+
+.zoom:hover{
+    transform: scale(1.05);
+}
+
+.container{
+    margin-top: 0.5em;
+}
+
+p{
+    color: #fff; 
+    font-weight: bold;
+}
+
+.col img {
+    height: 100%;
+    width: 100%;
+ }
+

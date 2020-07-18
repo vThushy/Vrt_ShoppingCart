@@ -2,7 +2,7 @@
 <app-nav></app-nav>
 
 <app-slider></app-slider>
-<app-category></app-category>
+<app-category [InputUrlCategory]="urlCategory" [InputCategories]='mainCategories'></app-category>
 
-<app-product-row viewTitle = "BEST SELLER"></app-product-row>
-<app-product-row viewTitle = "FEATURED PRODUCTS"></app-product-row>
+<app-product-row viewTitle = "BEST SELLER" searchCriteria="BS-ALL"></app-product-row>
+<app-product-row viewTitle = "TRENDING PRODUCTS"  searchCriteria="TP-ALL"></app-product-row>
