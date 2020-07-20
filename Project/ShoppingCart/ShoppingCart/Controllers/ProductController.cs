@@ -7,7 +7,7 @@ using System;
 
 namespace ShoppingCart.Controllers
 {
-    [Authorize]
+
     [ApiController]
     [Route("product")]
     public class ProductController : ControllerBase
@@ -21,13 +21,13 @@ namespace ShoppingCart.Controllers
             productRepository = _productRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAllProducts()
+        [HttpGet("{pageIndex}, {take}")]
+        public IActionResult GetAllProducts(int pageIndex, int take)
         {
             try
             {
-            var response = productRepository.GetAllProducts();
-            return Ok(response); 
+                var response = productRepository.GetAllProducts(pageIndex, take);
+                return Ok(response); 
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = productRepository.GetProductsByCategory(key);
+                var response = productRepository.GetProductsByCategory(key, 0, 2);
                 if (response == null)
                 {
                     return NotFound("Category does not exist!");
@@ -71,8 +71,7 @@ namespace ShoppingCart.Controllers
             {
                 logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
-            }
-           
+            }    
         }
 
 

@@ -17,11 +17,18 @@ namespace ShoppingCart.Repository
             shoppingCartDbContext = _shoppingCartDbContext;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public ProductList GetAllProducts(int pageIndex, int take)
         {
             try
             {
-                return shoppingCartDbContext.Products.ToList();
+                int skip = (pageIndex - 1) * take;
+                int noOfRecords = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
+                var result = shoppingCartDbContext.Products.Skip(skip).Take(take).ToList();
+                return new ProductList
+                {
+                    NoOfProducts = noOfRecords,
+                    ListOfProducts = result
+                };
             }
             catch(Exception e)
             {
@@ -41,27 +48,18 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public IEnumerable<Product> GetProductsByCategory(string searchCategory)
+        public ProductList GetProductsByCategory(string searchCategory, int pageIndex, int take)
         {
-            //var query1 = from category in shoppingCartDbContext.Categories
-            //             join product in shoppingCartDbContext.Products on category.Id equals product.CategoryId into Product
-            //             from m in Details.DefaultIfEmpty()
-            //             select new
-            //             {
-            //                 product
-            //             };
-            //return query1.ToList<Product>();
-
-            //var query = from category in shoppingCartDbContext.Set<Category>()
-            //            join product in shoppingCartDbContext.Set<Product>()
-            //                on category.Id equals product.CategoryId
-            //            where category.Title.Contains("WOMEN")
-            //            select new { product };
-            //return
             try
             {
-                var result = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5);
-                return result.ToList();
+                int skip = (pageIndex - 1) * take;
+                int noOfRecords = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
+                var result = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(take).ToList();
+                return new ProductList
+                {
+                    NoOfProducts = noOfRecords,
+                    ListOfProducts = result
+                };
             }
             catch(Exception e)
             {

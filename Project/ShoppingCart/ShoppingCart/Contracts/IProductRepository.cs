@@ -8,9 +8,9 @@ namespace ShoppingCart.Contracts
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAllProducts();
+        public ProductList GetAllProducts(int pageIndex, int take);
         Product GetProduct(int id);
-        IEnumerable<Product> GetProductsByCategory(string searchCategory);
+        public ProductList GetProductsByCategory(string searchCategory, int pageIndex, int take);
 
         //CRUD
         void AddProduct(Product product);

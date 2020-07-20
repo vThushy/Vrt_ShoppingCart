@@ -6,3 +6,12 @@
 a{
     margin-left: 1em;
 }
+
+.top-space{
+    margin-top: 2rem;
+}
+
+.no-result{
+    text-align: center;
+    font-size: xx-large;
+}
