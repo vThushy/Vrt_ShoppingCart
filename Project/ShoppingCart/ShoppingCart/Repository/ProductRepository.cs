@@ -1,38 +1,46 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using Microsoft.Data.SqlClient;
 using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using ShoppingCart.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ShoppingCartDbContext shoppingCartDbContext;
-        public ProductRepository(ShoppingCartDbContext _shoppingCartDbContext)
-        {
-            shoppingCartDbContext = _shoppingCartDbContext;
-        }
+        #region class variables
+        private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        private int _productsForPage;
+        #endregion
 
-        public ProductList GetAllProducts(int pageIndex, int take)
+        #region constructor
+        public ProductRepository(ShoppingCartDbContext shoppingCartDbContext)
+        {
+            _shoppingCartDbContext = shoppingCartDbContext;
+            _productsForPage = Constants.productsForPage;
+        }
+        #endregion
+
+        #region methods
+        public ProductList GetAllProducts(int pageIndex)
         {
             try
             {
-                int skip = (pageIndex - 1) * take;
-                int noOfRecords = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
-                var result = shoppingCartDbContext.Products.Skip(skip).Take(take).ToList();
+                int skip = (pageIndex - 1) * _productsForPage;
+                int noOfRecords = _shoppingCartDbContext.Products.Count();
+                var result = _shoppingCartDbContext.Products.Skip(skip).Take(_productsForPage).ToList();
                 return new ProductList
                 {
                     NoOfProducts = noOfRecords,
                     ListOfProducts = result
                 };
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -40,43 +48,104 @@ namespace ShoppingCart.Repository
         {
             try
             {
-                return shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
+                return _shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
-        public ProductList GetProductsByCategory(string searchCategory, int pageIndex, int take)
+        public IEnumerable<Product> GetNewArrivalProducts(string category)
         {
             try
             {
-                int skip = (pageIndex - 1) * take;
-                int noOfRecords = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
-                var result = shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(take).ToList();
+                if(category == "all")
+                {
+                    return _shoppingCartDbContext.Products.OrderByDescending(p => p.Id).Take(5).ToList();
+                }
+                else
+                {
+                    int categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(category)).FirstOrDefault().Id;
+                    return _shoppingCartDbContext.Products.Where(p => p.CategoryId == categoryId).OrderByDescending(p => p.Id).Take(5).ToList();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public ProductList GetProductsBySearch(string searchCategory, int pageIndex)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(searchCategory))
+                {
+                    int skip = (pageIndex - 1) * _productsForPage;
+
+                    int[] categoryIds = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(searchCategory) || c.Description.Contains(searchCategory)
+                    || c.Keyword.Contains(searchCategory)).Select(c => c.Id).ToArray();
+
+                    int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchCategory) || p.Description.Contains(searchCategory))
+                        .Union(_shoppingCartDbContext.Products.Where(p => categoryIds.Contains(p.CategoryId))).Count();
+
+
+                    List<Product> result = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchCategory) || p.Description.Contains(searchCategory))
+                        .Union(_shoppingCartDbContext.Products.Where(p => categoryIds.Contains(p.CategoryId))).Skip(skip).Take(_productsForPage).ToList();
+
+                    return new ProductList
+                    {
+                        NoOfProducts = noOfRecords,
+                        ListOfProducts = result
+                    };
+                }
+                else
+                {
+                    throw new Exception("search category or pageindex is empty!");
+                }
+              
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+        public ProductList GetProductsByCategory(string searchCategory, int pageIndex)
+        {
+            try
+            {
+                int skip = (pageIndex - 1) * _productsForPage;
+                int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
+                var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(_productsForPage).ToList();
                 return new ProductList
                 {
                     NoOfProducts = noOfRecords,
                     ListOfProducts = result
                 };
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+
+
+
 
         public void AddProduct(Product product)
         {
             try
             {
-                shoppingCartDbContext.Products.Add(product);
-                shoppingCartDbContext.SaveChanges();
+                _shoppingCartDbContext.Products.Add(product);
+                _shoppingCartDbContext.SaveChanges();
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -84,18 +153,21 @@ namespace ShoppingCart.Repository
         {
             try
             {
-                oldProduct.CategoryId = newProduct.CategoryId;
-                oldProduct.Name = newProduct.Name;
-                oldProduct.Description = newProduct.Description;
-                oldProduct.Discount = newProduct.Discount;
-                oldProduct.Price = newProduct.Price;
-                oldProduct.Image = newProduct.Image;
+                if (oldProduct != null && newProduct != null)
+                {
+                    oldProduct.CategoryId = newProduct.CategoryId;
+                    oldProduct.Name = newProduct.Name;
+                    oldProduct.Description = newProduct.Description;
+                    oldProduct.Discount = newProduct.Discount;
+                    oldProduct.Price = newProduct.Price;
+                    oldProduct.Image = newProduct.Image;
 
-                shoppingCartDbContext.SaveChanges();
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -103,13 +175,14 @@ namespace ShoppingCart.Repository
         {
             try
             {
-                shoppingCartDbContext.Remove(product);
-                shoppingCartDbContext.SaveChanges();
+                _shoppingCartDbContext.Remove(product);
+                _shoppingCartDbContext.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+        #endregion
     }
 }

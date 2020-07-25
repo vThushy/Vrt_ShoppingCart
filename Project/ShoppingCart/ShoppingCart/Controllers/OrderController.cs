@@ -2,6 +2,7 @@
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
@@ -13,26 +14,26 @@ namespace ShoppingCart.Controllers
     [Route("order")]
     public class OrderController : ControllerBase
     {
-        private readonly ILogger<OrderController> logger;
-        private readonly IOrderRepository orderRepository;
+        private readonly ILogger<OrderController> _logger;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderController(IOrderRepository _orderRepository, ILogger<OrderController> _logger)
+        public OrderController(IOrderRepository orderRepository, ILogger<OrderController> logger)
         {
-            orderRepository = _orderRepository;
-            logger = _logger;
+            _orderRepository = orderRepository;
+            _logger = logger;
         }
 
-        [HttpGet]
-        public IActionResult GetAllOrders()
+        [HttpGet("customer/{userName}")]
+        public IActionResult GetAllOrdersByCustomer(string userName)
         {
             try
             {
-                var response = orderRepository.GetAllOrders();
+                var response = _orderRepository.GetAllOrdersByCustomer(userName);
                 return Ok(response);
             }
-            catch(Exception e)
+            catch (SqlException e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError(e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -42,16 +43,16 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            var response = orderRepository.GetOrder(id);
-            if (response == null)
-            {
-                return NotFound("Order not exist");
+                var response = _orderRepository.GetOrder(id);
+                if (response == null)
+                {
+                    return NotFound("Order not exist");
+                }
+                return Ok(response);
             }
-            return Ok(response);
-            }
-            catch(Exception e)
+            catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in Order Controller: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -60,16 +61,16 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            if (order == null)
-            {
-                return BadRequest("Order is null");
+                if (order == null)
+                {
+                    return BadRequest("Order is null");
+                }
+                _orderRepository.AddOrder(order);
+                return CreatedAtAction("Get", new { id = order.Id }, order);
             }
-            orderRepository.AddOrder(order);
-            return CreatedAtAction("Get", new { id = order.Id }, order);
-            }
-            catch(Exception e)
+            catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in Product controller: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -79,21 +80,28 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            if (order == null)
-            {
-                return BadRequest("Order is null.");
-            }
-            Order orderToUpdate = orderRepository.GetOrder(id);
-            if (orderToUpdate == null)
-            {
-                return NotFound("The order not found!");
-            }
-            orderRepository.ModifyOrder(orderToUpdate, order);
-            return NoContent();
+                Order orderToUpdate = _orderRepository.GetOrder(id);
+                if (orderToUpdate == null)
+                {
+                    return NotFound("The order not found!");
+                }
+                else
+                {
+                    if (order != null)
+                    {
+
+                        _orderRepository.ModifyOrder(orderToUpdate, order);
+                        return NoContent();
+                    }
+                    else
+                    {
+                        return BadRequest("Wrong request!");
+                    }
+                }
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in Product controller: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -103,18 +111,18 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            Order orderToDelete = orderRepository.GetOrder(id);
-            if (orderToDelete == null)
-            {
-                return NotFound("The order not found!");
-            }
-            orderRepository.RemoveOrder(orderToDelete);
-            logger.LogInformation($"Order {orderToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-            return NoContent();
+                Order orderToDelete = _orderRepository.GetOrder(id);
+                if (orderToDelete == null)
+                {
+                    return NotFound("The order not found!");
+                }
+                _orderRepository.RemoveOrder(orderToDelete);
+                _logger.LogInformation($"Order {orderToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+                return NoContent();
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in Product controller: " + e.ToString());
                 return Problem(e.ToString());
             }
         }

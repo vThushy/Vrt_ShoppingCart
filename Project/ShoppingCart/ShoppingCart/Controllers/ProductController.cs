@@ -12,26 +12,27 @@ namespace ShoppingCart.Controllers
     [Route("product")]
     public class ProductController : ControllerBase
     {
-        private readonly ILogger<ProductController> logger;
-        private readonly IProductRepository productRepository;
+        private readonly ILogger<ProductController> _logger;
+        private readonly IProductRepository _productRepository;
 
-        public ProductController(IProductRepository _productRepository, ILogger<ProductController> _logger)
+        public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
         {
-            logger = _logger;
-            productRepository = _productRepository;
+            _logger = logger;
+            _productRepository = productRepository;
         }
 
-        [HttpGet("{pageIndex}, {take}")]
-        public IActionResult GetAllProducts(int pageIndex, int take)
+        [HttpGet]
+        [Route("/page/{pageIndex}")]
+        public IActionResult GetAllProducts(int pageIndex)
         {
             try
             {
-                var response = productRepository.GetAllProducts(pageIndex, take);
+                var response = _productRepository.GetAllProducts(pageIndex);
                 return Ok(response); 
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }
@@ -41,7 +42,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = productRepository.GetProduct(id);
+                var response = _productRepository.GetProduct(id);
                 if (response == null)
                 {
                     return NotFound("Product does not exist");
@@ -50,17 +51,37 @@ namespace ShoppingCart.Controllers
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }
 
-        [HttpGet("/cat/{key}")]
-        public IActionResult GetProductByCategory(string key)
+        [HttpGet]
+        [Route("newArrival/{category}")]
+        public IActionResult GetNewArrivalProducts(string category)
         {
             try
             {
-                var response = productRepository.GetProductsByCategory(key, 0, 2);
+                var response = _productRepository.GetNewArrivalProducts(category);
+                if (response == null)
+                {
+                    return NotFound("New arrival products does not exist!");
+                }
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
+        }
+
+        [HttpGet("/cat/{key}/{pageIndex}")]
+        public IActionResult GetProductByCategory(string key, int pageIndex)
+        {
+            try
+            {
+                var response = _productRepository.GetProductsByCategory(key, pageIndex);
                 if (response == null)
                 {
                     return NotFound("Category does not exist!");
@@ -69,10 +90,30 @@ namespace ShoppingCart.Controllers
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }    
         }
+
+        [HttpGet("/filter/{key}/{pageIndex}")]
+        public IActionResult GetProductBySearch(string key, int pageIndex)
+        {
+            try
+            {
+                var response = _productRepository.GetProductsBySearch(key, pageIndex);
+                if (response == null)
+                {
+                    return NotFound("Product does not exist!");
+                }
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error in Product controller : " + e.ToString());
+                return Problem(e.ToString());
+            }
+        }
+
 
 
         [HttpPost]
@@ -85,12 +126,12 @@ namespace ShoppingCart.Controllers
                     return BadRequest("Product is null.");
                 }
 
-                productRepository.AddProduct(product);
+                _productRepository.AddProduct(product);
                 return CreatedAtRoute("Get", new { id = product.Id }, product);
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }
@@ -105,18 +146,18 @@ namespace ShoppingCart.Controllers
                     return BadRequest("Product is null.");
                 }
 
-                Product productToUpdate = productRepository.GetProduct(id);
+                Product productToUpdate = _productRepository.GetProduct(id);
                 if (productToUpdate == null)
                 {
                     return NotFound("The product not found!");
                 }
 
-                productRepository.ModifyProduct(productToUpdate, product);
+                _productRepository.ModifyProduct(productToUpdate, product);
                 return NoContent();
             }
             catch(Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }
@@ -126,18 +167,18 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                Product productToDelete = productRepository.GetProduct(id);
+                Product productToDelete = _productRepository.GetProduct(id);
                 if (productToDelete == null)
                 {
                     return NotFound("The product not found!");
                 }
-                productRepository.RemoveProduct(productToDelete);
-                logger.LogInformation($"Product {productToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+                _productRepository.RemoveProduct(productToDelete);
+                _logger.LogInformation($"Product {productToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
                 return NoContent();
             }
             catch(Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }

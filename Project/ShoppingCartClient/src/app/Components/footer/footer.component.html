@@ -1,4 +1,98 @@
-<p>footer works!</p>
+<footer class="page-footer font-small unique-color-dark">
 
-    <p  class="text-xs-center">© Copyright 2019. All rights reserved.</p>
- 
+  <div style="background-color: #6351ce;">
+    <div class="container">
+
+      <div class="row py-4 d-flex align-items-center">
+        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+          <h6 class="mb-0">Get connected with us on social networks!</h6>
+        </div>
+
+        <div class="col-md-6 col-lg-7 text-center text-md-right">
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f white-text mr-4"> </i>
+          </a>
+          <a class="tw-ic">
+            <i class="fab fa-twitter white-text mr-4"> </i>
+          </a>
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g white-text mr-4"> </i>
+          </a>
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in white-text mr-4"> </i>
+          </a>
+          <a class="ins-ic">
+            <i class="fab fa-instagram white-text"> </i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center text-md-left mt-5">
+    <div class="row mt-3">
+      <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+        <h6 class="text-uppercase font-weight-bold">PT Clothing Store</h6>
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p class="txtAlign"> Sri Lanka’s biggest fashion chain offers a wide range of clothes and accessories for Men,
+          Women and Kids.
+          The retail store houses a range of Homeware and Lifestyle products to compliment a comprehensive family
+          shopping experience for all our customers.</p>
+      </div>
+
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase font-weight-bold">Products</h6>
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a [routerLink]="['/category', 'men']">Men</a>
+        </p>
+        <p>
+          <a [routerLink]="['/category', 'women']">Women</a>
+        </p>
+        <p>
+          <a [routerLink]="['/category', 'kid']">Kids</a>
+        </p>
+        <p>
+          <a [routerLink]="['/category', 'lifestyle']">Life Style</a>
+        </p>
+        <p>
+          <a [routerLink]="['/category', 'gift']">Gifts</a>
+        </p>
+      </div>
+
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a href="#!">About Us</a>
+        </p>
+        <p>
+          <a href="#!">Contact Us</a>
+        </p>
+        <p>
+          <a href="#!">Store locator</a>
+        </p>
+        <p>
+          <a href="#!">Return Policy</a>
+        </p>
+      </div>
+
+      <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+        <h6 class="text-uppercase font-weight-bold">Contact</h6>
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <i class="fa fa-home mr-3"></i> Nallur, Jaffna, LK</p>
+        <p>
+          <i class="fa fa-envelope mr-3"></i> inquire@ptclothing.com</p>
+        <p>
+          <i class="fa fa-phone mr-3"></i> + 94 011 234 567</p>
+        <p>
+          <i class="fa fa-print mr-3"></i> + 94 011 234 567</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a routerLink="/">PT-Clothing</a>
+  </div>
+</footer>

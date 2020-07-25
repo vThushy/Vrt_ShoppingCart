@@ -11,6 +11,7 @@ namespace ShoppingCart.Contracts
     {
         IEnumerable<Order> GetAllOrders();
         Order GetOrder(int id);
+        IEnumerable<Order> GetAllOrdersByCustomer(string userName);
 
         void AddOrder(Order order);
         void ModifyOrder(Order oldOrder, Order newOrder);

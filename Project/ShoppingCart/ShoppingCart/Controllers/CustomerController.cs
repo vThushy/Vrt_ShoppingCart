@@ -1,42 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
-using ShoppingCart.Repository;
 using System;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Controllers
 {
     [ApiController]
     [Route("customer")]
-    public class CustomerController: ControllerBase
+    public class CustomerController : ControllerBase
     {
-        private readonly ILogger<CustomerController> logger;
-        private readonly ICustomerRepository customerRepository;
-        private readonly IUserRepository userRepository;
-        private readonly IAddressRepository addressRepository;
+        #region class variables
+        private readonly ILogger<CustomerController> _logger;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
+        #endregion
 
+        #region constructor
         public CustomerController(
-            ICustomerRepository _customerRepository,
-            IUserRepository _userRepository,
-            IAddressRepository _addressRepository,
-            ILogger<CustomerController> _logger)
+            ICustomerRepository customerRepository,
+            IUserRepository userRepository,
+            IAddressRepository addressRepository,
+            ILogger<CustomerController> logger)
         {
-            logger = _logger;
-            customerRepository = _customerRepository;
-            userRepository = _userRepository;
-            addressRepository = _addressRepository;
+            _logger = logger;
+            _customerRepository = customerRepository;
+            _userRepository = userRepository;
+            _addressRepository = addressRepository;
         }
+        #endregion
 
+        #region methods
 
         [HttpGet("{id}")]
         public IActionResult GetCustomer(int id)
         {
             try
             {
-                var response = customerRepository.GetCustomer(id);
+                var response = _customerRepository.GetCustomer(id);
                 if (response == null)
                 {
                     return NotFound("Customer does not exist");
@@ -45,7 +47,7 @@ namespace ShoppingCart.Controllers
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in CustomerController: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -53,25 +55,26 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public IActionResult AddCustomer(CustomerRegObj customerRegObj)
         {
-            Customer customer = customerRegObj.Customer;
-            User user = customerRegObj.User;
-            Address address = customerRegObj.Address;
-
-            if (customer == null && user == null)
-            {
-                return BadRequest("Request is null.");
-            }
-
             try
             {
-                customerRepository.AddCustomer(customer);
-                userRepository.AddUser(user);
-                addressRepository.AddAddress(address);
-                return Ok("Customer created.");
+                if (customerRegObj != null)
+                {
+                    Customer customer = customerRegObj.Customer;
+                    User user = customerRegObj.User;
+                    Address address = customerRegObj.Address;
+                    _customerRepository.AddCustomer(customer);
+                    _userRepository.AddUser(user);
+                    _addressRepository.AddAddress(address);
+                    return Ok("Customer created.");
+                }
+                else
+                {
+                    return BadRequest("Request is null.");
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                logger.LogError("Error in CustomerController: " + e.ToString());
+                _logger.LogError("Error in CustomerController: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -81,23 +84,23 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            if (customer == null)
-            {
-                return BadRequest("Customer is null.");
-            }
+                if (customer == null)
+                {
+                    return BadRequest("Customer is null.");
+                }
 
-            Customer customerToUpdate = customerRepository.GetCustomer(id);
-            if (customerToUpdate == null)
-            {
-                return NotFound("The customer not found!");
-            }
+                Customer customerToUpdate = _customerRepository.GetCustomer(id);
+                if (customerToUpdate == null)
+                {
+                    return NotFound("The customer not found!");
+                }
 
-            customerRepository.ModifyCustomer(customerToUpdate, customer);
-            return NoContent();
+                _customerRepository.ModifyCustomer(customerToUpdate, customer);
+                return NoContent();
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in CustomerController: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
@@ -105,23 +108,25 @@ namespace ShoppingCart.Controllers
         [HttpDelete("{id}")]
         public IActionResult RemoveCustomer(int id)
         {
-            Customer customerToDelete = customerRepository.GetCustomer(id);
+            Customer customerToDelete = _customerRepository.GetCustomer(id);
             try
             {
                 if (customerToDelete == null)
                 {
                     return NotFound("The customer not found!");
                 }
-                customerRepository.RemoveCustomer(customerToDelete);
-                logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+                _customerRepository.RemoveCustomer(customerToDelete);
+                _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
                 return NoContent();
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in CustomerController: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
+
+        #endregion
     }
 
     public class CustomerRegObj

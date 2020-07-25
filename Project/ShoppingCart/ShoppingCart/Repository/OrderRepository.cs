@@ -18,18 +18,33 @@ namespace ShoppingCart.Repository
             shoppingCartDbContext = _shoppingCartDbContext;
         }
 
-        public IEnumerable<Order> GetAllOrders()
+
+
+        public IEnumerable<Order> GetAllOrdersByCustomer(string userName)
         {
             try
             {
-            return shoppingCartDbContext.Orders.ToList();
+                var customerId = shoppingCartDbContext.Customers.Where(c => c.UserName == userName).FirstOrDefault().Id;
+                return shoppingCartDbContext.Orders.Where(o => o.CustomerId == customerId).ToList();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
         }
 
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            try
+            {
+                return shoppingCartDbContext.Orders.ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public Order GetOrder(int id)
         {
             try
@@ -41,7 +56,6 @@ namespace ShoppingCart.Repository
                 throw e;
             }
         }
-
         public void AddOrder(Order order)
         {
             try

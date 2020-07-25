@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Models;
 using ShoppingCart.Contracts;
 using ShoppingCart.Utility;
 using System;
-using ShoppingCart.Repository;
+using System.Net;
 
 namespace ShoppingCart.Controllers
 {
@@ -14,46 +13,54 @@ namespace ShoppingCart.Controllers
     [Route("authentication")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ILogger<AuthenticationController> logger;
-        private readonly IUserRepository userRepository;
-        private readonly ICustomerRepository customerRepository;
-        private readonly IConfiguration configuration;
+        #region class variables
+        private readonly ILogger<AuthenticationController> _logger;
+        private readonly IUserRepository _userRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IConfiguration _configuration;
+        #endregion
 
+        #region constructor
         public AuthenticationController(
-            IUserRepository _userRepository, 
-            ILogger<AuthenticationController> _logger,
-            ICustomerRepository _customerRepository,
-            IConfiguration _configuration)
+            IUserRepository userRepository,
+            ILogger<AuthenticationController> logger,
+            ICustomerRepository customerRepository,
+            IConfiguration configuration)
         {
-            logger = _logger;
-            userRepository = _userRepository;
-            configuration = _configuration;
-            customerRepository = _customerRepository;
+            _logger = logger;
+            _userRepository = userRepository;
+            _configuration = configuration;
+            _customerRepository = customerRepository;
         }
+        #endregion
+
+        #region methods
 
         [HttpPost]
         public IActionResult Login([FromBody] User user)
         {
             try
             {
-            var verifyUser = userRepository.VerifyUser(user);
+                var verifyUser = _userRepository.VerifyUser(user);
 
-            if (verifyUser != null)
-            {
-                Token token = new Token(configuration);
-                var tokenString = token.GenerateJSONWebToken(verifyUser);
-                int userId = customerRepository.GetCustomerId(verifyUser.UserName);
-                logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                return Ok(new { customerId = userId, token = tokenString });
-            }
+                if (verifyUser != null)
+                {
+                    Token token = new Token(_configuration);
+                    var tokenString = token.GenerateJSONWebToken(verifyUser);
+                    int userId = _customerRepository.GetCustomerId(verifyUser.UserName);
+                    _logger.LogInformation($"User {verifyUser.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
+                    return Ok(new { customerId = userId, token = tokenString });
+                }
 
-            return BadRequest("Wrong username or password!");
+                return Ok();
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("Error in authentication controller: " + e.ToString());
                 return Problem(e.ToString());
             }
         }
+
+        #endregion
     }
 }

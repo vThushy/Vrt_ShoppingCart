@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListCategoryComponent } from './Components/list-category/list-category.component';
 import { FilterComponent } from './filter/filter.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderComponent } from './loader/loader.component';
 //import {MatProgressSpinnerModule} from '@angular/material';
 // import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
@@ -37,7 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SignupComponent,
     LoginComponent,
     ListCategoryComponent,
-    FilterComponent
+    FilterComponent,
+    LoaderComponent
     // MatProgressSpinnerModule
   ],
   imports: [

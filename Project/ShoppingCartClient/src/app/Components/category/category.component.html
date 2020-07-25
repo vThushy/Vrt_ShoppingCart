@@ -25,31 +25,31 @@
 
     <div class="row">
         <div class="col zoom">
-            <a [href]='categories[2][1]'>
+            <a [routerLink]="[urlCategory, categories[2][1]]">
                 <img class="card-img-top" [src]='categories[2][2]' alt="Card image">
                 <div class="card-img-overlay align-center">
                     <p class="card-text">NEW COLLECTION</p>
-                    <h4 class="card-title">categories[2][0]</h4>
+                    <h4 class="card-title">{{ categories[2][0] }}</h4>
                     DISCOVER NOW
                 </div>
             </a>
         </div>
         <div class="col zoom">
-            <a [href]='categories[3][1]'>
+            <a [routerLink]="[urlCategory, categories[3][1]]">
                 <img class="card-img-top" [src]='categories[3][2]' alt="Card image">
                 <div class="card-img-overlay align-center">
                     <p class="card-text">NEW COLLECTION</p>
-                    <h4 class="card-title">categories[3][0]</h4>
+                    <h4 class="card-title">{{ categories[3][0] }}</h4>
                     DISCOVER NOW
                 </div>
             </a>
         </div>
         <div class="col zoom">
-            <a [href]='categories[4][1]'>
+            <a [routerLink]="[urlCategory, categories[4][1]]">
                 <img class="card-img-top" [src]='categories[4][2]' alt="Card image">
                 <div class="card-img-overlay align-center">
                     <p class="card-text">NEW COLLECTION</p>
-                    <h4 class="card-title">categories[4][0]</h4>
+                    <h4 class="card-title">{{ categories[4][0] }}</h4>
                     DISCOVER NOW
                 </div>
             </a>

@@ -4,6 +4,7 @@ import { User } from 'src/app/Models/User';
 import { UsersService } from 'src/app/Services/users.service';
 import { Router } from '@angular/router';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
+import { imagePath } from 'src/app/Util/paths';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +13,12 @@ import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service'
 })
 
 export class LoginComponent implements OnInit {
+  errorMsg: string;
+  logoImagePath = imagePath.home_logo;
   loginForm: FormGroup;
   user = new User();
   loading = false;
+  wrongCredentials = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,23 +32,33 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.loading = true;
+    this.errorMsg= '';
     this.user.UserName = this.loginDetails.userName.value;
     this.user.Password = this.loginDetails.password.value;
 
-    this.userService.verifyUser(this.user).subscribe(
-      result => {
-        localStorage.setItem('auth_token', result.token);
-        localStorage.setItem('auth_user', this.user.UserName);
-        this.userService.setLoginStatus(true);
-        this.loading = false;
-        this.router.navigate(['']);
-      },
-      error => {
-        this.loading = false;
-        this.exceptionHandlerService.handleError(error);
-      }
-    );
+    if (this.user.UserName == '' || this.user.Password == '') {
+      this.errorMsg = "Please enter user name and password!";
+    } else {
+      this.loading = true;
+      this.userService.verifyUser(this.user).subscribe(
+        result => {
+          if (result != null) {
+            localStorage.setItem('auth_token', result.token);
+            localStorage.setItem('auth_user', this.user.UserName);
+            this.userService.setLoginStatus(true);
+            this.loading = false;
+            this.router.navigate(['']);
+          } else {
+            this.loading = false;
+            this.errorMsg = "Wrong username or password!"
+          }
+        },
+        error => {
+          this.loading = false;
+          this.exceptionHandlerService.handleError(error);
+        }
+      );
+    }
   }
 
   createForm() {
@@ -54,6 +68,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get loginDetails() { return this.loginForm.controls }
+  get loginDetails() {
+    return this.loginForm.controls
+  }
 
 }

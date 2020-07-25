@@ -18,3 +18,20 @@ h1:before {
     margin-left: -50%;
     text-align: right;
 }
+
+.tes li{
+    display: inline-flex;
+    margin: 0.4rem;
+}
+
+.tes{
+    padding:0;
+}
+
+.tes > div{
+    text-align: center;
+}
+
+a{
+    margin-left: 0.2rem;
+}

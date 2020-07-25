@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/Services/users.service';
+import { imagePath } from 'src/app/Util/paths';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,11 @@ import { UsersService } from 'src/app/Services/users.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  logoImagePath: string = imagePath.home_logo;
+  storeLocationImagePath: string = imagePath.home_store_location;
+  callImagePath: string = imagePath.home_call;
+
+
   accountStatus: string = "My Account";
   loggedIn = false;
   cartTotal = 0;

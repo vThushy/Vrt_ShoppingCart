@@ -3,4 +3,6 @@ export const loginAPI = baseAPI + '/authentication';
 export const userAPI = baseAPI + '/user';
 export const customerAPI = baseAPI + '/customer';
 export const produtAPI = baseAPI + '/product';
+export const categoryAPI = baseAPI + "/category";
+export const newArrivalAPI = baseAPI + produtAPI + '/newArrival';
 

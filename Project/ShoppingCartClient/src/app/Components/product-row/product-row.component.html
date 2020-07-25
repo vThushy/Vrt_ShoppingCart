@@ -1,21 +1,23 @@
 <div class="container">
     <h1>{{ viewTitle }}</h1>
     <br>
-    <!-- list of products -->
-
-    <ul>
-        <li ng-repeat="item in items">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="..." alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Add to cart</a>
-                </div>
+    
+    <ul class="tes">
+        <li class="card" style="width: 13rem;" *ngFor="let product of products">
+            <img class="card-img-top" [src]="imageFolderPath + product.image + '.jpg'" alt="image not uploaded!">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <a class="btn btn-primary" (click)="buynow(product.id)">
+                    <img [src]="buyNowImagePath" alt="Buy now" >
+                </a>
+                <a class="btn btn-primary" (click)="addToCart(product.id)">
+                    <img [src]="addToCartImagePath" alt="Add To Cart" >
+                </a>
+                <a class="btn btn-primary" (click)="favourite(product.id)">
+                    <img [src]="favouriteImagePath" alt="Favourite" >
+                </a>
             </div>
-
         </li>
     </ul>
 </div>

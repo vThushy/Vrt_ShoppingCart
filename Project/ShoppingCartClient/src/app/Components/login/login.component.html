@@ -1,42 +1,53 @@
-<div class="container align-space">
-    <div>
-        <!-- <mat-spinner></mat-spinner> -->
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-    </div>
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
+<div class="container top-space">
+    <app-loader *ngIf="loading"></app-loader>
 
-                    <header class="card-header">
-                        <a routerLink="/signup" class="float-right btn btn-outline-primary mt-1">Sign up</a>
-                        <h4 class="card-title mt-2">Login</h4>
-                    </header>
+    <div class="signup">
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <div class="row justify-content-center">
+                <div class="col-md-6 logo">
+                    <a routerLink="/">
+                        <img [src]="logoImagePath" width="40%" />
+                    </a>
+                </div>
 
-                    <article class="card-body">
-                        <div class="form-group">
-                            <label>User name</label>
-                            <input type="text" class="form-control" formControlName="userName" placeholder="">
+                <div class="col-md-6">
+                    <div class="card">
+
+                        <header class="card-header">
+                            <a routerLink="/signup" class="float-right btn btn-outline-primary mt-1">Sign up</a>
+                            <h4 class="card-title mt-2">Login</h4>
+                        </header>
+
+                        <article class="card-body">
+                            <div class="form-group">
+                                <label>User name</label>
+                                <input type="text" class="form-control" formControlName="userName" placeholder="">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" type="password" formControlName="password">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                            </div>
+
+                            <div *ngIf="errorMsg" class="form-group alert alert-warning alert-dismissible fade show">
+                                <strong>{{ errorMsg }}</strong>
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+
+                        </article>
+                        <div class="border-top card-body text-center">Havent an account? <a routerLink="/signup">Sign
+                                up</a>
                         </div>
-
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input class="form-control" type="password" formControlName="password">
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Login </button>
-                        </div>
-
-                    </article>
-                    <div class="border-top card-body text-center">Havent an account? <a routerLink="/signup">Sign up</a>
                     </div>
                 </div>
+
             </div>
 
-        </div>
+        </form>
+    </div>
 
-    </form>
 </div>

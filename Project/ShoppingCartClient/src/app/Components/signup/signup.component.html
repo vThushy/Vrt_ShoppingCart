@@ -1,6 +1,13 @@
 <div class="container align-space">
   <form [formGroup]="signUpForm" (ngSubmit)="submit()">
     <div class="row justify-content-center">
+
+      <div class="col-md-6 logo">
+        <a routerLink="/">
+          <img [src]="logoImagePath" width="40%" />
+        </a>
+      </div>
+
       <div class="col-md-6">
         <div class="card">
 
@@ -30,8 +37,11 @@
             <div class="form-group">
               <label>Email address</label>
               <input type="email" class="form-control" formControlName="email" placeholder="">
-              <input type="checkbox" class="form-check-input">
-              <small class="form-text text-muted">Share latest updates and promotion with your email.</small>
+              <span>
+                <input type="checkbox" class="form-check-input">
+                <small class="form-text text-muted">Share latest updates and promotion with your email.</small>
+
+              </span>
             </div>
 
             <div class="form-row">
@@ -105,8 +115,6 @@
           <div class="border-top card-body text-center">Have an account? <a routerLink="/login">Log In</a></div>
         </div>
       </div>
-
     </div>
-
   </form>
 </div>

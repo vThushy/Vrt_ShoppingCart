@@ -2,6 +2,10 @@
     margin:0.5em;
 }
 
+.col{
+    height: 15rem;
+}
+
 .align-center{
     text-align: center;
     margin-top: 10%;
@@ -27,5 +31,6 @@ p{
 .col img {
     height: 100%;
     width: 100%;
+    object-fit: cover;
  }
 

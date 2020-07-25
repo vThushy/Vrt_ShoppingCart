@@ -4,5 +4,7 @@
 <app-slider></app-slider>
 <app-category [InputUrlCategory]="urlCategory" [InputCategories]='mainCategories'></app-category>
 
-<app-product-row viewTitle = "BEST SELLER" searchCriteria="BS-ALL"></app-product-row>
-<app-product-row viewTitle = "TRENDING PRODUCTS"  searchCriteria="TP-ALL"></app-product-row>
+<app-product-row viewTitle = "BEST SELLER" [productList]='newArrivalProduct'></app-product-row>
+<app-product-row viewTitle = "TRENDING PRODUCTS"  [productList]='newArrivalProduct'></app-product-row>
+
+<app-footer></app-footer>

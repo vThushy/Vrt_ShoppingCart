@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { produtAPI } from '../Util/config';
+import { produtAPI, newArrivalAPI } from '../Util/config';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,17 @@ export class ProductsService {
     private exceptionHandlerService: ExceptionHandlerService
   ) { }
 
-  
+
 
   getAllProducts(): Observable<Product[]> {
-   
-
     return this.httpClient.get<Product[]>(produtAPI)
+      .pipe(
+        catchError(this.exceptionHandlerService.handleError)
+      );
+  }
+
+  getNewArrivalProducts(category: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>('https://localhost:5001/product/newArrival/'+ category)
       .pipe(
         catchError(this.exceptionHandlerService.handleError)
       );

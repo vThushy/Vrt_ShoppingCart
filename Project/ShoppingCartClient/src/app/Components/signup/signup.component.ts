@@ -7,6 +7,7 @@ import { CustomerService } from 'src/app/Services/customer.service';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 import { AddCustomerObj } from 'src/app/Models/AddCustomerObj';
 import { Router } from '@angular/router';
+import { imagePath } from 'src/app/Util/paths';
 
 @Component({
   selector: 'app-signup',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 })
 
 export class SignupComponent implements OnInit {
+  logoImagePath = imagePath.home_logo;
   countries = [];
   signUpForm: FormGroup;
   regExEmail = "/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";

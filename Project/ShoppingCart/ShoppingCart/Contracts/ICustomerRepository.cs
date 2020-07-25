@@ -10,7 +10,6 @@ namespace ShoppingCart.Contracts
     {
         Customer GetCustomer(int id);
         void AddCustomer(Customer customer);
-
         void ModifyCustomer(Customer oldCustomer, Customer newCustomer);
         void RemoveCustomer(Customer customer);
         int GetCustomerId(string userName);
