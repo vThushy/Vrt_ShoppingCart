@@ -133,9 +133,6 @@ namespace ShoppingCart.Repository
             }
         }
 
-
-
-
         public void AddProduct(Product product)
         {
             try

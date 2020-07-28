@@ -22,7 +22,6 @@
 }
 
 .mega-dropdown-menu:before {
-
   border-bottom: 15px solid #fff;
   border-right: 17px solid transparent;
   border-left: 17px solid transparent; 
@@ -93,4 +92,8 @@
 .padding-side{
   padding-left: 2em;
   padding-right: 2em;
+}
+
+li{
+  list-style: none;
 }

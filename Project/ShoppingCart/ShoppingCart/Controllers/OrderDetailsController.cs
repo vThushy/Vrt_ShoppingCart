@@ -8,9 +8,9 @@ namespace ShoppingCart.Controllers
 {
     public class OrderDetailsController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
     }
 }

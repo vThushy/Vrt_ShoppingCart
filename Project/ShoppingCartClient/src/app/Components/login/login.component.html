@@ -21,7 +21,14 @@
                         <article class="card-body">
                             <div class="form-group">
                                 <label>User name</label>
+                                <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }"> 
                                 <input type="text" class="form-control" formControlName="userName" placeholder="">
+                            </p>
+
+                            <div *ngIf="isSubmitted && formControls.email.errors" class="help-block">
+                                <div *ngIf="formControls.email.errors.required">Email is required</div>
+                              </div>
+
                             </div>
 
                             <div class="form-group">

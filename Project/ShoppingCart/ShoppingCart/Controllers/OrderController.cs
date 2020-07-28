@@ -23,109 +23,109 @@ namespace ShoppingCart.Controllers
             _logger = logger;
         }
 
-        [HttpGet("customer/{userName}")]
-        public IActionResult GetAllOrdersByCustomer(string userName)
-        {
-            try
-            {
-                var response = _orderRepository.GetAllOrdersByCustomer(userName);
-                return Ok(response);
-            }
-            catch (SqlException e)
-            {
-                _logger.LogError(e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //[HttpGet("customer/{userName}")]
+        //public IActionResult GetAllOrdersByCustomer(string userName)
+        //{
+        //    try
+        //    {
+        //        var response = _orderRepository.GetAllOrdersByCustomer(userName);
+        //        return Ok(response);
+        //    }
+        //    catch (SqlException e)
+        //    {
+        //        _logger.LogError(e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
-        [HttpGet("{id}")]
-        public IActionResult GetOrder(int id)
-        {
-            try
-            {
-                var response = _orderRepository.GetOrder(id);
-                if (response == null)
-                {
-                    return NotFound("Order not exist");
-                }
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in Order Controller: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult GetOrder(int id)
+        //{
+        //    try
+        //    {
+        //        var response = _orderRepository.GetOrder(id);
+        //        if (response == null)
+        //        {
+        //            return NotFound("Order not exist");
+        //        }
+        //        return Ok(response);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in Order Controller: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
-        public IActionResult AddOrder([FromBody] Order order)
-        {
-            try
-            {
-                if (order == null)
-                {
-                    return BadRequest("Order is null");
-                }
-                _orderRepository.AddOrder(order);
-                return CreatedAtAction("Get", new { id = order.Id }, order);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in Product controller: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //public IActionResult AddOrder([FromBody] Order order)
+        //{
+        //    try
+        //    {
+        //        if (order == null)
+        //        {
+        //            return BadRequest("Order is null");
+        //        }
+        //        _orderRepository.AddOrder(order);
+        //        return CreatedAtAction("Get", new { id = order.Id }, order);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in Product controller: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
-        [HttpPut("{id}")]
-        public IActionResult ModifyOrder(int id, [FromBody] Order order)
-        {
-            try
-            {
-                Order orderToUpdate = _orderRepository.GetOrder(id);
-                if (orderToUpdate == null)
-                {
-                    return NotFound("The order not found!");
-                }
-                else
-                {
-                    if (order != null)
-                    {
+        //[HttpPut("{id}")]
+        //public IActionResult ModifyOrder(int id, [FromBody] Order order)
+        //{
+        //    try
+        //    {
+        //        Order orderToUpdate = _orderRepository.GetOrder(id);
+        //        if (orderToUpdate == null)
+        //        {
+        //            return NotFound("The order not found!");
+        //        }
+        //        else
+        //        {
+        //            if (order != null)
+        //            {
 
-                        _orderRepository.ModifyOrder(orderToUpdate, order);
-                        return NoContent();
-                    }
-                    else
-                    {
-                        return BadRequest("Wrong request!");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in Product controller: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //                _orderRepository.ModifyOrder(orderToUpdate, order);
+        //                return NoContent();
+        //            }
+        //            else
+        //            {
+        //                return BadRequest("Wrong request!");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in Product controller: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveOrder(int id)
-        {
-            try
-            {
-                Order orderToDelete = _orderRepository.GetOrder(id);
-                if (orderToDelete == null)
-                {
-                    return NotFound("The order not found!");
-                }
-                _orderRepository.RemoveOrder(orderToDelete);
-                _logger.LogInformation($"Order {orderToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in Product controller: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult RemoveOrder(int id)
+        //{
+        //    try
+        //    {
+        //        Order orderToDelete = _orderRepository.GetOrder(id);
+        //        if (orderToDelete == null)
+        //        {
+        //            return NotFound("The order not found!");
+        //        }
+        //        _orderRepository.RemoveOrder(orderToDelete);
+        //        _logger.LogInformation($"Order {orderToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+        //        return NoContent();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in Product controller: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
     }
 }

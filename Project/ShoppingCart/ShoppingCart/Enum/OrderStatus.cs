@@ -11,23 +11,19 @@ namespace ShoppingCart.Enum
     public enum OrderStatus
     {
         /// <summary>
-        /// 
+        /// Order 
         /// </summary>
         Active = 0,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Process = 1,
         
         /// <summary>
-        /// 
+        /// order after payment
         /// </summary>
-        Post = 2,
+        Released = 1,
 
         /// <summary>
         /// 
         /// </summary>
-        Delivered = 3
+        Completed = 2
     }
 }
+

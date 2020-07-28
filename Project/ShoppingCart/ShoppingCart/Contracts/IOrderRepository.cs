@@ -9,12 +9,12 @@ namespace ShoppingCart.Contracts
 {
     public interface IOrderRepository
     {
-        IEnumerable<Order> GetAllOrders();
-        Order GetOrder(int id);
-        IEnumerable<Order> GetAllOrdersByCustomer(string userName);
+        //IEnumerable<Order> GetAllOrders();
+        //Order GetOrder(int id);
+        //List<OrderList> GetAllOrdersByCustomer(string userName);
 
-        void AddOrder(Order order);
-        void ModifyOrder(Order oldOrder, Order newOrder);
-        void RemoveOrder(Order order);
+        //void AddOrder(Order order);
+        //void ModifyOrder(Order oldOrder, Order newOrder);
+        //void RemoveOrder(Order order);
     }
 }

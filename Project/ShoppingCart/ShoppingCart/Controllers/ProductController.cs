@@ -7,7 +7,6 @@ using System;
 
 namespace ShoppingCart.Controllers
 {
-
     [ApiController]
     [Route("product")]
     public class ProductController : ControllerBase
@@ -113,8 +112,6 @@ namespace ShoppingCart.Controllers
                 return Problem(e.ToString());
             }
         }
-
-
 
         [HttpPost]
         public IActionResult AddProduct([FromBody] Product product)
