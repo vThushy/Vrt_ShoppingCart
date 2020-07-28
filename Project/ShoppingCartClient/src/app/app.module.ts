@@ -21,7 +21,7 @@ import { FilterComponent } from './Components/filter/filter.component';
 import { LoaderComponent } from './Components/loader/loader.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { PlaceOrderComponent } from './Components/place-order/place-order.component';
-
+import { PaymentComponent } from './Components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,8 @@ import { PlaceOrderComponent } from './Components/place-order/place-order.compon
     FilterComponent,
     LoaderComponent,
     CartComponent,
-    PlaceOrderComponent
+    PlaceOrderComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,7 @@ import { PlaceOrderComponent } from './Components/place-order/place-order.compon
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule
+     
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]

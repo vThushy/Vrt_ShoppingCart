@@ -1,0 +1,22 @@
+.container{
+    padding-top:2rem;
+    padding-bottom: 2rem;
+}
+
+.changer{
+    width: 2rem;
+}
+
+.quantity{
+    width: 4rem;
+    margin: 0 0.4rem 0 0.4rem;
+}
+
+.btn-manage a{
+    margin-left: 2rem;
+}
+
+.address{
+    font-size: 1rem;
+}
+

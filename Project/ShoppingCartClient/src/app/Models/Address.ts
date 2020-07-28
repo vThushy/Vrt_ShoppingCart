@@ -1,5 +1,5 @@
 export class Address {
-    CustomerId: number;
+    CustomerId: string;
     AddressType: string;
     AddressLine: string;
     ZipCode: string;

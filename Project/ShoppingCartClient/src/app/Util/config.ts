@@ -5,4 +5,5 @@ export const customerAPI = baseAPI + '/customer';
 export const produtAPI = baseAPI + '/product';
 export const categoryAPI = baseAPI + "/category";
 export const newArrivalAPI = baseAPI + produtAPI + '/newArrival';
+export const addressAPI = baseAPI + "/address";
 
