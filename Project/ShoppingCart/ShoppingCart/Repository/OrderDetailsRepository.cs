@@ -12,21 +12,21 @@ namespace ShoppingCart.Repository
     {
         private readonly ShoppingCartDbContext _shoppingCartDbContext;
 
-        //public OrderDetailsRepository(ShoppingCartDbContext shoppingCartDbContext)
-        //{
-        //    _shoppingCartDbContext = shoppingCartDbContext;
-        //}
-        //public List<OrderDetail> GetOrderDetails(int OrderNo)
-        //{
-        //    try
-        //    {
-        //        return _shoppingCartDbContext.OrderDetails.Where(o => o.OrderId == OrderNo).ToList();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw e;
-        //    }
-        //}
+        public OrderDetailsRepository(ShoppingCartDbContext shoppingCartDbContext)
+        {
+            _shoppingCartDbContext = shoppingCartDbContext;
+        }
+        public List<OrderDetail> GetOrderDetails(int OrderNo)
+        {
+            try
+            {
+                return _shoppingCartDbContext.OrderDetails.Where(o => o.OrderId == OrderNo).ToList();
+            }
+            catch 
+            {
+                throw;
+            }
+        }
 
     }
 }

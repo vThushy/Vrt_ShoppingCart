@@ -16,7 +16,6 @@ import { UsersService } from './Services/users.service';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListCategoryComponent } from './Components/list-category/list-category.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './Components/footer/footer.component';
 import { FilterComponent } from './Components/filter/filter.component';
 import { LoaderComponent } from './Components/loader/loader.component';
@@ -49,8 +48,7 @@ import { PlaceOrderComponent } from './Components/place-order/place-order.compon
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
-    NgbModule
+    HttpClientModule
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]

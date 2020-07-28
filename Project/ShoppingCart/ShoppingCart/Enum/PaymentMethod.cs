@@ -13,7 +13,7 @@ namespace ShoppingCart.Enum
         /// <summary>
         /// Pay By Cash
         /// </summary>
-        Cash = 0,
+        PayOnDelivery = 0,
 
         /// <summary>
         /// Pay By Shop Credit
@@ -21,9 +21,9 @@ namespace ShoppingCart.Enum
         ShopCredit = 1,
 
         /// <summary>
-        /// Pay By Cart
+        /// Pay By Card
         /// </summary>
-        Cart = 2
+        Card = 2
 
     }
 }
