@@ -25,9 +25,12 @@ export class CustomerService {
   }
 
   public addAddress(address: Address){
-    const header = { 'content-type': 'application/json' };
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('auth_token')
+    };
     var body = JSON.stringify(address);
-    return this.httpClient.post<any>(addressAPI, body, { 'headers': header })
+    return this.httpClient.post<any>(addressAPI, body, { 'headers': headers })
       .pipe(catchError(this.exceptionHandlerService.handleError));
   }
 

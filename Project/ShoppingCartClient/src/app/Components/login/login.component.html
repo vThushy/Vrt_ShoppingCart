@@ -26,7 +26,7 @@
                                 </p>
 
                                 <div *ngIf="isSubmitted && loginDetails.userName.errors" class="help-block">
-                                    <div *ngIf="loginDetails.email.errors.required">User name is required</div>
+                                    <div *ngIf="loginDetails.userName.errors.required" class="alert alert-danger alert-dismissible fade show">User name is required</div>
                                 </div>
 
                             </div>
@@ -38,7 +38,7 @@
                                 </p>
 
                                 <div *ngIf="isSubmitted && loginDetails.password.errors" class="help-block">
-                                    <div *ngIf="loginDetails.password.errors.required">Password is required</div>
+                                    <div *ngIf="loginDetails.password.errors.required" class="alert alert-danger alert-dismissible fade show">Password is required</div>
                                 </div>
                             </div>
 

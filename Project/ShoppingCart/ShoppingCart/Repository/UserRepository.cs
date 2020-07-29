@@ -8,71 +8,77 @@ using System.Linq;
 
 namespace ShoppingCart.Repository
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
-        private readonly ShoppingCartDbContext shoppingCartDbContext;
-        public UserRepository(ShoppingCartDbContext _shoppingCartDbContext)
+        private readonly ShoppingCartDbContext _shoppingCartDbContext;
+
+
+        public UserRepository(ShoppingCartDbContext shoppingCartDbContext)
         {
-            shoppingCartDbContext = _shoppingCartDbContext;
+            _shoppingCartDbContext = shoppingCartDbContext;
         }
+
+
 
         public void AddUser(User user)
         {
             try
             {
-            shoppingCartDbContext.Users.Add(user);
-            shoppingCartDbContext.SaveChanges();
+                _shoppingCartDbContext.Users.Add(user);
+                _shoppingCartDbContext.SaveChanges();
             }
-          catch(Exception e)
+            catch 
             {
-                throw e;
+                throw;
             }
         }
-
+        
         public User GetUser(string userName)
         {
             try
             {
-            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == userName));
-            if (foundUser == null)
-            {
-                return null;
+                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == userName));
+                if (foundUser == null)
+                {
+                    return null;
+                }
+                return foundUser;
             }
-            return foundUser;
-            }
-          catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+        
         public User VerifyUser(User user)
         {
             try
             {
-            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
-            if (foundUser == null)
-            {
-                return null;
+                user.Password = Hashing.ConvertToHash(user.Password);
+                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
+                if (foundUser == null)
+                {
+                    return null;
+                }
+                return foundUser;
             }
-            return foundUser;
-            }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
-
+        
         public void ChangePassword(User user)
         {
             try
             {
-            var foundUser = shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName));
-            foundUser.Password = Hashing.ConvertToHash(user.Password);
-            shoppingCartDbContext.SaveChanges();
+                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName));
+                foundUser.Password = Hashing.ConvertToHash(user.Password);
+                _shoppingCartDbContext.SaveChanges();
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -80,12 +86,12 @@ namespace ShoppingCart.Repository
         {
             try
             {
-            shoppingCartDbContext.Remove(user);
-            shoppingCartDbContext.SaveChanges();
+                _shoppingCartDbContext.Remove(user);
+                _shoppingCartDbContext.SaveChanges();
             }
-           catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 

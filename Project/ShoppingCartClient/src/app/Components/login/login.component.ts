@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   user = new User();
   loading = false;
   wrongCredentials = false;
-  isSubmitted  =  false;
+  isSubmitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,44 +34,39 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.isSubmitted = true;
-    this.errorMsg= '';
+    this.errorMsg = '';
     this.user.UserName = this.loginDetails.userName.value;
     this.user.Password = this.loginDetails.password.value;
-    
-    if(this.loginForm.invalid){
+
+    if (this.loginForm.invalid) {
       return;
     }
-
-    // if (this.user.UserName == '' || this.user.Password == '') {
-    //   this.errorMsg = "Please enter user name and password!";
-    // } else {
-    //   this.loading = true;
-    //   this.userService.verifyUser(this.user).subscribe(
-    //     result => {
-    //       if (result != null) {
-    //         localStorage.setItem('auth_token', result.token);
-    //         localStorage.setItem('auth_user', this.user.UserName);
-    //         this.userService.setLoginStatus(true);
-    //         this.loading = false;
-    //         this.router.navigate(['']);
-    //       } else {
-    //         this.loading = false;
-    //         this.errorMsg = "Wrong username or password!"
-    //       }
-    //     },
-    //     error => {
-    //       this.loading = false;
-    //       this.exceptionHandlerService.handleError(error);
-    //     }
-    //   );
-    // }
+    this.loading = true;
+    this.userService.verifyUser(this.user).subscribe(
+      result => {
+        if (result != null) {
+          localStorage.setItem('auth_token', result.token);
+          localStorage.setItem('auth_user', this.user.UserName);
+          this.userService.setLoginStatus(true);
+          this.loading = false;
+          this.router.navigate(['']);
+        } else {
+          this.loading = false;
+          this.errorMsg = "Wrong username or password!"
+        }
+      },
+      error => {
+        this.loading = false;
+        this.exceptionHandlerService.handleError(error);
+      }
+    );
   }
 
   createForm() {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(5)]]
-    });    
+    });
   }
 
   get loginDetails() {

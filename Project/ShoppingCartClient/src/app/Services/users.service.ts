@@ -28,7 +28,6 @@ export class UsersService {
   }
 
   public verifyUser(user: User) {
-    user.Password = this.EncryptPassword(user.Password);
     const header = { 'content-type': 'application/json' };
     return this.httpClient.post<any>(loginAPI, JSON.stringify(user), { 'headers': header })
       .pipe(catchError(this.exceptionHandlerService.handleError));
@@ -60,9 +59,4 @@ export class UsersService {
     return this.loggedIn;
   }
 
-  EncryptPassword(password: string){
-   // return shajs('sha256').update({password}).digest('hex')
-
-    return '4d7cc50ef7ead5edb9903a94eeb0fb4381b82a89ea6872bf28ae287ae751ae8c';
-  }
 }
