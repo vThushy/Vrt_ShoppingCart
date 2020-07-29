@@ -56,11 +56,11 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public IEnumerable<Product> GetNewArrivalProducts(string category)
+        public List<Product> GetNewArrivalProducts(string category)
         {
             try
             {
-                if(category == "all")
+                if (category == "all")
                 {
                     return _shoppingCartDbContext.Products.OrderByDescending(p => p.Id).Take(5).ToList();
                 }
@@ -76,22 +76,22 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public ProductList GetProductsBySearch(string searchCategory, int pageIndex)
+        public ProductList GetProductsBySearch(string searchKey, int pageIndex)
         {
             try
             {
-                if (!string.IsNullOrEmpty(searchCategory))
+                if (!string.IsNullOrEmpty(searchKey))
                 {
                     int skip = (pageIndex - 1) * _productsForPage;
 
-                    int[] categoryIds = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(searchCategory) || c.Description.Contains(searchCategory)
-                    || c.Keyword.Contains(searchCategory)).Select(c => c.Id).ToArray();
+                    int[] categoryIds = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(searchKey) || c.Description.Contains(searchKey)
+                    || c.Keyword.Contains(searchKey)).Select(c => c.Id).ToArray();
 
-                    int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchCategory) || p.Description.Contains(searchCategory))
+                    int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchKey) || p.Description.Contains(searchKey))
                         .Union(_shoppingCartDbContext.Products.Where(p => categoryIds.Contains(p.CategoryId))).Count();
 
 
-                    List<Product> result = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchCategory) || p.Description.Contains(searchCategory))
+                    List<Product> result = _shoppingCartDbContext.Products.Where(p => p.Name.Contains(searchKey) || p.Description.Contains(searchKey))
                         .Union(_shoppingCartDbContext.Products.Where(p => categoryIds.Contains(p.CategoryId))).Skip(skip).Take(_productsForPage).ToList();
 
                     return new ProductList
@@ -100,11 +100,7 @@ namespace ShoppingCart.Repository
                         ListOfProducts = result
                     };
                 }
-                else
-                {
-                    throw new Exception("search category or pageindex is empty!");
-                }
-              
+                return null;
             }
             catch
             {
@@ -112,20 +108,23 @@ namespace ShoppingCart.Repository
             }
         }
 
-
-
         public ProductList GetProductsByCategory(string searchCategory, int pageIndex)
         {
             try
             {
-                int skip = (pageIndex - 1) * _productsForPage;
-                int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Count();
-                var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(_productsForPage).ToList();
-                return new ProductList
+                if (searchCategory != null)
                 {
-                    NoOfProducts = noOfRecords,
-                    ListOfProducts = result
-                };
+                    int skip = (pageIndex - 1) * _productsForPage;
+                    int categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(searchCategory)).FirstOrDefault().Id;
+                    int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.CategoryId == categoryId).Count();
+                    var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(_productsForPage).ToList();
+                    return new ProductList
+                    {
+                        NoOfProducts = noOfRecords,
+                        ListOfProducts = result
+                    };
+                }
+                return null;
             }
             catch
             {
@@ -137,8 +136,11 @@ namespace ShoppingCart.Repository
         {
             try
             {
-                _shoppingCartDbContext.Products.Add(product);
-                _shoppingCartDbContext.SaveChanges();
+                if (product != null)
+                {
+                    _shoppingCartDbContext.Products.Add(product);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
             catch
             {
@@ -146,18 +148,19 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ModifyProduct(Product oldProduct, Product newProduct)
+        public void ModifyProduct(int productId, Product newProduct)
         {
             try
             {
-                if (oldProduct != null && newProduct != null)
+                if (productId > 0 && newProduct != null)
                 {
-                    oldProduct.CategoryId = newProduct.CategoryId;
-                    oldProduct.Name = newProduct.Name;
-                    oldProduct.Description = newProduct.Description;
-                    oldProduct.Discount = newProduct.Discount;
-                    oldProduct.Price = newProduct.Price;
-                    oldProduct.Image = newProduct.Image;
+                    Product product = _shoppingCartDbContext.Products.Where(p => p.Id == productId).FirstOrDefault();
+                    product.CategoryId = newProduct.CategoryId;
+                    product.Name = newProduct.Name;
+                    product.Description = newProduct.Description;
+                    product.Discount = newProduct.Discount;
+                    product.Price = newProduct.Price;
+                    product.Image = newProduct.Image;
 
                     _shoppingCartDbContext.SaveChanges();
                 }
@@ -168,12 +171,16 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveProduct(Product product)
+        public void RemoveProduct(int productId)
         {
             try
             {
-                _shoppingCartDbContext.Remove(product);
-                _shoppingCartDbContext.SaveChanges();
+                if (productId > 0)
+                {
+                    Product product = _shoppingCartDbContext.Products.Where(p => p.Id == productId).FirstOrDefault();
+                    _shoppingCartDbContext.Products.Remove(product);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
             catch
             {

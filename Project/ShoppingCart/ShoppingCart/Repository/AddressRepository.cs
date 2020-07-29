@@ -1,46 +1,56 @@
 ﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Repository
 {
     public class AddressRepository : IAddressRepository
     {
-        private readonly ShoppingCartDbContext shoppingCartDbContext;
+        #region class variables
+        private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        #endregion
 
-        public AddressRepository(ShoppingCartDbContext _shoppingCartDbContext)
+        #region constructor
+        public AddressRepository(ShoppingCartDbContext shoppingCartDbContext)
         {
-            shoppingCartDbContext = _shoppingCartDbContext;
+            _shoppingCartDbContext = shoppingCartDbContext;
         }
+        #endregion
 
+        #region methods
         public void AddAddress(Address address)
         {
             try
             {
-                shoppingCartDbContext.Addresses.Add(address);
-                shoppingCartDbContext.SaveChanges();
+                if (address != null)
+                {
+                    _shoppingCartDbContext.Addresses.Add(address);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
-        public void RemoveAddress(Address address)
+        public void RemoveAddress(int addressId)
         {
             try
             {
-                shoppingCartDbContext.Addresses.Remove(address);
-                shoppingCartDbContext.SaveChanges();
+                if (addressId > 0)
+                {
+                    Address address = _shoppingCartDbContext.Addresses.Where(a => a.Id == addressId).FirstOrDefault();
+                    _shoppingCartDbContext.Addresses.Remove(address);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+        #endregion
     }
 }

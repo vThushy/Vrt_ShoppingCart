@@ -1,8 +1,5 @@
 ﻿using ShoppingCart.Contexts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 
@@ -10,71 +7,88 @@ namespace ShoppingCart.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly ShoppingCartDbContext shoppingCartDbContext;
+        #region class variables
+        private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        #endregion
 
-        public CustomerRepository(ShoppingCartDbContext _shoppingCartDbContext)
+        #region constructor
+        public CustomerRepository(ShoppingCartDbContext shoppingCartDbContext)
         {
-            shoppingCartDbContext = _shoppingCartDbContext;
+            _shoppingCartDbContext = shoppingCartDbContext;
         }
+        #endregion
 
-        public int GetCustomerId(string userName)
-        {
-            var result = shoppingCartDbContext.Customers.Where(c => c.UserName == userName).Select(c => new Customer { Id = c.Id }).SingleOrDefault();
-            return result.Id;
-        }
-        public Customer GetCustomer(int id)
+        #region methods
+
+        public Customer GetCustomer(string userName)
         {
             try
             {
-                return shoppingCartDbContext.Customers.FirstOrDefault(c => c.Id == id);
+                return _shoppingCartDbContext.Customers.FirstOrDefault(c => c.UserName == userName);
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+
         public void AddCustomer(Customer customer)
         {
             try
             {
-                shoppingCartDbContext.Customers.Add(customer);
-                shoppingCartDbContext.SaveChanges();
+                if (customer != null)
+                {
+                    _shoppingCartDbContext.Customers.Add(customer);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
-            }
-        }
-        public void ModifyCustomer(Customer oldCustomer, Customer newCustomer)
-        {
-            try
-            {
-            oldCustomer.FirstName = newCustomer.FirstName;
-            oldCustomer.LastName = newCustomer.LastName;
-            oldCustomer.Gender = newCustomer.Gender;
-            oldCustomer.DateOfBirth = newCustomer.DateOfBirth;
-            oldCustomer.Email = newCustomer.Email;
-            oldCustomer.Phone = newCustomer.Phone;
-
-            shoppingCartDbContext.SaveChanges();
-            }
-            catch(Exception e)
-            {
-                throw e;
+                throw;
             }
         }
 
-        public void RemoveCustomer(Customer customer)
+        public void ModifyCustomer(string userName, Customer updateCustomer)
         {
             try
             {
-                shoppingCartDbContext.Customers.Remove(customer);
-                shoppingCartDbContext.SaveChanges();
+                if (userName != null && updateCustomer != null)
+                {
+                    Customer customer = _shoppingCartDbContext.Customers.Where(c => c.UserName == userName).FirstOrDefault();
+                    customer.FirstName = updateCustomer.FirstName;
+                    customer.LastName = updateCustomer.LastName;
+                    customer.Gender = updateCustomer.Gender;
+                    customer.DateOfBirth = updateCustomer.DateOfBirth;
+                    customer.Email = updateCustomer.Email;
+                    customer.Phone = updateCustomer.Phone;
+
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
-            catch(Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
+
+        public void RemoveCustomer(string userName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    Customer customer = _shoppingCartDbContext.Customers.Where(c => c.UserName == userName).FirstOrDefault();
+                    _shoppingCartDbContext.Customers.Remove(customer);
+                    _shoppingCartDbContext.SaveChanges();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        #endregion
     }
 }
+

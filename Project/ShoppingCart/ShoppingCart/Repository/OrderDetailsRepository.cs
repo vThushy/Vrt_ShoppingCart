@@ -10,23 +10,15 @@ namespace ShoppingCart.Repository
 {
     public class OrderDetailsRepository : IOrderDetailsRepository
     {
+        #region class variables
         private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        #endregion
 
+        #region constructor
         public OrderDetailsRepository(ShoppingCartDbContext shoppingCartDbContext)
         {
             _shoppingCartDbContext = shoppingCartDbContext;
         }
-        public List<OrderDetail> GetOrderDetails(int OrderNo)
-        {
-            try
-            {
-                return _shoppingCartDbContext.OrderDetails.Where(o => o.OrderId == OrderNo).ToList();
-            }
-            catch 
-            {
-                throw;
-            }
-        }
-
+        #endregion
     }
 }

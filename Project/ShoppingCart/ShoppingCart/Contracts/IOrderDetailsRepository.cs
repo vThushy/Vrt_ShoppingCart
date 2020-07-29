@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart.Contracts
 {
-    public class IOrderDetailsRepository
+    public interface IOrderDetailsRepository
     {
     }
 }

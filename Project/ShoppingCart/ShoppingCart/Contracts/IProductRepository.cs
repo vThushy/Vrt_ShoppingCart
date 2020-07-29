@@ -8,13 +8,15 @@ namespace ShoppingCart.Contracts
 {
     public interface IProductRepository
     {
-        void AddProduct(Product product);
-        void ModifyProduct(Product oldProduct, Product newProduct);
-        void RemoveProduct(Product product);
-        Product GetProduct(int id);
+        #region contracts
         ProductList GetAllProducts(int pageIndex);
-        IEnumerable<Product> GetNewArrivalProducts(string category);
+        Product GetProduct(int id);
+        List<Product> GetNewArrivalProducts(string category);
+        ProductList GetProductsBySearch(string searchKey, int pageIndex);
         ProductList GetProductsByCategory(string searchCategory, int pageIndex);
-        ProductList GetProductsBySearch(string searchKeyword, int pageIndex);
+        void AddProduct(Product product);
+        void ModifyProduct(int productId, Product newProduct);
+        void RemoveProduct(int productId);
+        #endregion
     }
 }

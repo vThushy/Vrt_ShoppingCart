@@ -8,11 +8,11 @@ namespace ShoppingCart.Contracts
 {
     public interface ICustomerRepository
     {
-        Customer GetCustomer(int id);
+        #region contracts
+        Customer GetCustomer(string userName);
         void AddCustomer(Customer customer);
-        void ModifyCustomer(Customer oldCustomer, Customer newCustomer);
-        void RemoveCustomer(Customer customer);
-        int GetCustomerId(string userName);
-
+        void ModifyCustomer(string userName, Customer newCustomer);
+        void RemoveCustomer(string userName);
+        #endregion
     }
 }

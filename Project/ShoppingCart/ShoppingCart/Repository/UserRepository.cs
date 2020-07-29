@@ -10,71 +10,27 @@ namespace ShoppingCart.Repository
 {
     public class UserRepository : IUserRepository
     {
+        #region class variables
         private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        #endregion
 
-
+        #region constructor
         public UserRepository(ShoppingCartDbContext shoppingCartDbContext)
         {
             _shoppingCartDbContext = shoppingCartDbContext;
         }
+        #endregion
 
-
-
+        #region methods
         public void AddUser(User user)
         {
             try
             {
-                _shoppingCartDbContext.Users.Add(user);
-                _shoppingCartDbContext.SaveChanges();
-            }
-            catch 
-            {
-                throw;
-            }
-        }
-        
-        public User GetUser(string userName)
-        {
-            try
-            {
-                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == userName));
-                if (foundUser == null)
+                if (user != null)
                 {
-                    return null;
+                    _shoppingCartDbContext.Users.Add(user);
+                    _shoppingCartDbContext.SaveChanges();
                 }
-                return foundUser;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        
-        public User VerifyUser(User user)
-        {
-            try
-            {
-                user.Password = Hashing.ConvertToHash(user.Password);
-                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
-                if (foundUser == null)
-                {
-                    return null;
-                }
-                return foundUser;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        
-        public void ChangePassword(User user)
-        {
-            try
-            {
-                var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName));
-                foundUser.Password = Hashing.ConvertToHash(user.Password);
-                _shoppingCartDbContext.SaveChanges();
             }
             catch
             {
@@ -82,12 +38,68 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveUser(User user)
+        public User GetUser(string userName)
         {
             try
             {
-                _shoppingCartDbContext.Remove(user);
-                _shoppingCartDbContext.SaveChanges();
+                if (userName != null)
+                {
+                    User foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == userName));
+                    return foundUser;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public User VerifyUser(User user)
+        {
+            try
+            {
+                if (user != null)
+                {
+                    user.Password = Hashing.ConvertToHash(user.Password);
+                    User foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
+                    return foundUser;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void ChangePassword(User user)
+        {
+            try
+            {
+                if (user != null)
+                {
+                    var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName));
+                    foundUser.Password = Hashing.ConvertToHash(user.Password);
+                    _shoppingCartDbContext.SaveChanges();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void RemoveUser(string userName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    User user = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
+                    _shoppingCartDbContext.Remove(user);
+                    _shoppingCartDbContext.SaveChanges();
+                }
             }
             catch
             {
@@ -99,5 +111,6 @@ namespace ShoppingCart.Repository
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
