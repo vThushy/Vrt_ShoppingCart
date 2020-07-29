@@ -6,6 +6,7 @@ namespace ShoppingCart.Models
 {
     public class Stock
     {
+        #region Properties
         public int Id { get; set; }
 
         [ForeignKey("Product")]
@@ -21,5 +22,6 @@ namespace ShoppingCart.Models
         [Required]
         [Range(0, 10)]
         public int Quantity { get; set; }
+        #endregion
     }
 }

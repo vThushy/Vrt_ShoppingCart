@@ -6,6 +6,7 @@ namespace ShoppingCart.Models
 {
     public class Product
     {
+        #region Properties
         public int Id { get; set; }
 
         [ForeignKey("Category")]
@@ -29,5 +30,6 @@ namespace ShoppingCart.Models
 
         [StringLength(100)]
         public string Image { get; set; }
+        #endregion
     }
 }

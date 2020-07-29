@@ -1,11 +1,11 @@
 ﻿using ShoppingCart.Enum;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingCart.Models
 {
     public class User
     {
+        #region Properties
         [Key]
         [Required]
         [StringLength(100)]
@@ -18,5 +18,6 @@ namespace ShoppingCart.Models
         [Required]
         [EnumDataType(typeof(AccessRole), ErrorMessage = "User Role value doesn't exist within enum")]
         public AccessRole UserRole { get; set; }
+        #endregion
     }
 }

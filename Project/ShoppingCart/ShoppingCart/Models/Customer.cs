@@ -1,18 +1,13 @@
 ﻿using ShoppingCart.Enum;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
     public class Customer 
     {
-        public int Id { get; set; }
-
-        [ForeignKey("User")]
+        #region Properties
+        [Key]
         public string UserName { get; set; }
 
         [Required]
@@ -38,5 +33,6 @@ namespace ShoppingCart.Models
         [StringLength(25)]
         [EmailAddress]
         public string Email { get; set; }
+        #endregion
     }
 }

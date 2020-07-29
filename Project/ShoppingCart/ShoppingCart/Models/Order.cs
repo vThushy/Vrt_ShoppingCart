@@ -6,15 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingCart.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Order
     {
+        #region Properties
         public int Id { get; set; }
         
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public string UserName { get; set; }
 
         [ForeignKey("Address")]
         public int AddressId { get; set; }
@@ -30,5 +28,7 @@ namespace ShoppingCart.Models
         [EnumDataType(typeof(OrderStatus), ErrorMessage = "Order Status value doesn't exist within enum")]
         public OrderStatus OrderStatus { get; set;}
 
+        public List<OrderDetail> OrderDetails { get; set; }
+        #endregion
     }
 }

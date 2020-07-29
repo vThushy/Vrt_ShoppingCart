@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingCart.Models
 {
     public class Category
     {
+        #region Properties
         public int Id { get; set; }
 
         [Required]
@@ -19,6 +18,6 @@ namespace ShoppingCart.Models
         [Required]
         [StringLength(500)]
         public string Keyword { get; set; }
-
+        #endregion
     }
 }

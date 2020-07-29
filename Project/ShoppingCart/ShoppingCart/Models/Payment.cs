@@ -7,6 +7,7 @@ namespace ShoppingCart.Models
 {
     public class Payment
     {
+        #region Properties
         public int Id { get; set; }
 
         [ForeignKey("Order")]
@@ -28,5 +29,6 @@ namespace ShoppingCart.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
+        #endregion
     }
 }

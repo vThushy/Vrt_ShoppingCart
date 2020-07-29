@@ -1,19 +1,15 @@
-﻿using ShoppingCart.Enum;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingCart.Models
 {
-    /// <summary>
-    /// Customer Address
-    /// </summary>
     public class Address
     {
+        #region Properties
         public int Id { get; set; }
 
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(20)]
@@ -37,5 +33,6 @@ namespace ShoppingCart.Models
         [Required]
         [StringLength(50)]
         public string Country { get; set; }
+        #endregion
     }
 }
