@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Migrations
 {
-    public partial class ShoppinCartDbContext : Migration
+    public partial class shoppingCartDbContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace ShoppingCart.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     AddressType = table.Column<int>(maxLength: 20, nullable: false),
                     AddressLine = table.Column<string>(maxLength: 100, nullable: false),
                     ZipCode = table.Column<string>(maxLength: 10, nullable: false),
@@ -45,12 +45,9 @@ namespace ShoppingCart.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     LastName = table.Column<string>(maxLength: 100, nullable: false),
-                    AddressId = table.Column<int>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: true),
@@ -58,23 +55,7 @@ namespace ShoppingCart.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    UnitPrice = table.Column<double>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.UserName);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,7 +64,7 @@ namespace ShoppingCart.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     Discount = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
@@ -157,6 +138,33 @@ namespace ShoppingCart.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserName);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    UnitPrice = table.Column<double>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_OrderId",
+                table: "OrderDetails",
+                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -174,9 +182,6 @@ namespace ShoppingCart.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
@@ -187,6 +192,9 @@ namespace ShoppingCart.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
         }
     }
 }
