@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using System;
+using System.Collections.Generic;
 
 namespace ShoppingCart.Controllers
 {
@@ -13,114 +14,83 @@ namespace ShoppingCart.Controllers
         #region class variables
         private readonly ILogger<AddressController> _logger;
         private readonly IAddressRepository _addressRepository;
-        private readonly IUserRepository _userRepository;
+        private string error;
         #endregion
 
         #region constructor
         public AddressController(
             ILogger<AddressController> logger,
-            IAddressRepository addressRepository,
-            IUserRepository userRepository
+            IAddressRepository addressRepository
             )
         {
             _logger = logger;
             _addressRepository = addressRepository;
-            _userRepository = userRepository;
         }
         #endregion
 
         #region methods
 
         [HttpGet("{userName}")]
-        public IActionResult GetAllAddressByCustomer(int userName)
+        public IActionResult GetAllAddressByCustomer(string userName)
         {
             try
             {
-                var customerId = _userRepository.GetUser(userna);
-                if (response == null)
+                if (userName != null)
                 {
-                    return NotFound("Customer does not exist");
+                    List<Address> addresses = _addressRepository.GetAddressesByUser(userName);
+                    if (addresses == null)
+                    {
+                        return NotFound("Customer does not exist");
+                    }
+                    return Ok(addresses);
                 }
-                return Ok(response);
+                return BadRequest("Request object is null");
             }
             catch (Exception e)
             {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
+                error = "Error in CustomerController: " + e.ToString();
+                _logger.LogError(error);
+                return Problem(error);
             }
         }
 
         [HttpPost]
-        public IActionResult AddCustomer(CustomerRegObj customerRegObj)
+        public IActionResult AddAddress(Address address)
         {
             try
             {
-                if (customerRegObj != null)
+                if (address != null)
                 {
-                    Customer customer = customerRegObj.Customer;
-                    User user = customerRegObj.User;
-                    Address address = customerRegObj.Address;
-                    _customerRepository.AddCustomer(customer);
-                    _userRepository.AddUser(user);
                     _addressRepository.AddAddress(address);
-                    return Ok("Customer created.");
+                    return Ok(address);
                 }
-                else
-                {
-                    return BadRequest("Request is null.");
-                }
+                return BadRequest("Request object is null");
             }
             catch (Exception e)
             {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult ModifyCustomer(int id, [FromBody] Customer customer)
-        {
-            try
-            {
-                if (customer == null)
-                {
-                    return BadRequest("Customer is null.");
-                }
-
-                Customer customerToUpdate = _customerRepository.GetCustomer(id);
-                if (customerToUpdate == null)
-                {
-                    return NotFound("The customer not found!");
-                }
-
-                _customerRepository.ModifyCustomer(customerToUpdate, customer);
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
+                error = "Error in CustomerController: " + e.ToString();
+                _logger.LogError(error);
+                return Problem(error);
             }
         }
 
         [HttpDelete("{id}")]
-        public IActionResult RemoveCustomer(int id)
+        public IActionResult RemoveAddress(int id)
         {
-            Customer customerToDelete = _customerRepository.GetCustomer(id);
             try
             {
-                if (customerToDelete == null)
+                if (id > 0)
                 {
-                    return NotFound("The customer not found!");
+                    _addressRepository.RemoveAddress(id);
+                    return Ok();
                 }
-                _customerRepository.RemoveCustomer(customerToDelete);
-                _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-                return NoContent();
+                return BadRequest("Request object is null");
             }
             catch (Exception e)
             {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
+                error = "Error in CustomerController: " + e.ToString();
+                _logger.LogError(error);
+                return Problem(error);
             }
         }
 

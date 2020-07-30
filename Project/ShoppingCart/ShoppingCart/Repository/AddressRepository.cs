@@ -1,6 +1,7 @@
 ﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingCart.Repository
@@ -19,6 +20,39 @@ namespace ShoppingCart.Repository
         #endregion
 
         #region methods
+
+        public List<Address> GetAddressesByUser(string userName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    return _shoppingCartDbContext.Addresses.Where(a => a.UserName == userName).ToList();
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public Address GetAddress(int addressId)
+        {
+            try
+            {
+                if (addressId > 0)
+                {
+                    return _shoppingCartDbContext.Addresses.FirstOrDefault(a => a.Id == addressId);
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public void AddAddress(Address address)
         {
             try
