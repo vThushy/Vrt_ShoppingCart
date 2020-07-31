@@ -8,15 +8,57 @@ namespace ShoppingCart.Controllers
 {
     [ApiController]
     [Route("user")]
-    public class UserController: ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> logger;
-        private readonly IUserRepository userRepository;
+        #region class variables
+        private readonly ILogger<UserController> _logger;
+        private readonly IUserRepository _userRepository;
+        #endregion
 
-        public UserController(IUserRepository _userRepository, ILogger<UserController> _logger)
+        #region construtor
+        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
         {
-            logger = _logger;
-            userRepository = _userRepository;
+            _logger = logger;
+            _userRepository = userRepository;
+        }
+        #endregion
+
+        #region methods
+        [HttpGet("{userName}")]
+        public IActionResult ForgotPassword(string userName)
+        {
+            try
+            {
+                _userRepository.SendResetCode(userName);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ValidateResetCode([FromBody] ResetReq resetReq)
+        {
+            try
+            {
+                if (resetReq != null)
+                {
+                    bool isValid = _userRepository.ValidateResetCode(resetReq.UserName, resetReq.ResetCode);
+                    if (isValid)
+                    {
+                        return Ok();
+                    }
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
         }
 
         [HttpPut("{id}")]
@@ -24,28 +66,26 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-            if (user == null)
-            {
+                if (user != null)
+                {
+                    _userRepository.ChangePassword(user);
+                    return Ok("Password changed");
+                }
                 return BadRequest("User is null.");
-            }
-
-            User userToBeUpdate = userRepository.GetUser(user.UserName);
-            if (userToBeUpdate == null)
-            {
-                return NotFound("The product not found!");
-            }
-
-            userRepository.ChangePassword(userToBeUpdate);
-            return NoContent();
             }
             catch (Exception e)
             {
-                logger.LogError("\n Error: {0}", e);
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
 
         }
+        #endregion
+    }
 
-
+    public class ResetReq
+    {
+        public string UserName { get; set; }
+        public string ResetCode { get; set; }
     }
 }

@@ -18,6 +18,8 @@ namespace ShoppingCart.Models
         [Required]
         [EnumDataType(typeof(AccessRole), ErrorMessage = "User Role value doesn't exist within enum")]
         public AccessRole UserRole { get; set; }
+
+        public string ResetCode { get; set; }
         #endregion
     }
 }

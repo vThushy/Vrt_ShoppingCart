@@ -107,10 +107,43 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ForgotPassword()
+        public void SendResetCode(string userName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string toMail = _shoppingCartDbContext.Customers.FirstOrDefault(c => c.UserName == userName).Email;
+                string resetCode = ResetCodeGen.ResetCodeGenerator(toMail);
+                User resetUser = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
+                resetUser.ResetCode = resetCode;
+                _shoppingCartDbContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
         }
+
+        public bool ValidateResetCode(string userName, string userCode)
+        {
+            try
+            {
+                if (userName != null && userCode != null)
+                {
+                    string generatedCode = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName).ResetCode;
+                    if (generatedCode == userCode)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         #endregion
     }
 }

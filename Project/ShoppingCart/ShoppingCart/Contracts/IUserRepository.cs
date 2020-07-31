@@ -9,8 +9,9 @@ namespace ShoppingCart.Contracts
         User VerifyUser(User user);
         void ChangePassword(User user);
         User GetUser(string userName);
-        void ForgotPassword();
         void RemoveUser(string userName);
+        void SendResetCode(string userName);
+        bool ValidateResetCode(string sysCode, string userCode);
         #endregion
     }
 }

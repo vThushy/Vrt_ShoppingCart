@@ -36,7 +36,7 @@ namespace ShoppingCart.Utility
             }
         }
 
-        public void Send(Mail mail)
+        public void Send(MailContent mail)
         {
             try
             {
