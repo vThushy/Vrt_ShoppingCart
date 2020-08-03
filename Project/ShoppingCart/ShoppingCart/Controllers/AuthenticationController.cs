@@ -47,9 +47,8 @@ namespace ShoppingCart.Controllers
                 {
                     Token token = new Token(_configuration);
                     var tokenString = token.GenerateJSONWebToken(verifyUser);
-                    int userId = _customerRepository.GetCustomerId(verifyUser.UserName);
                     _logger.LogInformation($"User {verifyUser.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                    return Ok(new { customerId = userId, token = tokenString });
+                    return Ok(new { customerId = verifyUser.UserName, token = tokenString });
                 }
 
                 return Ok();
