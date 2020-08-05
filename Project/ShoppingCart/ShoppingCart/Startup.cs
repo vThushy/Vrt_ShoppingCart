@@ -50,8 +50,8 @@ namespace ShoppingCart
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
+            //services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             //services.AddCors(
@@ -70,9 +70,9 @@ namespace ShoppingCart
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(builder => builder
-.AllowAnyOrigin()
-.AllowAnyMethod()
-.AllowAnyHeader());
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseAuthentication();
             if (env.IsDevelopment())

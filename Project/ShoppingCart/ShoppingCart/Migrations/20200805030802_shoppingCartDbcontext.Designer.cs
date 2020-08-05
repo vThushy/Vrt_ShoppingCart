@@ -10,8 +10,8 @@ using ShoppingCart.Contexts;
 namespace ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20200729154326_shoppingCartDbContext")]
-    partial class shoppingCartDbContext
+    [Migration("20200805030802_shoppingCartDbcontext")]
+    partial class shoppingCartDbcontext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,8 +33,9 @@ namespace ShoppingCart.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("AddressType")
-                        .HasColumnType("int")
+                    b.Property<string>("AddressType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
                     b.Property<string>("City")
@@ -280,17 +281,29 @@ namespace ShoppingCart.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("ResetCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
                     b.HasKey("UserName");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserName = "Thushy",
+                            Password = "4d7cc50ef7ead5edb9903a94eeb0fb4381b82a89ea6872bf28ae287ae751ae8c",
+                            ResetCode = "1",
+                            UserRole = 0
+                        });
                 });
 
             modelBuilder.Entity("ShoppingCart.Models.OrderDetail", b =>
                 {
-                    b.HasOne("ShoppingCart.Models.Order", null)
+                    b.HasOne("ShoppingCart.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)

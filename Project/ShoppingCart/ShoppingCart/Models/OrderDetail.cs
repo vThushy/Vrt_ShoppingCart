@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoppingCart.Models
 {
-    public class OrderDetail 
+    public class OrderDetail
     {
         #region Properties
         public int Id { get; set; }
@@ -23,6 +23,8 @@ namespace ShoppingCart.Models
         [Required]
         [Range(1, 10)]
         public int Quantity { get; set; }
+
+       public Order Order { get; set; }
         #endregion
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Migrations
 {
-    public partial class shoppingCartDbContext : Migration
+    public partial class shoppingCartDbcontext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace ShoppingCart.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(nullable: true),
-                    AddressType = table.Column<int>(maxLength: 20, nullable: false),
+                    AddressType = table.Column<string>(maxLength: 20, nullable: false),
                     AddressLine = table.Column<string>(maxLength: 100, nullable: false),
                     ZipCode = table.Column<string>(maxLength: 10, nullable: false),
                     City = table.Column<string>(maxLength: 50, nullable: false),
@@ -132,7 +132,8 @@ namespace ShoppingCart.Migrations
                 {
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
-                    UserRole = table.Column<int>(nullable: false)
+                    UserRole = table.Column<int>(nullable: false),
+                    ResetCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,6 +161,11 @@ namespace ShoppingCart.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserName", "Password", "ResetCode", "UserRole" },
+                values: new object[] { "Thushy", "4d7cc50ef7ead5edb9903a94eeb0fb4381b82a89ea6872bf28ae287ae751ae8c", "1", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
