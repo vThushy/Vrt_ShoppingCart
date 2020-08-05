@@ -51,7 +51,7 @@ namespace ShoppingCart.Controllers
                     return Ok(new { customerId = verifyUser.UserName, token = tokenString });
                 }
 
-                return Ok();
+                return Ok("Wrong user name or password!");
             }
             catch (Exception e)
             {
