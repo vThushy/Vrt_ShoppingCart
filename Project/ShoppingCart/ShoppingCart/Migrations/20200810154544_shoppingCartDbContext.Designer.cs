@@ -10,8 +10,8 @@ using ShoppingCart.Contexts;
 namespace ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20200805030802_shoppingCartDbcontext")]
-    partial class shoppingCartDbcontext
+    [Migration("20200810154544_shoppingCartDbContext")]
+    partial class shoppingCartDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,6 +241,30 @@ namespace ShoppingCart.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ShoppingCart.Models.ProductDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Attributes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("ShoppingCart.Models.Stock", b =>

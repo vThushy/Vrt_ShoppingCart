@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Migrations
 {
-    public partial class shoppingCartDbcontext : Migration
+    public partial class shoppingCartDbContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,6 +90,22 @@ namespace ShoppingCart.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(nullable: false),
+                    Color = table.Column<string>(nullable: true),
+                    Size = table.Column<int>(nullable: false),
+                    Attributes = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,6 +205,9 @@ namespace ShoppingCart.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "ProductDetails");
 
             migrationBuilder.DropTable(
                 name: "Products");

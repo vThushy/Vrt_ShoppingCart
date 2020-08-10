@@ -12,7 +12,7 @@ namespace ShoppingCart.Models
         [ForeignKey("Order")]
         public int OrderId { get; set; }
 
-        [ForeignKey("Product")]
+        [ForeignKey("ProductDetails")]
         public int ProductId { get; set; }
 
         [Required]

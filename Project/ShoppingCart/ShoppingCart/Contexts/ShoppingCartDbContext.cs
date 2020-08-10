@@ -19,7 +19,7 @@ namespace ShoppingCart.Contexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Stock> Stocks { get; set; }
-
+        public DbSet<ProductDetails> ProductDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,21 +28,20 @@ namespace ShoppingCart.Contexts
                 .HasConversion<int>();
 
             modelBuilder.Entity<Customer>()
-               .Property(u => u.Gender)
-               .HasConversion<int>();
-
-            //modelBuilder.Entity<OrderDetail>()
-            //    .HasOne(d => d.Order)
-            //    .WithMany(o => o.OrderDetails);
+                .Property(u => u.Gender)
+                .HasConversion<int>();
 
             modelBuilder.Entity<Order>()
-              .Property(u => u.OrderStatus)
-              .HasConversion<int>();
+                .Property(u => u.OrderStatus)
+                .HasConversion<int>();
 
             modelBuilder.Entity<Payment>()
-              .Property(u => u.PayMethod)
-            .HasConversion<int>();
+                .Property(u => u.PayMethod)
+                .HasConversion<int>();
 
+            modelBuilder.Entity<ProductDetails>()
+                .Property(u => u.Size)
+                .HasConversion<int>();
 
             modelBuilder.Entity<User>()
                 .HasData(new User

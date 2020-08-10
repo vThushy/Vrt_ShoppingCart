@@ -9,7 +9,7 @@ namespace ShoppingCart.Models
         #region Properties
         public int Id { get; set; }
 
-        [ForeignKey("Product")]
+        [ForeignKey("ProductDetails")]
         public int ProductId { get; set; }
 
         [Required]

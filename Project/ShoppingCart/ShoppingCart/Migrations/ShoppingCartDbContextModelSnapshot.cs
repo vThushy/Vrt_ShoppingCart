@@ -241,6 +241,30 @@ namespace ShoppingCart.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("ShoppingCart.Models.ProductDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Attributes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductDetails");
+                });
+
             modelBuilder.Entity("ShoppingCart.Models.Stock", b =>
                 {
                     b.Property<int>("Id")
