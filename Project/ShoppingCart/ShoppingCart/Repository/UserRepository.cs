@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Contexts;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using ShoppingCart.Utility;
@@ -28,6 +29,7 @@ namespace ShoppingCart.Repository
             {
                 if (user != null)
                 {
+                    user.Password = Hashing.ConvertToHash(user.Password);
                     _shoppingCartDbContext.Users.Add(user);
                     _shoppingCartDbContext.SaveChanges();
                 }
@@ -137,6 +139,23 @@ namespace ShoppingCart.Repository
                     return false;
                 }
                 return false;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public bool ValidUserName(string userName)
+        {
+            try
+            {
+                var isAvailable = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
+                if (isAvailable != null)
+                {
+                    return false;
+                }
+                return true;
             }
             catch
             {

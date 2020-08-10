@@ -61,7 +61,7 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult ChangePassword([FromBody] User user)
         {
             try

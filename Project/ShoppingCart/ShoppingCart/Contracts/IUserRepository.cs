@@ -12,6 +12,7 @@ namespace ShoppingCart.Contracts
         void RemoveUser(string userName);
         void SendResetCode(string userName);
         bool ValidateResetCode(string sysCode, string userCode);
+        bool ValidUserName(string userName);
         #endregion
     }
 }
