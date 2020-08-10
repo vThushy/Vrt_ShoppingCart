@@ -60,6 +60,23 @@ namespace ShoppingCart.Controllers
             }
         }
 
+        [HttpGet("{userName}")]
+        public IActionResult ValidateUserName(string userName)
+        {
+            try
+            {
+                if (_userRepository.ValidUserName(userName))
+                {
+                    return Ok(true);
+                }
+                return Ok(false);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error in authentication controller: " + e.ToString());
+                return Problem(e.ToString());
+            }
+        }
         #endregion
     }
 }
