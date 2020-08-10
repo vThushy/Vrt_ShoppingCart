@@ -20,8 +20,8 @@ namespace ShoppingCart.Controllers
             _productRepository = productRepository;
         }
 
-        [HttpGet]
-        [Route("/page/{pageIndex}")]
+        [HttpGet()]
+        [Route("/product/page/{pageIndex}")]
         public IActionResult GetAllProducts(int pageIndex)
         {
             try
@@ -56,7 +56,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpGet]
-        [Route("newArrival/{category}")]
+        [Route("/new-arrival/{category}")]
         public IActionResult GetNewArrivalProducts(string category)
         {
             try
@@ -75,7 +75,27 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        [HttpGet("/cat/{key}/{pageIndex}")]
+        [HttpGet]
+        [Route("/best-seller/{category}")]
+        public IActionResult GetBestSellingProducts(string category)
+        {
+            try
+            {
+                var response = _productRepository.GetNewArrivalProducts(category);
+                if (response == null)
+                {
+                    return NotFound("New arrival products does not exist!");
+                }
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("\n Error: {0}", e);
+                return Problem(e.ToString());
+            }
+        }
+
+        [HttpGet("/category/{key}/{pageIndex}")]
         public IActionResult GetProductByCategory(string key, int pageIndex)
         {
             try
@@ -149,7 +169,7 @@ namespace ShoppingCart.Controllers
                     return NotFound("The product not found!");
                 }
 
-                _productRepository.ModifyProduct(productToUpdate, product);
+                //_productRepository.ModifyProduct(productToUpdate, product);
                 return NoContent();
             }
             catch(Exception e)
@@ -169,7 +189,7 @@ namespace ShoppingCart.Controllers
                 {
                     return NotFound("The product not found!");
                 }
-                _productRepository.RemoveProduct(productToDelete);
+               // _productRepository.RemoveProduct(productToDelete);
                 _logger.LogInformation($"Product {productToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
                 return NoContent();
             }

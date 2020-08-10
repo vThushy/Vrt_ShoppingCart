@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using ShoppingCart.Contexts;
+﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using ShoppingCart.Utility;
@@ -66,7 +65,7 @@ namespace ShoppingCart.Repository
                 }
                 else
                 {
-                    int categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(category)).FirstOrDefault().Id;
+                    int categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.StartsWith(category)).FirstOrDefault().Id;
                     return _shoppingCartDbContext.Products.Where(p => p.CategoryId == categoryId).OrderByDescending(p => p.Id).Take(5).ToList();
                 }
             }
@@ -117,7 +116,7 @@ namespace ShoppingCart.Repository
                     int skip = (pageIndex - 1) * _productsForPage;
                     int categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.Contains(searchCategory)).FirstOrDefault().Id;
                     int noOfRecords = _shoppingCartDbContext.Products.Where(p => p.CategoryId == categoryId).Count();
-                    var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == 5).Skip(skip).Take(_productsForPage).ToList();
+                    var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == categoryId).Skip(skip).Take(_productsForPage).ToList();
                     return new ProductList
                     {
                         NoOfProducts = noOfRecords,
