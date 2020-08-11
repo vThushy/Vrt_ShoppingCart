@@ -16,6 +16,8 @@ namespace ShoppingCart.Models
         public Sizes Size { get; set; }
 
         public string Attributes { get; set; }
+
+        public string Image { get; set; }
         #endregion
     }
 }

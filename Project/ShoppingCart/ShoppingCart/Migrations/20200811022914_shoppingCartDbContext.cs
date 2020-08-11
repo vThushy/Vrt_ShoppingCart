@@ -101,7 +101,8 @@ namespace ShoppingCart.Migrations
                     ProductId = table.Column<int>(nullable: false),
                     Color = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: false),
-                    Attributes = table.Column<string>(nullable: true)
+                    Attributes = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,7 +120,7 @@ namespace ShoppingCart.Migrations
                     Description = table.Column<string>(maxLength: 250, nullable: false),
                     Discount = table.Column<double>(nullable: false),
                     Price = table.Column<double>(nullable: false),
-                    Image = table.Column<string>(maxLength: 100, nullable: true)
+                    DefaultImage = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {

@@ -159,7 +159,7 @@ namespace ShoppingCart.Repository
                     product.Description = newProduct.Description;
                     product.Discount = newProduct.Discount;
                     product.Price = newProduct.Price;
-                    product.Image = newProduct.Image;
+                    product.DefaultImage = newProduct.DefaultImage;
 
                     _shoppingCartDbContext.SaveChanges();
                 }

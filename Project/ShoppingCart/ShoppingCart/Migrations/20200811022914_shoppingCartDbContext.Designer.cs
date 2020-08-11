@@ -10,7 +10,7 @@ using ShoppingCart.Contexts;
 namespace ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20200810154544_shoppingCartDbContext")]
+    [Migration("20200811022914_shoppingCartDbContext")]
     partial class shoppingCartDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,6 +218,10 @@ namespace ShoppingCart.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DefaultImage")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
@@ -225,10 +229,6 @@ namespace ShoppingCart.Migrations
 
                     b.Property<double>("Discount")
                         .HasColumnType("float");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -254,6 +254,9 @@ namespace ShoppingCart.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")

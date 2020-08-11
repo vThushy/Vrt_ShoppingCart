@@ -29,7 +29,7 @@ namespace ShoppingCart.Models
         public double Price { get; set; }
 
         [StringLength(100)]
-        public string Image { get; set; }
+        public string DefaultImage { get; set; }
         #endregion
     }
 }
