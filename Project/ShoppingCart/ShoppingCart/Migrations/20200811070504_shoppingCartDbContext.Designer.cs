@@ -10,7 +10,7 @@ using ShoppingCart.Contexts;
 namespace ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20200811022914_shoppingCartDbContext")]
+    [Migration("20200811070504_shoppingCartDbContext")]
     partial class shoppingCartDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
