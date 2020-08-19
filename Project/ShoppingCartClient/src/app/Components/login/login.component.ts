@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/Models/User';
 import { UsersService } from 'src/app/Services/users.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 import { imagePath } from 'src/app/Util/paths';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { imagePath } from 'src/app/Util/paths';
 })
 
 export class LoginComponent implements OnInit {
+  error: string;
   errorMsg: string;
   logoImagePath = imagePath.home_logo;
   loginForm: FormGroup;
@@ -20,12 +22,14 @@ export class LoginComponent implements OnInit {
   loading = false;
   wrongCredentials = false;
   isSubmitted = false;
+  previousUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UsersService,
     private exceptionHandlerService: ExceptionHandlerService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -33,6 +37,12 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.previousUrl = event.url;
+      });
+
     this.isSubmitted = true;
     this.errorMsg = '';
     this.user.UserName = this.loginDetails.userName.value;
@@ -40,32 +50,34 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.invalid) {
       return;
-    }
-    this.loading = true;
-    this.userService.verifyUser(this.user).subscribe(
-      result => {
-        if (result != null) {
-          localStorage.setItem('auth_token', result.token);
-          localStorage.setItem('auth_user', this.user.UserName);
-          this.userService.setLoginStatus(true);
+    } else {
+      this.loading = true;
+      this.userService.verifyUser(this.user).subscribe(
+        result => {
+          console.log(result);
+          if (result.token != "") {
+            localStorage.setItem('auth_token', result.token);
+            localStorage.setItem('auth_user', this.user.UserName);
+            this.userService.setLoginStatus(true);
+            this.loading = false;
+            this.router.navigateByUrl(this.previousUrl);
+          } else {
+            this.loading = false;
+            this.errorMsg = "Wrong username or password!"
+          }
+        },
+        error => {
           this.loading = false;
-          this.router.navigate(['']);
-        } else {
-          this.loading = false;
-          this.errorMsg = "Wrong username or password!"
+          this.exceptionHandlerService.handleError(error);
         }
-      },
-      error => {
-        this.loading = false;
-        this.exceptionHandlerService.handleError(error);
-      }
-    );
+      );
+    }
   }
 
   createForm() {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(5)]]
+      password: ['', Validators.required]
     });
   }
 
@@ -74,3 +86,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+

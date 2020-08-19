@@ -41,17 +41,17 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var verifyUser = _userRepository.VerifyUser(user);
+                bool verifiedUser = _userRepository.VerifyUser(user);
 
-                if (verifyUser != null)
+                if (verifiedUser)
                 {
                     Token token = new Token(_configuration);
-                    var tokenString = token.GenerateJSONWebToken(verifyUser);
-                    _logger.LogInformation($"User {verifyUser.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                    return Ok(new { customerId = verifyUser.UserName, token = tokenString });
+                    var tokenString = token.GenerateJSONWebToken();
+                    _logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
+                    return Ok(new { customerId = user.UserName, token = tokenString });
                 }
 
-                return Ok("Wrong user name or password!");
+                return Ok(new { customerId = "", token = "" });
             }
             catch (Exception e)
             {

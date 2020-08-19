@@ -6,7 +6,7 @@ namespace ShoppingCart.Contracts
     {
         #region contracts
         void AddUser(User user);
-        User VerifyUser(User user);
+        bool VerifyUser(User user);
         void ChangePassword(User user);
         User GetUser(string userName);
         void RemoveUser(string userName);

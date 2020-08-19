@@ -12,7 +12,6 @@
 
                 <div class="col-md-6">
                     <div class="card">
-
                         <header class="card-header">
                             <a routerLink="/signup" class="float-right btn btn-outline-primary mt-1">Sign up</a>
                             <h4 class="card-title mt-2">Login</h4>
@@ -21,32 +20,26 @@
                         <article class="card-body">
                             <div class="form-group">
                                 <label>User name</label>
-                                <p [ngClass]="{ 'has-error': isSubmitted && loginDetails.userName.errors }">
-                                    <input type="text" class="form-control" formControlName="userName" placeholder="">
-                                </p>
-
-                                <div *ngIf="isSubmitted && loginDetails.userName.errors" class="help-block">
-                                    <div *ngIf="loginDetails.userName.errors.required" class="alert alert-danger alert-dismissible fade show">User name is required</div>
-                                </div>
-
+                                <input type="text" class="form-control" formControlName="userName" placeholder="">
+                                <small *ngIf="isSubmitted && loginDetails.userName.errors"
+                                    class="text-danger alert-dismissible fade show ">User name is required
+                                </small>
                             </div>
 
                             <div class="form-group">
-                                <p [ngClass]="{ 'has-error': isSubmitted && loginDetails.password.errors }">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password" formControlName="password">
-                                </p>
+                                <label>Password</label>
+                                <input class="form-control" type="password" formControlName="password">
 
-                                <div *ngIf="isSubmitted && loginDetails.password.errors" class="help-block">
-                                    <div *ngIf="loginDetails.password.errors.required" class="alert alert-danger alert-dismissible fade show">Password is required</div>
-                                </div>
+                                <small *ngIf="isSubmitted && loginDetails.password.errors"
+                                    class="text-danger alert-dismissible fade show">Password is required
+                                </small>
                             </div>
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block"> Login </button>
                             </div>
 
-                            <div *ngIf="errorMsg" class="form-group alert alert-warning alert-dismissible fade show">
+                            <div *ngIf="errorMsg" class="form-group alert alert-error alert-dismissible fade show">
                                 <strong>{{ errorMsg }}</strong>
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                             </div>
@@ -57,10 +50,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </form>
     </div>
-
 </div>

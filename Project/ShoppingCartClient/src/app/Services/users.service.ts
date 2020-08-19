@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Models/User';
-import { loginAPI, customerAPI } from '../Util/config';
+import { loginAPI, customerAPI, validUserAPI } from '../Util/config';
 import { catchError } from 'rxjs/operators';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
 import { AddCustomerObj } from '../Models/AddCustomerObj';
@@ -30,6 +30,11 @@ export class UsersService {
   public verifyUser(user: User) {
     const header = { 'content-type': 'application/json' };
     return this.httpClient.post<any>(loginAPI, JSON.stringify(user), { 'headers': header })
+      .pipe(catchError(this.exceptionHandlerService.handleError));
+  }
+
+  public ValidateUser(userName: string) {
+    return this.httpClient.get<any>(validUserAPI + "/" + userName)
       .pipe(catchError(this.exceptionHandlerService.handleError));
   }
 

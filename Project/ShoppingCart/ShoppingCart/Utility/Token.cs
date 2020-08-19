@@ -15,7 +15,7 @@ namespace ShoppingCart.Utility
         {
             configuration = _configuration;
         }
-        public string GenerateJSONWebToken(User userInfo)
+        public string GenerateJSONWebToken()
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

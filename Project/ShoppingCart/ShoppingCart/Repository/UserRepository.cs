@@ -57,17 +57,21 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public User VerifyUser(User user)
+        public bool VerifyUser(User user)
         {
             try
             {
                 if (user != null)
                 {
                     user.Password = Hashing.ConvertToHash(user.Password);
-                    User foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
-                    return foundUser;
+                    var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName && u.Password == user.Password));
+                    if (foundUser != null)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
-                return null;
+                return false;
             }
             catch
             {
