@@ -5,7 +5,6 @@ import { loginAPI, customerAPI, validUserAPI } from '../Util/config';
 import { catchError } from 'rxjs/operators';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
 import { AddCustomerObj } from '../Models/AddCustomerObj';
-import * as shajs from 'sha.js';
 
 @Injectable({
   providedIn: 'root'
@@ -57,10 +56,12 @@ export class UsersService {
   logout() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');
+    localStorage.removeItem('cart-products');
+    localStorage.removeItem('fav-products');
     this.loggedIn = false;
   }
 
-  public isLogged() {
+  public isLogged(): boolean {
     return this.loggedIn;
   }
 
