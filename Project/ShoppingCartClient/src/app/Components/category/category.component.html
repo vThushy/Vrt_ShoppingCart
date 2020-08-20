@@ -5,8 +5,8 @@
             <a [routerLink]="[urlCategory, categories[0][1]]">
                 <img class="card-img-top" [src]='categories[0][2]' alt="Card image">
                 <div class="card-img-overlay align-center">
-                    <p class="card-text">NEW COLLECTION</p>
-                    <h4 class="card-title">{{ categories[0][0] }}</h4>
+                    <span class="card-text">NEW COLLECTION</span>
+                    <h4 class="card-title display-2">{{ categories[0][0] }}</h4>
                     DISCOVER NOW
                 </div>
             </a>
@@ -15,9 +15,8 @@
             <a [routerLink]="[urlCategory, categories[1][1]]">
                 <img class="card-img-top" [src]='categories[1][2]' alt="Card image">
                 <div class="card-img-overlay align-center">
-                    <button class="btn blue-gradient">Blue</button>
                     <p class="card-text">NEW COLLECTION</p>
-                    <h4 class="card-title">{{ categories[1][0] }}</h4>
+                    <h4 class="card-title display-2">{{ categories[1][0] }}</h4>
                     DISCOVER NOW
                 </div>
             </a>

@@ -2,6 +2,16 @@
 
 <div class="container py-5">
     <div class="row">
+        <div class="col-lg-5">
+            
+            <div class="display-4">
+                Total : 
+            </div>
+            <div class="display-3">
+                {{finalTotal | currency}}
+
+            </div>
+        </div>
         <div class="col-lg-7 mx-auto">
             <div class="bg-white rounded-lg shadow-sm p-5">
                 <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
@@ -24,7 +34,7 @@
 
                 <div class="tab-content">
                     <div id="nav-tab-card" class="tab-pane fade show active">
-                        <p class="alert alert-success">Some text success or error</p>
+                        <!-- <p class="alert alert-success"> success or error</p> -->
                         <form role="form">
                             <div class="form-group">
                                 <label for="username">Full name (on the card)</label>

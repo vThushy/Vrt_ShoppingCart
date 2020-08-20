@@ -15,3 +15,12 @@ a{
     text-align: center;
     font-size: xx-large;
 }
+
+.jumbotron{
+    text-align: center;
+}
+
+h1{
+    font-size: 3em;
+    text-transform: capitalize;
+}

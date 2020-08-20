@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/Services/products.service';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 import { Product } from 'src/app/Models/Product';
-import { imagePath } from 'src/app/Util/paths';
+import { mainCategories } from 'src/app/Util/Categories';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
   cardTitle: string;
   mainCategories: string[][];
   urlCategory: string;
-  newArrivalProduct: Product[];
+  trendingProduct: Product[];
+  bestSellerProduct: Product[];
 
   constructor(
     private productService: ProductsService,
@@ -22,7 +23,14 @@ export class HomeComponent implements OnInit {
   ) {
     this.productService.getNewArrivalProducts('all').subscribe(
       result => {
-        this.newArrivalProduct = result;
+        this.trendingProduct = result;
+      },
+      error => {
+        this.exceptionHandlerService.handleError(error);
+      });
+    this.productService.getBestSellingProducts('all').subscribe(
+      result => {
+        this.bestSellerProduct = result;
       },
       error => {
         this.exceptionHandlerService.handleError(error);
@@ -32,13 +40,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.urlCategory = "/category";
     this.cardTitle = 'NEW COLLECTION';
-    this.mainCategories = [
-      ['SHOP WOMENs', 'women', imagePath.category_women],
-      ['SHOP MENs', 'men', imagePath.category_men],
-      ['SHOP KIDs', 'kid', imagePath.category_kid],
-      ['SHOP LIFESTYLE', 'lifestyle', imagePath.category_lifestyle],
-      ['SHOP GIFTs', 'gift', imagePath.category_gift]
-    ];
+    this.mainCategories = mainCategories;
   }
 
 }

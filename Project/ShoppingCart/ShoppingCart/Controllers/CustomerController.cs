@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using ShoppingCart.Utility;
 using System;
 
 namespace ShoppingCart.Controllers
@@ -15,6 +17,7 @@ namespace ShoppingCart.Controllers
         private readonly ICustomerRepository _customerRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly IConfiguration _configuration;
         #endregion
 
         #region constructor
@@ -22,35 +25,37 @@ namespace ShoppingCart.Controllers
             ICustomerRepository customerRepository,
             IUserRepository userRepository,
             IAddressRepository addressRepository,
-            ILogger<CustomerController> logger)
+            ILogger<CustomerController> logger,
+            IConfiguration configuration)
         {
             _logger = logger;
             _customerRepository = customerRepository;
             _userRepository = userRepository;
             _addressRepository = addressRepository;
+            _configuration = configuration;
         }
         #endregion
 
         #region methods
 
-        [HttpGet("{id}")]
-        public IActionResult GetCustomer(int id)
-        {
-            try
-            {
-                var response = _customerRepository.GetCustomer(id);
-                if (response == null)
-                {
-                    return NotFound("Customer does not exist");
-                }
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult GetCustomer(int id)
+        //{
+        //    try
+        //    {
+        //        //var response = _customerRepository.GetCustomer(id);
+        //        //if (response == null)
+        //        //{
+        //        //    return NotFound("Customer does not exist");
+        //        //}
+        //        //return Ok(response);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in CustomerController: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
         [HttpPost]
         public IActionResult AddCustomer(CustomerRegObj customerRegObj)
@@ -65,7 +70,11 @@ namespace ShoppingCart.Controllers
                     _customerRepository.AddCustomer(customer);
                     _userRepository.AddUser(user);
                     _addressRepository.AddAddress(address);
-                    return Ok("Customer created.");
+
+                    Token token = new Token(_configuration);
+                    var tokenString = token.GenerateJSONWebToken();
+                    _logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
+                    return Ok(new { customerId = user.UserName, token = tokenString });
                 }
                 else
                 {
@@ -89,13 +98,13 @@ namespace ShoppingCart.Controllers
                     return BadRequest("Customer is null.");
                 }
 
-                Customer customerToUpdate = _customerRepository.GetCustomer(id);
-                if (customerToUpdate == null)
-                {
-                    return NotFound("The customer not found!");
-                }
+                //Customer customerToUpdate = _customerRepository.GetCustomer(id);
+                //if (customerToUpdate == null)
+                //{
+                //    return NotFound("The customer not found!");
+                //}
 
-                _customerRepository.ModifyCustomer(customerToUpdate, customer);
+                //_customerRepository.ModifyCustomer(customerToUpdate, customer);
                 return NoContent();
             }
             catch (Exception e)
@@ -105,26 +114,26 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveCustomer(int id)
-        {
-            Customer customerToDelete = _customerRepository.GetCustomer(id);
-            try
-            {
-                if (customerToDelete == null)
-                {
-                    return NotFound("The customer not found!");
-                }
-                _customerRepository.RemoveCustomer(customerToDelete);
-                _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error in CustomerController: " + e.ToString());
-                return Problem(e.ToString());
-            }
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult RemoveCustomer(int id)
+        //{
+        //    Customer customerToDelete = _customerRepository.GetCustomer(id);
+        //    try
+        //    {
+        //        if (customerToDelete == null)
+        //        {
+        //            return NotFound("The customer not found!");
+        //        }
+        //        _customerRepository.RemoveCustomer(customerToDelete);
+        //        _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+        //        return NoContent();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error in CustomerController: " + e.ToString());
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
         #endregion
     }

@@ -1,0 +1,94 @@
+<app-header></app-header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-5 image">
+            <img class="border rounded" [src]="imageFolderPath + mainProduct.defaultImage + '.jpg'" alt="">
+        </div>
+
+        <div class="col-7 desc">
+            <div class="row border-bottom border-info back">
+                <p (click)="back()"># Back to products.</p>
+            </div>
+            <div class="row">
+                <span class="display-4 productName">{{mainProduct.name}}</span>
+                <span class="display-6">{{mainProduct.description}}</span>
+                <p>
+                    <a href="#!" type="button" class="card-link-secondary small text-uppercase" data-toggle="modal"
+                    data-target="#ReviewModal">
+                    Review it.</a>
+                    (4 customer review) 
+                </p>
+            </div>
+
+            <div class="row">
+                <ul class="related">
+                    <li *ngFor="let product of uniqueProducts">
+                        <img [src]="imageFolderPath + product + '.jpg'" alt="">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row desc">
+                <span class="display-4">{{mainProduct.price | currency}}</span>
+
+            </div>
+            <div class="row">
+                <div>
+                    <button class="changer btn btn-info">-</button>
+                    <input type="text" class="quantity" name="" id="" min="0" placeholder="0">
+                    <button class="changer btn btn-info">+</button>
+                </div>
+                <button type="button" class="btn btn-dark">ADD TO CART</button>
+            </div>
+            <div class="row">
+                <span>Categroies: </span>
+                <span>Tags: </span>
+            </div>
+            <div class="row"></div>
+            <div class="row"></div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<app-product-row viewTitle="RECOMMENDED FOR YOU" [productList]='recommendProduct'></app-product-row>
+<app-product-row viewTitle="SIMILIAR PRODUCTS" [productList]='similiarProduct'></app-product-row>
+
+
+
+<app-footer></app-footer>
+
+
+
+<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Provide a reveiw.</h5>
+                <button type="button btn-primary" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card text-center py-4">
+                    <h5 class="card-heading">Thanks for your feedback</h5>
+                    <div class="ratings mt-3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                            class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                    <div class="review">
+                        <h6>Leave some reviews</h6>
+                        <div>
+                            <textarea name="review" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div> 
+                    <button class="btn btn-success mb-2 review-button">Write a review</button> 
+                    <button class="btn btn-outline-primary later" data-dismiss="modal" aria-label="Close">Sure, but later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/Services/users.service';
 import { imagePath } from 'src/app/Util/paths';
+import { storeLocatoion } from 'src/app/Util/config';
 
 @Component({
   selector: 'app-header',
@@ -12,10 +13,11 @@ export class HeaderComponent implements OnInit {
   logoImagePath: string = imagePath.home_logo;
   storeLocationImagePath: string = imagePath.home_store_location;
   callImagePath: string = imagePath.home_call;
+  storeLocationUrl = storeLocatoion;
 
 
   accountStatus: string = "My Account";
-  loggedIn = false;
+  loggedIn: boolean = false;
   cartTotal = 0;
 
   constructor(
@@ -34,5 +36,7 @@ export class HeaderComponent implements OnInit {
     this.usersService.logout();
     this.loggedIn = false;
     this.accountStatus = "My Account";
+    this.changeRef.markForCheck();
+    this.router.navigate(['']);
   }
 }

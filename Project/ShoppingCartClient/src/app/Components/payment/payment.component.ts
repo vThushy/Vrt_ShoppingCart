@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-payment',
@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
+  @Input() total;
+  finalTotal = 0;
 
   constructor() { }
 
   ngOnInit(): void {
+    if(this.total != null){
+      this.finalTotal = this.total;
+    }
   }
 
 }

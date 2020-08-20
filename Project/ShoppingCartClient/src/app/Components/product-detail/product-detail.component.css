@@ -1,0 +1,47 @@
+.products{
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.container{
+    padding: 1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.related{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    padding-top: 1em;
+}
+
+.related li{
+    display: inline;
+    list-style: none;
+    padding:0;
+    margin-right: 0.2em;
+}
+
+.related li img{
+    width: 15%;
+    object-fit: cover;
+    border: 0.01em solid #000;
+}
+
+.productName{
+    font-size: 2.8em;
+}
+
+.desc{
+    padding-top: 1em;
+}
+
+.back{
+    cursor: pointer;
+}
+
+.back :hover{
+    color: royalblue;
+}

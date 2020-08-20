@@ -130,7 +130,7 @@ namespace ShoppingCart.Controllers
                 {
                     return NotFound("The order not found!");
                 }
-                _orderRepository.RemoveOrder(orderToDelete);
+                // _orderRepository.RemoveOrder(orderToDelete);
                 _logger.LogInformation($"Order {orderToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
                 return NoContent();
             }

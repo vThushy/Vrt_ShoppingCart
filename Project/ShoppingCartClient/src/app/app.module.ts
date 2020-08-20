@@ -20,8 +20,10 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { FilterComponent } from './Components/filter/filter.component';
 import { LoaderComponent } from './Components/loader/loader.component';
 import { CartComponent } from './Components/cart/cart.component';
-import { PlaceOrderComponent } from './Components/place-order/place-order.component';
 import { PaymentComponent } from './Components/payment/payment.component';
+import { WarningComponent } from './Components/warning/warning.component';
+import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +43,10 @@ import { PaymentComponent } from './Components/payment/payment.component';
     FilterComponent,
     LoaderComponent,
     CartComponent,
-    PlaceOrderComponent,
-    PaymentComponent
+    PaymentComponent,
+    WarningComponent,
+    ProductDetailComponent,
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -6,10 +6,11 @@ namespace ShoppingCart.Contracts
     public interface IOrderRepository
     {
         #region contracts
+        List<Order> GetAllOrdersByCustomer(string userName);
         List<Order> GetAllOrders();
         Order GetOrder(int id);
-        List<Order> GetAllOrdersByCustomer(string userName);
         void AddOrder(Order order);
+        void ModifyOrder(int orderId, Order newOrder);
         void RemoveOrder(int orderNo);
         #endregion
     }

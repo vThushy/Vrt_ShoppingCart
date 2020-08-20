@@ -16,31 +16,33 @@ export const imagePath = {
     'category_lifestyle': 'assets/images/category_lifestyle.jpg',
     'category_gift': 'assets/images/category_gift.jpg',
 
-    'category_women_traditional': 'assets/images/category_women_traditional.jpg',
     'category_women_casual': 'assets/images/category_women_casual.jpg',
     'category_women_formal': 'assets/images/category_women_formal.jpg',
+    'category_women_sport': 'assets/images/category_women_sport.jpg',
     'category_women_foot': 'assets/images/category_women_foot.jpg',
     'category_women_accessories': 'assets/images/category_women_accessories.jpg',
 
     'category_men_casual': 'assets/images/category_men_casual.jpg',
     'category_men_formal': 'assets/images/category_men_formal.jpg',
+    'category_men_sport': 'assets/images/category_men_sport.jpg',
     'category_men_foot': 'assets/images/category_men_foot.jpg',
-    'category_men_watches': 'assets/images/category_men_watches.jpg',
-    'category_men_wallets': 'assets/images/category_men_wallets.jpg',
+    'category_men_accessories': 'assets/images/category_men_accessories.jpg',
 
     'category_kid_girl': 'assets/images/category_kid_girl.jpg',
     'category_kid_boy': 'assets/images/category_kid_boy.jpg',
-    'category_kid_infant': 'assets/images/category_kid_infant.jpg',
+    'category_kid_foot': 'assets/images/category_kid_foot.jpg',
     'category_kid_toy': 'assets/images/category_kid_toy.jpg',
-    'category_kid_other': 'assets/images/category_kid_other.jpg',
+    'category_kid_accessories': 'assets/images/category_kid_accessories.jpg',
 
-    'category_lifestyle_home': 'assets/images/category_lifestyle_home.jpg',
-    'category_lifestyle_kitchen': 'assets/images/category_lifestyle_home.jpg',
+    'category_lifestyle_home': 'assets/images/category_lifestyle_home.jpeg',
+    'category_lifestyle_kitchen': 'assets/images/category_lifestyle_kitchen.jpeg',
+    'category_lifestyle_bath': 'assets/images/category_lifestyle_bath.jpg',
+    'category_lifestyle_wall': 'assets/images/category_lifestyle_wall.jpg',
+    'category_lifestyle_garden': 'assets/images/category_lifestyle_garden.jpg',
 
-
-    'product_row_addToCart': 'assets/images/product_row_addToCart.jpg',
-    'product_row_buynow': 'assets/images/product_row_buynow.jpg',
-    'product_row_favourite': 'assets/images/product_row_favourite.jpg'
+    'product_row_addToCart': 'assets/images/add_cart.png',
+    'product_row_buynow': 'assets/images/buy.png',
+    'product_row_favourite': 'assets/images/favorite.png'
 };
 
 

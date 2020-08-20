@@ -1,41 +1,114 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductsService } from 'src/app/Services/products.service';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
+import { Product } from 'src/app/Models/Product';
+import { imagePath } from 'src/app/Util/paths';
+import ProductFunctions from 'src/app/Util/Functions';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-list-product',
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.css']
 })
-export class ListProductComponent implements OnChanges {
+export class ListProductComponent implements OnInit {
+  imageFolderPath = imagePath.product_image_folder;
+  addToCartImagePath = imagePath.product_row_addToCart;
+  buyNowImagePath = imagePath.product_row_buynow;
+  favouriteImagePath = imagePath.product_row_favourite;
+  urlProductDetails = "/details";
 
+  filterType: string;
   searchValue: string;
   noOfResults: number;
   noOfPages = 1;
+  results: Product[];
+  heading: string;
+  pageCount: number[];
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
-    private exceptionHandlerService: ExceptionHandlerService
+    private exceptionHandlerService: ExceptionHandlerService,
+    private router: Router,
+    private usersService: UsersService
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnInit(): void{
+    this.route.queryParams.subscribe(qp => {
+      this.results = [];
+      this.initFirstResults();
+    })
+  }
+
+  initFirstResults() {
+    this.filterType = this.route.snapshot.paramMap.get("type");
     this.searchValue = this.route.snapshot.paramMap.get("searchValue");
-    if (this.noOfResults > 0) {
-      this.noOfPages = this.noOfResults / 9;
-    } else {
-      this.noOfResults = 0;
-    }
+    this.heading = this.searchValue.replace('_', ' ');
 
-    var listProduct = this.productService.getAllProducts().subscribe(
-      result => {
-        console.log(result);
-      },
-      error => {
-        this.exceptionHandlerService.handleError(error);
-      });
+    this.fetchProducts();
   }
+
+
+  arrayOne(n: number): any[] {
+    return Array(n);
+  }
+
+  fetchProducts(page: number = 1) {
+    if (this.filterType == "by-category") {
+      this.productService.getProductsByCategory(this.searchValue, page).subscribe(
+        result => {
+          this.noOfResults = result.noOfProducts;
+          this.results = result.listOfProducts;
+          if (this.noOfResults > 0) {
+            this.noOfPages = Math.ceil(this.noOfResults / 9);
+          } else {
+            this.noOfPages = 1;
+          }
+          this.pageCount = this.arrayOne(this.noOfPages);
+        },
+        error => {
+          this.exceptionHandlerService.handleError(error);
+        });
+    } else {
+      this.productService.getProductsBySearch(this.searchValue, page).subscribe(
+        result => {
+          this.noOfResults = result.noOfProducts;
+          this.results = result.listOfProducts;
+          if (this.noOfResults > 0) {
+            this.noOfPages = Math.ceil(this.noOfResults / 9);
+          } else {
+            this.noOfPages = 1;
+          }
+          this.pageCount = this.arrayOne(this.noOfPages);
+        },
+        error => {
+          this.exceptionHandlerService.handleError(error);
+        });
+    }
+  }
+
+  addToFav(productId: number) {
+    if (this.usersService.isLogged()) {
+      var u = new ProductFunctions();
+      u.addToFav(productId);
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+  }
+
+  addToCart(productId: number) {
+    if (this.usersService.isLogged()) {
+      var u = new ProductFunctions();
+      u.addToCart(productId);
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+  }
+
+
 
 }
