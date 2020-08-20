@@ -64,16 +64,16 @@
         <h6 class="text-uppercase font-weight-bold">Useful links</h6>
         <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
-          <a href="#!">About Us</a>
+          <a routerLink="/about">About Us</a>
         </p>
         <p>
-          <a href="#!">Contact Us</a>
+          <a routerLink="/contact">Contact Us</a>
         </p>
         <p>
-          <a href="#!">Store locator</a>
+          <a [href]="storeLocationUrl">Store locator</a>
         </p>
         <p>
-          <a href="#!">Return Policy</a>
+          <a [href]="policyUrl">Return Policy</a>
         </p>
       </div>
 
