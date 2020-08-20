@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ShoppingCart.Models;
 using ShoppingCart.Contracts;
 using System;
+using System.Collections.Generic;
 
 namespace ShoppingCart.Controllers
 {
@@ -41,7 +42,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetProduct(id);
+                var response = _productRepository.GetProductWithDetails(id);
                 if (response == null)
                 {
                     return NotFound("Product does not exist");
@@ -81,10 +82,10 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetNewArrivalProducts(category);
+                var response = _productRepository.GetBestSellerProducts(category);
                 if (response == null)
                 {
-                    return NotFound("New arrival products does not exist!");
+                    return NotFound("best selling products does not exist!");
                 }
                 return Ok(response);
             }
@@ -129,6 +130,26 @@ namespace ShoppingCart.Controllers
             catch (Exception e)
             {
                 _logger.LogError("Error in Product controller : " + e.ToString());
+                return Problem(e.ToString());
+            }
+        }
+
+        [HttpPost("/cart")]
+        public IActionResult GetCartProducts([FromBody] string[] productIds)
+        {
+            try
+            {
+                if (productIds == null)
+                {
+                    return BadRequest("Product is null.");
+                }
+
+                List<Product> products = _productRepository.GetProductListById(productIds);
+                return Ok(new { cartItems = products });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("\n Error: {0}", e);
                 return Problem(e.ToString());
             }
         }

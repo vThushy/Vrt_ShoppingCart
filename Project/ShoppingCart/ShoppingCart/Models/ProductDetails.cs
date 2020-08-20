@@ -13,7 +13,7 @@ namespace ShoppingCart.Models
 
         public string Color { get; set; }
 
-        public Sizes Size { get; set; }
+        public ProductSize Size { get; set; }
 
         public string Attributes { get; set; }
 
