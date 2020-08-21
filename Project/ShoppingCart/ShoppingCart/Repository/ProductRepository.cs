@@ -96,7 +96,6 @@ namespace ShoppingCart.Repository
                 Product product = _shoppingCartDbContext.Products.FirstOrDefault(pro => pro.Id == p.ProductId);
                 if (product != null)
                 {
-                    product.Id = p.Id;
                     product.DefaultImage = p.Image;
                 }
                 returnProducts.Add(product);

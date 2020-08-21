@@ -44,13 +44,6 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        //[HttpPost("customer")]
-        //public IActionResult PlaceOrder([FromBody] )
-        //{
-
-        //}
-
-
         [HttpGet("{id}")]
         public IActionResult GetOrder(int id)
         {
@@ -94,23 +87,15 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                Order orderToUpdate = _orderRepository.GetOrder(id);
-                if (orderToUpdate == null)
+                if (order != null && id > 0)
                 {
-                    return NotFound("The order not found!");
+
+                    _orderRepository.ModifyOrder(id, order);
+                    return NoContent();
                 }
                 else
                 {
-                    if (order != null)
-                    {
-
-                        _orderRepository.ModifyOrder(orderToUpdate, order);
-                        return NoContent();
-                    }
-                    else
-                    {
-                        return BadRequest("Wrong request!");
-                    }
+                    return BadRequest("Wrong request!");
                 }
             }
             catch (Exception e)
