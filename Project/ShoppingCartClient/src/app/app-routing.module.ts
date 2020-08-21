@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'category/:category', component: ListCategoryComponent },
   { path: 'product/:type/:searchValue', component: ListProductComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'payment', component: PaymentComponent },
+  { path: 'payment/:total', component: PaymentComponent },
   { path: 'error', component: WarningComponent },
   { path: 'details/:productId', component: ProductDetailComponent },
   { path: 'about', component: AboutComponent },
