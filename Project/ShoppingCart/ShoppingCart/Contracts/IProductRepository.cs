@@ -11,7 +11,7 @@ namespace ShoppingCart.Contracts
         #region contracts
         ProductList GetAllProducts(int pageIndex);
         Product GetProduct(int id);
-        ProductWithDetails GetProductWithDetails(int id);
+        List<Product> GetProductWithDetails(int id);
         List<Product> GetProductListById(string[] productIds);
         List<Product> GetNewArrivalProducts(string category);
         List<Product> GetBestSellerProducts(string category);

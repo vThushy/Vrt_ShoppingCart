@@ -12,14 +12,18 @@ namespace ShoppingCart.Controllers
     [Route("product")]
     public class ProductController : ControllerBase
     {
+        #region Class variables
         private readonly ILogger<ProductController> _logger;
         private readonly IProductRepository _productRepository;
+        #endregion
 
+        #region Constructor
         public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
         {
             _logger = logger;
             _productRepository = productRepository;
         }
+        #endregion
 
         [HttpGet()]
         [Route("/product/page/{pageIndex}")]
@@ -55,6 +59,14 @@ namespace ShoppingCart.Controllers
                 return Problem(e.ToString());
             }
         }
+
+
+
+
+
+
+
+
 
         [HttpGet]
         [Route("/new-arrival/{category}")]

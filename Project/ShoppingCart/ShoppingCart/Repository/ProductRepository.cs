@@ -70,25 +70,31 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public ProductWithDetails GetProductWithDetails(int id)
+        public List<Product> GetProductWithDetails(int id)
 
         {
             try
             {
 
+                Product mainProduct = _shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
+                List<ProductDetails> subProduct = _shoppingCartDbContext.ProductDetails.Where(p => p.ProductId == id).ToList();
 
-                Product Product = _shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
-                // int[] Sizes = _shoppingCartDbContext.ProductDetails.Where(p => p.ProductId )
-                //List<ProductDetails> ProductAttr = _shoppingCartDbContext.ProductDetails
+                List<Product> returnProducts = new List<Product>();
 
-                //      .Where(d => d.ProductId == id )
-                //      .Select(p => new { p.ProductId, p.Color.Distinct() })
-                //      .Distinct()
-                //      .ToList();
-                // var ProductAttrs = _shoppingCartDbContext.ProductDetails.Where(d => d.ProductId == id).Select(p => p.ProductId).Distinct().ToList();
+                foreach (ProductDetails p in subProduct)
+                {
+                    Product addProduct = new Product();
+                    addProduct.Id = p.Id;
+                    addProduct.Name = mainProduct.Name;
+                    addProduct.CategoryId = mainProduct.CategoryId;
+                    addProduct.Description = mainProduct.Description;
+                    addProduct.Discount = mainProduct.Discount;
+                    addProduct.Price = mainProduct.Price;
+                    addProduct.DefaultImage = p.Image;
+                    returnProducts.Add(addProduct);
+                }
 
-                List<ProductDetails> ProductAttr = _shoppingCartDbContext.ProductDetails.Where(p => p.ProductId == id).ToList();
-                return new ProductWithDetails { Product = Product, ProductDetails = ProductAttr };
+                return returnProducts;
             }
             catch
             {
