@@ -27,7 +27,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetAllProducts(pageIndex);
+                ProductList response = _productRepository.GetAllProducts(pageIndex);
                 return Ok(response); 
             }
             catch (Exception e)

@@ -30,16 +30,26 @@ namespace ShoppingCart.Repository
             try
             {
                 int skip = (pageIndex - 1) * _productsForPage;
-                int noOfRecords = _shoppingCartDbContext.Products.Count();
-                var result = _shoppingCartDbContext.Products.Skip(skip).Take(_productsForPage).ToList();
-                foreach (Product p in result)
+                int noOfRecords = _shoppingCartDbContext.Products.Count(); 
+                List<Product> products = _shoppingCartDbContext.Products.Skip(skip).Take(_productsForPage).ToList();
+                List<Product> returnProducts = new List<Product>();
+
+                foreach (Product p in products)
                 {
-                    p.Id = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == p.Id).Id;
+                    Product addProduct = new Product();
+                    addProduct = p;
+                    var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                    if (result_ != null)
+                    {
+                        addProduct.Id = result_.Id;
+                        returnProducts.Add(addProduct);
+                    }
                 }
+
                 return new ProductList
                 {
                     NoOfProducts = noOfRecords,
-                    ListOfProducts = result
+                    ListOfProducts = products
                 };
             }
             catch
