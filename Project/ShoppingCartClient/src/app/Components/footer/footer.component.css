@@ -1,3 +1,22 @@
 .txtAlign{
     text-align: justify;
 }
+
+.zoom{
+    width: 0.2em;
+    transition: transform .2s;
+}
+
+.zoom:hover{
+    transform: scale(1.35);
+}
+
+.make-space a{
+    margin-left: 1em;
+}
+
+a img {
+    height: 5%;
+    width: 5%;
+    object-fit: cover;
+ }
