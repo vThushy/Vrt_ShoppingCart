@@ -28,8 +28,14 @@
     width: 15%;
     object-fit: cover;
     border: 0.01em solid #000;
+    cursor: pointer;
+    transition: transform .2s;
+    margin-left: 0.5em;
 }
 
+.related li img:hover{
+    transform: scale(1.1);
+}
 .productName{
     font-size: 2.8em;
 }
@@ -44,4 +50,14 @@
 
 .back :hover{
     color: royalblue;
+}
+
+.quantity{
+    text-align: center;
+    width: 3em;
+    margin:0.2em;
+}
+
+.add-cart{
+    margin-left: 0.4em;
 }

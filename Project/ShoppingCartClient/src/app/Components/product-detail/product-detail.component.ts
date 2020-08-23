@@ -6,6 +6,8 @@ import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { imagePath } from 'src/app/Util/paths';
 import { filter } from 'rxjs/operators';
+import ProductFunctions from 'src/app/Util/Functions';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -14,14 +16,14 @@ import { filter } from 'rxjs/operators';
 })
 export class ProductDetailComponent implements OnInit {
   imageFolderPath = imagePath.product_image_folder;
-
-  productId: string;
-  mainProduct: Product;
-  productDetails: ProductDetail[];
-  recommendProduct: Product[];
-  similiarProduct: Product[];
-  uniqueProducts: string[];
   previousUrl: string;
+  productId: string;
+
+  products: Product[];
+  similarProducts: Product[];
+  recommendProducts: Product[];
+  selectedProduct :Product;
+  qty: number  = 1;
 
   constructor(
     private productService: ProductsService,
@@ -37,15 +39,36 @@ export class ProductDetailComponent implements OnInit {
         this.previousUrl = event.url;
       });
     this.productId = this.route.snapshot.paramMap.get("productId");
+    
     this.productService.getProduct(this.productId).subscribe(
       result => {
-        this.mainProduct = result.product;
-        this.productDetails = result.productDetails;
-        this.uniqueProducts = [...new Set(this.productDetails.map(p => p.image))];
+        this.products = result;
+        this.selectedProduct =this.products[0];
+        this.selectedProduct.defaultImage = this.productId + '-DEF';
       },
       error => {
         this.exceptionHandlerService.handleError(error);
       });
+  }
+
+  changeProduct(selectProduct: Product){
+    this.selectedProduct = selectProduct;
+  }
+
+  addToCart(productId: number){
+    let u = new ProductFunctions();
+    u.addToCart(productId, this.qty);
+    console.log(u.getCartProducts());
+  }
+
+  increaseQty(){
+    this.qty  += 1;
+  }
+  
+  decreaseQty(){
+    if( this.qty > 1){
+      this.qty -+ 1;
+    }
   }
 
   back() {

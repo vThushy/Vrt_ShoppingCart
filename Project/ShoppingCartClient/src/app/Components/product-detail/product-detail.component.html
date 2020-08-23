@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-5 image">
-            <img class="border rounded" [src]="imageFolderPath + mainProduct.defaultImage + '.jpg'" alt="">
+            <img class="border rounded" [src]="imageFolderPath + (selectedProduct ? selectedProduct.defaultImage : 'no-image') + '.jpg'" alt="">
         </div>
 
         <div class="col-7 desc">
@@ -11,8 +11,8 @@
                 <p (click)="back()"># Back to products.</p>
             </div>
             <div class="row">
-                <span class="display-4 productName">{{mainProduct.name}}</span>
-                <span class="display-6">{{mainProduct.description}}</span>
+                <span class="display-4 productName">{{ (selectedProduct ?  selectedProduct.name: 'Product Name') }}</span>
+                <span class="display-6">{{ (selectedProduct ? selectedProduct.description : 'Product Description') }}</span>
                 <p>
                     <a href="#!" type="button" class="card-link-secondary small text-uppercase" data-toggle="modal"
                     data-target="#ReviewModal">
@@ -23,23 +23,23 @@
 
             <div class="row">
                 <ul class="related">
-                    <li *ngFor="let product of uniqueProducts">
-                        <img [src]="imageFolderPath + product + '.jpg'" alt="">
+                    <li *ngFor="let product of products">
+                        <img [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="" (click)="changeProduct(product)">
                     </li>
                 </ul>
             </div>
 
             <div class="row desc">
-                <span class="display-4">{{mainProduct.price | currency}}</span>
+                <span class="display-4">{{ (selectedProduct ? selectedProduct.price : '0.00') | currency}}</span>
 
             </div>
             <div class="row">
                 <div>
-                    <button class="changer btn btn-info">-</button>
-                    <input type="text" class="quantity" name="" id="" min="0" placeholder="0">
-                    <button class="changer btn btn-info">+</button>
+                    <button class="changer btn btn-info"  (click)="decreaseQty()">-</button>
+                    <input type="text" class="quantity" name="" id="" min="0" placeholder="0" width="5%" [ngModel]="qty">
+                    <button class="changer btn btn-info" (click)="increaseQty()">+</button>
                 </div>
-                <button type="button" class="btn btn-dark">ADD TO CART</button>
+                <button type="button" class="btn btn-dark add-cart" (click)="addToCart(selectedProduct.id)">ADD TO CART</button>
             </div>
             <div class="row">
                 <span>Categroies: </span>
@@ -54,8 +54,8 @@
 
 </div>
 
-<app-product-row viewTitle="RECOMMENDED FOR YOU" [productList]='recommendProduct'></app-product-row>
-<app-product-row viewTitle="SIMILIAR PRODUCTS" [productList]='similiarProduct'></app-product-row>
+<app-product-row viewTitle="RECOMMENDED FOR YOU" [productList]='recommendProducts'></app-product-row>
+<app-product-row viewTitle="SIMILIAR PRODUCTS" [productList]='similarProducts'></app-product-row>
 
 
 
