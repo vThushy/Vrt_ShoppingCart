@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -6,15 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  @Input() total;
-  finalTotal = 0;
+  total= 0;
+  discount = 0;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    if(this.total != null){
-      this.finalTotal = this.total;
-    }
+    let stringParam = this.route.snapshot.paramMap.get("total");
+    this.total = +stringParam.substring(0, stringParam.indexOf('0'))
+    this.discount = +stringParam.substring(stringParam.indexOf('0'), stringParam.length)
   }
 
 }
