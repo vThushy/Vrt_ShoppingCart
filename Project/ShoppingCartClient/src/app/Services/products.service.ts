@@ -53,8 +53,8 @@ export class ProductsService {
       );
   }
 
-  getProduct(productId: string): Observable<ProductWithDetails>{
-    return this.httpClient.get<ProductWithDetails>(produtAPI + '/' + productId)
+  getProduct(productId: string): Observable<Product[]>{
+    return this.httpClient.get<Product[]>(produtAPI + '/' + productId)
     .pipe(
       catchError(this.exceptionHandlerService.handleError)
     );
