@@ -24,8 +24,6 @@ import { PaymentComponent } from './Components/payment/payment.component';
 import { WarningComponent } from './Components/warning/warning.component';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -48,9 +46,7 @@ import { ContactComponent } from './contact/contact.component';
     PaymentComponent,
     WarningComponent,
     ProductDetailComponent,
-    OrderHistoryComponent,
-    AboutComponent,
-    ContactComponent
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,
