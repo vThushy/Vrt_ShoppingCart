@@ -6,4 +6,5 @@ export class Product{
     discount: number;
     price: number;
     defaultImage: string;
+    qty: number = 1;
 }
