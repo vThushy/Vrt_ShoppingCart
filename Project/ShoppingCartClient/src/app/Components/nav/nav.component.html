@@ -89,56 +89,95 @@
                   </li>
                 </ul>
               </div>
-
             </div>
           </div>
-
-
         </div>
       </li>
+
+      <!-- Men -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Men
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
           <div class="container">
             <div class="row">
-              <div class="col-md-4">
-                <span class="text-uppercase text-white">Casual wear</span>
+              <!-- Men - Casual wear -->
+              <div class="col-3">
+                <span class="text-uppercase text-white">Casual Wear</span>
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'men_casual_tshirt']">T-Shirts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'men_casual_shirt']">Shirts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_pant']">Pants</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_short']">Shorts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_jean']">Jeans</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_jacket']">Jackets</a>
                   </li>
                 </ul>
               </div>
-              <div class="col-md-4">
+
+              <!-- Men - formal wear -->
+              <div class="col-3">
+                <span class="text-uppercase text-white">Formal Wear</span>
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
+                    <a class="nav-link active"  [routerLink]="[productSearchPath, 'men_formal_tshirt']">T-Shirts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_pant']">Pants</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_shirts']">Shirts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_suit']">Suits</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_skirts']">Skirts</a>
                   </li>
                 </ul>
               </div>
-              <div class="col-md-4">
+
+              <!-- Women - sport wear -->
+              <div class="col-3">
+                <span class="text-uppercase text-white">Sport Wear</span>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link active"  [routerLink]="[productSearchPath, 'women_formal_tshirt']">T-Shirts</a>
+                  </li>
+                </ul>
                 <a href="">
-                  <img src="https://dummyimage.com/200x100/ccc/000&text=image+link" alt="" class="img-fluid">
+                  <img src="" alt="" class="img-fluid">
                 </a>
                 <p class="text-white">Short image call to action</p>
 
+              </div>
+
+              <div class="col-3">
+                <span class="text-uppercase text-white">Formal Wear</span>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Active</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Link item</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Link item</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
