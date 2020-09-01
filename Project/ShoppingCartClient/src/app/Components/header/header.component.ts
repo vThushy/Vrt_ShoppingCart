@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/Services/users.service';
 import { imagePath } from 'src/app/Util/paths';
 import { storeLocatoion } from 'src/app/Util/config';
+import ProductFunctions from 'src/app/Util/Functions';
 
 @Component({
   selector: 'app-header',
@@ -38,5 +39,10 @@ export class HeaderComponent implements OnInit {
     this.accountStatus = "My Account";
     this.changeRef.markForCheck();
     this.router.navigate(['']);
+  }
+
+  getCountOfCartItems(): number{
+    let f = new ProductFunctions();
+    return f.getCartItemsCount();
   }
 }

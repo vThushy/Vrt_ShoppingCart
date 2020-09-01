@@ -16,7 +16,7 @@
                 aria-haspopup="true" aria-expanded="false">{{ accountStatus }}</a>
             <div *ngIf="loggedIn" class="dropdown-menu" aria-labelledby="myAccountLink">
                 <a class="dropdown-item" routerLink="/favourite">Favourite</a>
-                <a class="dropdown-item" routerLink="/cart">My Cart</a>
+                <a class="dropdown-item" routerLink="/cart">My Cart <span class="badge count">{{ getCountOfCartItems() }}</span></a>
                 <a class="dropdown-item" routerLink="/orders">Orders</a>
                 <a class="dropdown-item" routerLink="/payment">Payments</a>
                 <a class="dropdown-item" (click)=logout()>Logout</a>

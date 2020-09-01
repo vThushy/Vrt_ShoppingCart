@@ -16,3 +16,10 @@
 .top-space{
     padding-top:2em;
 }
+
+.count{
+    background-color: royalblue;
+    color: #fff;
+    padding: 0.4em;
+    font-size: 1em;
+}
