@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-using ShoppingCart.Contexts;
+﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
+using ShoppingCart.Enum;
 using ShoppingCart.Models;
 using ShoppingCart.Utility;
 using System;
@@ -42,6 +42,8 @@ namespace ShoppingCart.Repository
                     if (result_ != null)
                     {
                         addProduct.Id = result_.Id;
+                        addProduct.DefaultImage = result_.Image;
+                        addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                         returnProducts.Add(addProduct);
                     }
                 }
@@ -91,6 +93,7 @@ namespace ShoppingCart.Repository
                     addProduct.Discount = mainProduct.Discount;
                     addProduct.Price = mainProduct.Price;
                     addProduct.DefaultImage = p.Image;
+                    addProduct.Size = ProductSize.GetName(typeof(ProductSize), p.Size);
                     returnProducts.Add(addProduct);
                 }
 
@@ -136,6 +139,8 @@ namespace ShoppingCart.Repository
                         if (result_ != null)
                         {
                             addProduct.Id = result_.Id;
+                            addProduct.DefaultImage = result_.Image;
+                            addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -188,6 +193,8 @@ namespace ShoppingCart.Repository
                         if (result_ != null)
                         {
                             addProduct.Id = result_.Id;
+                            addProduct.DefaultImage = result_.Image;
+                            addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -251,6 +258,8 @@ namespace ShoppingCart.Repository
                         if (result_ != null)
                         {
                             addProduct.Id = result_.Id;
+                            addProduct.DefaultImage = result_.Image;
+                            addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -292,6 +301,8 @@ namespace ShoppingCart.Repository
                             if (result_ != null)
                             {
                                 addProduct.Id = result_.Id;
+                                addProduct.DefaultImage = result_.Image;
+                                addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                                 returnProducts.Add(addProduct);
                             }
                         }
