@@ -9,6 +9,9 @@ import { CartComponent } from './Components/cart/cart.component';
 import { PaymentComponent } from './Components/payment/payment.component';
 import { WarningComponent } from './Components/warning/warning.component';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
+import { FavouriteComponent } from './Components/favourite/favourite.component';
+import { ContactComponent } from './Components/contact/contact.component';
+import { AboutComponent } from './Components/about/about.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +22,10 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'payment/:total', component: PaymentComponent },
   { path: 'error', component: WarningComponent },
-  { path: 'details/:productId', component: ProductDetailComponent }
+  { path: 'details/:productId', component: ProductDetailComponent },
+  { path: 'favourite', component: FavouriteComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent }
 ];
 
 @NgModule({
