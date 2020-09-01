@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.userService.verifyUser(this.user).subscribe(
         result => {
-          console.log(result);
           if (result.token != "") {
             localStorage.setItem('auth_token', result.token);
             localStorage.setItem('auth_user', this.user.UserName);
