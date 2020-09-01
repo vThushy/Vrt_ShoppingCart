@@ -60,14 +60,6 @@ namespace ShoppingCart.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
         [HttpGet]
         [Route("/new-arrival/{category}")]
         public IActionResult GetNewArrivalProducts(string category)
