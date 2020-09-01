@@ -42,7 +42,9 @@ export const imagePath = {
 
     'product_row_addToCart': 'assets/images/add_cart.png',
     'product_row_buynow': 'assets/images/buy.png',
-    'product_row_favourite': 'assets/images/favorite.png'
+    'product_row_favourite': 'assets/images/fav.png',
+    'product_row_unFavourite': 'assets/images/unFav.png',
+    'product_row_removeFromCart': 'assets/images/remove_cart.png'
 };
 
 
