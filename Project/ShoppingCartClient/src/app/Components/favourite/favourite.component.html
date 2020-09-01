@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<div class="jumbotron">
+    <h1>
+        Favourites.
+    </h1>
+</div>
+
+<section class="container">
+
+    <div class="card booking-card fav-cart" *ngFor="let product of favProducts">
+        <div class="view overlay">
+            <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="Product Image">
+            <a href="#!">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+
+        <div class="card-body">
+            <h4 class="card-title font-weight-bold"><a>{{ product.name }}</a></h4>
+
+            <p class="card-text">{{ product.description }}</p>
+            <hr class="my-4">
+            <a href="#" class="btn btn-flat deep-purple-text p-1 mx-0 mb-0">Remove</a>
+
+        </div>
+    </div>
+
+</section>
+
+
+<app-footer></app-footer>
