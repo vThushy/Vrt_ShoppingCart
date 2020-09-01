@@ -10,6 +10,7 @@
 .quantity{
     width: 4rem;
     margin: 0 0.4rem 0 0.4rem;
+    text-align: center;
 }
 
 .btn-manage a{

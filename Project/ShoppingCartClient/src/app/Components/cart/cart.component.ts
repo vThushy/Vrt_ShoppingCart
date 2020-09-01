@@ -1,12 +1,12 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import ProductFunctions from 'src/app/Util/Functions';
 import { ProductsService } from 'src/app/Services/products.service';
 import { Product } from 'src/app/Models/Product';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
-import { element } from 'protractor';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { imagePath } from 'src/app/Util/paths';
 
 @Component({
   selector: 'app-cart',
@@ -16,53 +16,39 @@ import { filter } from 'rxjs/operators';
 })
 
 export class CartComponent implements OnInit {
-  cartItems: string[];
+  imageFolderPath = imagePath.product_image_folder;
+  cartProducts: Product[];
+
   date = new Date();
   formAddNewAddress = false;
   addressId: number;
   deliveryAddress = 'Nallur, Jaffna, Sri Lanka.';
-  cartProducts: Product[];
+  
   previousUrl: string;
+  coupondiscount: Discount[];
 
   constructor(
     private datePipe: DatePipe,
     private productService: ProductsService,
     private exceptionHandlerService: ExceptionHandlerService,
-    private router: Router
-    ) { }
+    private router: Router,
+    private changeRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((event: NavigationEnd) => {
-      this.previousUrl = event.url;
-    });
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.previousUrl = event.url;
+      });
 
     var f = new ProductFunctions();
-    this.cartItems = f.getCartItemsAsArray();
     this.date.setDate(this.date.getDate() + 3);
-    console.log(this.cartItems);
 
-    this.productService.getCartItems(this.cartItems).subscribe(
-      result => {
-        this.cartProducts = result.cartItems;
-      },
-      error => {
-        this.exceptionHandlerService.handleError(error);
-      }
-    );
-
-    console.log(this.cartProducts);
+    this.cartProducts = f.getCartProducts();
   }
 
-  getTotalItemCunt(): number{
-    let count = 0;
-    if( this.cartItems != null){
-      count = this.cartItems.length;
-    }
-    return count;
-  }
-
+ 
   addressChange(addressId: number) {
     if (addressId == 0) {
       this.formAddNewAddress = true;
@@ -74,69 +60,76 @@ export class CartComponent implements OnInit {
     // this.deliveryAddress = this.addressId;
   }
 
-  getItemCount(productId: number): number{
-    let count: number = 0;
-    this.cartProducts.forEach(element => {
-      if(element.id == productId){
-        count++;
-      }
-    });
-    return count;
+  getTotalItemCount(): number {
+    let f = new ProductFunctions();
+    return f.getCartItemsCount();
   }
 
-  increaseQty(productId: number){
-    let increaseProduct: Product;
-    for( let element of this.cartProducts){
-      if(element.id == productId){
-        increaseProduct = element;
-        break;
-      }
-    };
-    this.cartItems.push(increaseProduct.id.toString());
-    this.cartProducts.push(increaseProduct);
+  increaseQty(product: Product) {
+    let f = new ProductFunctions();
+    f.increaseCartItemQty(product);
+    this.changeRef.detectChanges();
   }
 
-  decreaseQty(productId : number){
-    let decreaseProduct: Product;
-    for(let element of this.cartProducts){
-      if(element.id == productId){
-        decreaseProduct = element;
-        break;
-      }
-    };
-    let productIndex = this.cartProducts.indexOf(decreaseProduct);
-    let itemIndex = this.cartItems.indexOf(decreaseProduct.id.toString());
-    this.cartProducts.splice(productIndex,1)
-    this.cartItems.splice(itemIndex, 1);
+  decreaseQty(product: Product) {
+    let f = new ProductFunctions();
+    f.decreaseCartItemQty(product);
+    this.changeRef.reattach();
   }
 
-  calculateItemTotal(price: number, qty: number): number{
-    return (price * qty);
+  getQty(product: number): number{
+    let f = new ProductFunctions();
+    return f.getFromCart(product).qty;
   }
 
-  calculateNetTotal(): number{
+  removeItem(product: Product) {
+    let f = new ProductFunctions();
+    f.removeFromCart(product);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/cart']);
+  }); 
+  }
+
+  calculateNetTotal(): number {
     let sum = 0;
-    if(this.cartProducts){
+    if (this.cartProducts) {
       this.cartProducts.forEach(element => {
-        sum = sum + element.price;
+        sum = sum + (element.price * this.getQty(element.id));
       });
     }
-    
     return sum;
   }
 
-  calculateShipping(): number{
+  calculateShipping(): number {
     return this.calculateNetTotal() * 0.05;
   }
 
-  calcualteTotal(): number{
-    return (this.calculateNetTotal() + this.calculateShipping());
+  calculateTotal(): number {
+    return (this.calculateNetTotal() + this.calculateShipping() - this.totalDiscount());
   }
 
-  backTo(){
+  backTo() {
     this.router.navigateByUrl(this.previousUrl);
   }
 
+  checkout() {
+    let param: string = this.calculateTotal().toString() + this.totalDiscount().toString()
+    this.router.navigate(['/payment', param]);
+  }
+
+  addDiscount() {
+    return 0;
+  }
+
+  totalDiscount(): number {
+    let totalDis: number = 0;
+    if (this.coupondiscount != null) {
+      this.coupondiscount.forEach(element => {
+        totalDis += element.amount;
+      });
+    }
+    return totalDis;
+  }
 
 
 
@@ -144,4 +137,9 @@ export class CartComponent implements OnInit {
 
 
 
+}
+
+export class Discount {
+  coupon: string;
+  amount: number;
 }
