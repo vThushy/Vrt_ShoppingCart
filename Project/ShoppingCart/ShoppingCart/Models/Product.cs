@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingCart.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,6 +31,9 @@ namespace ShoppingCart.Models
 
         [StringLength(100)]
         public string DefaultImage { get; set; }
+
+        [NotMapped]
+        public string Size { get; set; }
         #endregion
     }
 }
