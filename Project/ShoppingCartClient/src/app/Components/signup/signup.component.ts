@@ -65,7 +65,6 @@ export class SignupComponent implements OnInit {
     if (this.signUpForm.invalid) {
       return;
     } else {
-      console.log(this.customer);
       this.customerService.registerCustomer(this.customer).subscribe(
         result => {
           localStorage.setItem('auth_token', result.token);
