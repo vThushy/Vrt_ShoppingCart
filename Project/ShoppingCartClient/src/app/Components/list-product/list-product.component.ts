@@ -48,7 +48,6 @@ export class ListProductComponent implements OnInit {
     this.filterType = this.route.snapshot.paramMap.get("type");
     this.searchValue = this.route.snapshot.paramMap.get("searchValue");
     this.heading = this.searchValue.replace('_', ' ');
-
     this.fetchProducts();
   }
 
@@ -90,25 +89,23 @@ export class ListProductComponent implements OnInit {
         });
     }
   }
-
-  addToFav(productId: number) {
+  
+  addToFav(product: Product) {
     if (this.usersService.isLogged()) {
-      var u = new ProductFunctions();
-      u.addToFav(productId);
+      let f = new ProductFunctions();
+      f.addToFav(product);
     } else {
       this.router.navigateByUrl('/login');
     }
   }
 
-  addToCart(productId: number) {
+  addToCart(product: Product) {
     if (this.usersService.isLogged()) {
-      var u = new ProductFunctions();
-      u.addToCart(productId);
+      let f = new ProductFunctions();
+      f.addToCart(product);
     } else {
       this.router.navigateByUrl('/login');
     }
   }
-
-
 
 }

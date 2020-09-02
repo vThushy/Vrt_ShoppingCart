@@ -1,13 +1,14 @@
 <app-header></app-header>
 <app-nav></app-nav>
 
-<div class="container">
-    <div class="jumbotron">
-        <h1>
-            {{ heading }}
-        </h1>
-    </div>
+<div class="jumbotron" style="text-align: center; font-weight: bold;">
+    <h1 class="display-4" style="text-align: center; font-weight: bold;">
+        {{ heading }}
+    </h1>
+</div>
 
+
+<div class="container">
     <div class="row" *ngIf="noOfResults < 1">
         <div class="col container">
             <h1 class="no-result">
@@ -25,20 +26,20 @@
             <div class="row">
                 <!-- list of products -->
                 <div *ngFor="let product of results" class="card" style="width: 18rem;">
-                    <a [routerLink]="[urlProductDetails, product.id]">
+                    <a [routerLink]="[urlProductDetails, product.baseProduct]">
                         <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'"
                             alt="image not uploaded">
                     </a>
                     <div class="card-body">
                         <h6 class="card-title">{{product.name}}</h6>
-                        <span>Price : {{product.price | currency}}</span><br>
-                        <a title="Buy now" class="btn btn-primary" [routerLink]="[urlProductDetails, product.id]">
+                        <span>Price : {{product.price | currency:'LKR':'symbol-narrow'}}</span><br>
+                        <a title="Buy now" class="btn btn-primary" [routerLink]="[urlProductDetails, product.baseProduct]">
                             <img [src]="buyNowImagePath" alt="Buy now">
                         </a>
-                        <a title="Add to cart" class="btn btn-primary" (click)="addToCart(product.id)">
+                        <a title="Add to cart" class="btn btn-primary" (click)="addToCart(product)">
                             <img [src]="addToCartImagePath" alt="Add To Cart">
                         </a>
-                        <a title="Favourite" class="btn btn-primary" (click)="addToFav(product.id)">
+                        <a title="Favourite" class="btn btn-primary" (click)="addToFav(product)">
                             <img [src]="favouriteImagePath" alt="Favourite">
                         </a>
                     </div>

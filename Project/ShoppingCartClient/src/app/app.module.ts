@@ -25,6 +25,8 @@ import { WarningComponent } from './Components/warning/warning.component';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
 import { OrderHistoryComponent } from './Components/order-history/order-history.component';
 import { FavouriteComponent } from './Components/favourite/favourite.component';
+import { ContactComponent } from './Components/contact/contact.component';
+import { AboutComponent } from './Components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { FavouriteComponent } from './Components/favourite/favourite.component';
     WarningComponent,
     ProductDetailComponent,
     OrderHistoryComponent,
-    FavouriteComponent
+    FavouriteComponent,
+    ContactComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

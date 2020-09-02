@@ -7,6 +7,7 @@ import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service'
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { imagePath } from 'src/app/Util/paths';
+import { Coupon, coupons } from 'src/app/Util/Const/Coupons';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,7 @@ import { imagePath } from 'src/app/Util/paths';
 export class CartComponent implements OnInit {
   imageFolderPath = imagePath.product_image_folder;
   cartProducts: Product[];
+  urlProductDetails = "/details";
 
   date = new Date();
   formAddNewAddress = false;
@@ -25,7 +27,9 @@ export class CartComponent implements OnInit {
   deliveryAddress = 'Nallur, Jaffna, Sri Lanka.';
   
   previousUrl: string;
-  coupondiscount: Discount[];
+  coupondiscount: Coupon[];
+  couponCode: string;
+  wrongCoupon: boolean= false;
 
   constructor(
     private datePipe: DatePipe,
@@ -87,7 +91,7 @@ export class CartComponent implements OnInit {
     f.removeFromCart(product);
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/cart']);
-  }); 
+    }); 
   }
 
   calculateNetTotal(): number {
@@ -113,12 +117,31 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    let param: string = this.calculateTotal().toString() + this.totalDiscount().toString()
-    this.router.navigate(['/payment', param]);
+    let f = new ProductFunctions();
+    f.setTotal(this.calculateTotal());
+    f.setDiscount(this.totalDiscount());
+    this.router.navigate(['/payment']);
   }
 
   addDiscount() {
-    return 0;
+    console.log('test');
+    let f = new ProductFunctions();
+    if(f.existInCoupon(this.couponCode)){
+      let c: Coupon = f.getCoupon(this.couponCode);
+      this.coupondiscount.push(c);
+    }else{
+      this.wrongCoupon = true;
+    }
+  }
+
+  removeDiscount(coupon: string) {
+    let indexOfRemove: number;
+    for (let i = 0; i < coupons.length; i++) {
+        if (coupons[i].coupon == coupon) {
+            indexOfRemove = i;
+        }
+    }
+    coupons.splice(indexOfRemove, 1);
   }
 
   totalDiscount(): number {
@@ -131,15 +154,5 @@ export class CartComponent implements OnInit {
     return totalDis;
   }
 
-
-
-
-
-
-
 }
 
-export class Discount {
-  coupon: string;
-  amount: number;
-}

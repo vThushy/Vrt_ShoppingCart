@@ -1,88 +1,241 @@
+import { Product } from '../Models/Product';
+import { coupons, Coupon } from './Const/Coupons';
+
 export default class ProductFunctions {
 
-    public setCartProducts(productId: number) {
-        let products: string;
-        if (this.getCartProducts() != null) {
-            products = localStorage.getItem('cart-products');
-            products += '-' + productId;
-            localStorage.setItem('cart-products', products);
-        } else {
-            products = productId.toString();
-            localStorage.setItem('cart-products', products);
-        }
-        console.log(localStorage.getItem('cart-products'))
+    public removeCartProductsAttr() {
+        localStorage.removeItem('cart-products');
     }
 
-    public addToCart(productId: number) {
-        if (productId != null) {
-            this.setCartProducts(productId);
-        }
-
-    }
-
-    public addToFav(productId: number) {
-        if (productId != null) {
-            this.setFavProducts(productId);
-        }
-    }
-
-    public getCartProducts(): string {
+    public getCartProductsAttr(): string {
         return localStorage.getItem('cart-products');
     }
 
-    
-    public getFavProducts(): string {
+    public setCartProductsAttr(products: Product[]) {
+        let attr: string;
+        if (products != null) {
+            this.removeCartProductsAttr();
+            localStorage.setItem('cart-products', JSON.stringify(products));
+        }
+    }
+
+    public existInCart(product: Product): boolean {
+        if (this.getCartProducts() != null) {
+            this.getCartProducts().forEach(element => {
+                if (element.id == product.id) {
+                    return true;
+                }
+            });
+        }
+        return false;
+    }
+
+    public getCartProducts(): Product[] {
+        var attr = localStorage.getItem('cart-products');
+        if (attr == "undefined") {
+            return null;
+        } else {
+            var json = { 'retrievedProducts: ': JSON.parse(attr) };
+            return json["retrievedProducts: "];
+        }
+    }
+
+    public setCartProducts(product: Product) {
+        let products: Product[] = [];
+
+        if (this.getCartProducts() != null) {
+            products = this.getCartProducts();
+            if (this.existInCart(product)) {
+                this.increaseCartItemQty(product);
+            }
+            else {
+                products.push(product);
+            }
+        }
+        else {
+            products.push(product);
+        }
+        this.setCartProductsAttr(products);
+    }
+
+    public addToCart(product: Product) {
+        if (product.id != null) {
+            if (product.qty == null) {
+                product.qty = 1;
+            }
+            this.setCartProducts(product);
+        }
+    }
+
+    public removeFromCart(product: Product) {
+        let cartItems = this.getCartProducts();
+        let indexOfRemove: number;
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id == product.id) {
+                indexOfRemove = i;
+            }
+        }
+        cartItems.splice(indexOfRemove, 1);
+        this.setCartProductsAttr(cartItems);
+    }
+
+    public increaseCartItemQty(product: Product) {
+        let cartItems = this.getCartProducts();
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id == product.id) {
+                cartItems[i].qty += 1;
+            }
+        }
+        this.setCartProductsAttr(cartItems);
+    }
+
+    public decreaseCartItemQty(product: Product) {
+        let cartItems = this.getCartProducts();
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id == product.id) {
+                cartItems[i].qty -= 1;
+            }
+        }
+        this.setCartProductsAttr(cartItems);
+    }
+
+    public getCartItemsCount(): number {
+        let count = 0;
+        if (this.getCartProducts()) {
+            this.getCartProducts().forEach(element => {
+                count += element.qty;
+            });
+            return count;
+        }
+        return null;
+    }
+
+    public getCartProductsId(): string[] {
+        let ids: string[] = [];
+        if (this.getCartProducts() != null) {
+            this.getCartProducts().forEach(element => {
+                if (element.id != null) {
+                    ids.push(element.id.toString());
+                }
+            });
+        }
+        return ids;
+    }
+
+    public getFromCart(productId: number): Product {
+        let cartItems = this.getCartProducts();
+        let returnProduct: Product;
+
+        cartItems.forEach(element => {
+            if (element.id == productId) {
+                returnProduct = element;
+                returnProduct.qty = element.qty != null ? element.qty : 1;
+            }
+        });
+        return returnProduct;
+    }
+
+
+
+
+
+
+
+    // Favourite
+
+    public removeFavProductsAttr() {
+        localStorage.removeItem('fav-products');
+    }
+
+    public getFavProductsAttr() {
         return localStorage.getItem('fav-products');
     }
 
-    public setFavProducts(productId: number) {
-        let products: string;
+    public setFavProductsAttr(products: Product[]) {
+        let attr: string;
+        if (products != null) {
+            this.removeFavProductsAttr();
+            localStorage.setItem('fav-products', JSON.stringify(products));
+        }
+    }
+
+    public existInFav(product: Product): boolean {
         if (this.getFavProducts() != null) {
-            products = localStorage.getItem('fav-products');
-            products += '-' + productId;
-            localStorage.setItem('fav-products', products);
+            this.getFavProducts().forEach(element => {
+                if (element.id == product.id) {
+                    return true;
+                }
+            });
+        }
+        return false;
+    }
+
+    public getFavProducts(): Product[] {
+        var attr = localStorage.getItem('fav-products');
+
+        if (attr == "undefined") {
+            return null;
         } else {
-            products = productId.toString();
-            localStorage.setItem('fav-products', products);
+            var json = { 'retrievedProducts: ': JSON.parse(attr) };
+            return json["retrievedProducts: "];
         }
     }
 
-    public checkInCart(productId: number): boolean {
-        if (this.getCartProducts() != null) {
-            return this.getCartProducts().includes(productId.toString());
+    public addToFav(product: Product) {
+        if (product.id != null) {
+            let products: Product[] = [];
+            products = this.getFavProducts();
+            products.push(product);
+            this.setFavProductsAttr(products);
         }
-        return false;
     }
 
-    public checkInFav(productId: number): boolean {
-        if (this.getCartProducts() != null) {
-            console.log('infave');
-            return this.getFavProducts().includes(productId.toString());
+    public removeFromFav(product: Product) {
+        let cartItems = this.getFavProducts();
+        let indexOfRemove: number;
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id == product.id) {
+                indexOfRemove = i;
+            }
         }
-        console.log('notfave');
-        return false;
+        cartItems.splice(indexOfRemove, 1);
+        this.setFavProductsAttr(cartItems);
     }
 
-    public getCartItemsAsArray(): string[]{
-        return this.getCartProducts().split('-');
+    //Payment
+    setTotal(total: number){
+        localStorage.setItem('Total-Amount', total.toString());
     }
 
-    public getCartItemsCount(): number{
-        return this.getCartProducts().split('-').length;
+    setDiscount(discount: number){
+        localStorage.setItem('Discount-amount', discount.toString());
     }
 
-    public getFavItemsAsArray(): string[]{
-        return this.getFavProducts().split('-');
+    getTotal(): number{
+        return +localStorage.getItem('Total-Amount');
     }
 
-    public getFavItemsCount(): number{
-        return this.getFavProducts().split('-').length;
+    getDiscount(): number{
+        return +localStorage.getItem('Discount-amount');
     }
 
-    public checkAlreadyExist(productId: number): boolean{
-        if (this.getCartItemsAsArray().indexOf(productId.toString()) != -1 && this.getFavItemsAsArray().indexOf(productId.toString()) != -1){
+    //coupon
+    existInCoupon(coupon: string): boolean{
+        coupons.forEach(element => {
+          if(element.coupon == coupon){
             return true;
-        }
-        return false;
+          }
+          return false;
+        });
+    }
+
+    getCoupon(coupon: string): Coupon{
+        coupons.forEach(element => {
+            if(element.coupon == coupon){
+              return element;
+            }
+            return null;
+        });
+        return null;
     }
 }

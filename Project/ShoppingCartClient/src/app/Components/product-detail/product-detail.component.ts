@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/Services/products.service';
 import { Product } from 'src/app/Models/Product';
-import { ProductDetail } from 'src/app/Models/ProductDetails';
 import { ExceptionHandlerService } from 'src/app/Util/exception-handler.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { imagePath } from 'src/app/Util/paths';
 import { filter } from 'rxjs/operators';
 import ProductFunctions from 'src/app/Util/Functions';
+import { UsersService } from 'src/app/Services/users.service';
 
 
 @Component({
@@ -14,22 +14,26 @@ import ProductFunctions from 'src/app/Util/Functions';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
+
 export class ProductDetailComponent implements OnInit {
   imageFolderPath = imagePath.product_image_folder;
   previousUrl: string;
   productId: string;
 
-  products: Product[];
+  products: Product[] = [];
+  typesOfProducts: Product[] = [];
   similarProducts: Product[];
   recommendProducts: Product[];
   selectedProduct :Product;
+  sizes: string[] =[];
   qty: number  = 1;
 
   constructor(
     private productService: ProductsService,
     private exceptionHandlerService: ExceptionHandlerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userService: UsersService
   ) { }
 
   ngOnInit(): void {
@@ -39,12 +43,18 @@ export class ProductDetailComponent implements OnInit {
         this.previousUrl = event.url;
       });
     this.productId = this.route.snapshot.paramMap.get("productId");
-    
+    let uniqueIds = [];
     this.productService.getProduct(this.productId).subscribe(
       result => {
+        result.forEach(element => {
+          if(uniqueIds.indexOf(element.defaultImage) == -1){
+            uniqueIds.push(element.defaultImage);
+            this.typesOfProducts.push(element);
+          }
+        });
         this.products = result;
-        this.selectedProduct =this.products[0];
-        this.selectedProduct.defaultImage = this.productId + '-DEF';
+        this.changeProduct(this.products[0]);
+        
       },
       error => {
         this.exceptionHandlerService.handleError(error);
@@ -53,22 +63,39 @@ export class ProductDetailComponent implements OnInit {
 
   changeProduct(selectProduct: Product){
     this.selectedProduct = selectProduct;
+    this.sizes = [];
+    this.products.forEach(element => {
+      if(element.defaultImage == this.selectedProduct.defaultImage){
+        this.sizes.push(element.size);
+      }
+    });
   }
 
-  addToCart(productId: number){
-    let u = new ProductFunctions();
-    u.addToCart(productId, this.qty);
-    console.log(u.getCartProducts());
+  changeProductOnSize(selectedSize: string){
+    this.products.forEach(element => {
+      if(element.defaultImage == this.selectedProduct.defaultImage && element.size == selectedSize){
+        this.selectedProduct = element;
+      }
+    });
+  }
+
+  addToCart(product: Product, qty: number = 1){
+    if (this.userService.isLogged()) {
+      var u = new ProductFunctions();
+      product.qty = qty;
+      u.addToCart(product);
+      this.router.navigateByUrl('/cart');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   increaseQty(){
-    this.qty  += 1;
+    this.qty +=  1;
   }
   
   decreaseQty(){
-    if( this.qty > 1){
-      this.qty -+ 1;
-    }
+    this.qty -= 1;
   }
 
   back() {

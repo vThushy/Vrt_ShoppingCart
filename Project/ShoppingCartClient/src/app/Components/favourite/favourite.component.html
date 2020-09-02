@@ -1,30 +1,33 @@
 <app-header></app-header>
 
-<div class="jumbotron">
-    <h1>
-        Favourites.
+<div class="jumbotron" style="text-align: center; font-weight: bold;">
+    <h1 class="display-4" style="text-align: center; font-weight: bold;">
+        Favourites. 
     </h1>
 </div>
 
 <section class="container">
 
-    <div class="card booking-card fav-cart" *ngFor="let product of favProducts">
-        <div class="view overlay">
-            <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="Product Image">
-            <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-            </a>
-        </div>
+    <ul>
+        <li class="card booking-card fav-cart" *ngFor="let product of favProducts">
+            <div class="view overlay">
+                <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="Product Image">
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
 
-        <div class="card-body">
-            <h4 class="card-title font-weight-bold"><a>{{ product.name }}</a></h4>
+            <div class="card-body">
+                <h4 class="card-title font-weight-bold"><a>{{ product.name }}</a></h4>
 
-            <p class="card-text">{{ product.description }}</p>
-            <hr class="my-4">
-            <a href="#" class="btn btn-flat deep-purple-text p-1 mx-0 mb-0">Remove</a>
+                <p class="card-text">{{ product.description }}</p>
+                <a title="Favourite" class="btn btn-primary" (click)="removeFromFav(product)">
+                    <img [src]="favImagePath" alt="Favourite">
+                </a>
+            </div>
+        </li>
+    </ul>
 
-        </div>
-    </div>
 
 </section>
 

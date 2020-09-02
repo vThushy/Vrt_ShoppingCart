@@ -4,8 +4,10 @@
 
 .fav-cart{
     width: 20em;
+    margin-left: 0.5em;
 }
 
-.jumbotron{
-    text-align: center;
+
+ul > li{
+    display: inline-block;
 }

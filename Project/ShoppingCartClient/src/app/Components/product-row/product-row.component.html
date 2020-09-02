@@ -4,21 +4,21 @@
 
     <ul class="tes">
         <li class="card" style="width: 13rem;" *ngFor="let product of products">
-            <a [routerLink]="[urlProductDetails, product.id]">
+            <a [routerLink]="[urlProductDetails, product.baseProduct]">
                 <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'"
                     alt="image not uploaded!">
             </a>
             <div class="card-body">
                 <h6 class="card-title">{{product.name}}</h6>
-                <span>Price : {{product.price | currency}}</span><br>
-                <a title="Buy now" class="btn btn-primary" [routerLink]="[urlProductDetails, product.id]">
+                <span>Price : {{product.price | currency:'LKR':'symbol-narrow'}}</span><br>
+                <a title="Buy now" class="btn btn-primary" [routerLink]="[urlProductDetails, product.baseProduct]">
                     <img [src]="buyNowImagePath" alt="Buy now">
                 </a>
-                <a title="Add to cart" class="btn btn-primary" (click)="addToCart(product.id)">
-                    <img [src]=cartImage(product.id) alt="Add To Cart">
+                <a title="Add to cart" class="btn btn-primary" (click)="addToCart(product)">
+                    <img [src]=cartImage(product) alt="Add To Cart">
                 </a>
-                <a title="Favourite" class="btn btn-primary" (click)="addToFav(product.id)">
-                    <img [src]=favImage(product.id) alt="Favourite">
+                <a title="Favourite" class="btn btn-primary" (click)="addToFav(product)">
+                    <img [src]=favImage(product) alt="Favourite">
                 </a>
             </div>
         </li>

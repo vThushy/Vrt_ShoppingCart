@@ -23,15 +23,18 @@
 
             <div class="row">
                 <ul class="related">
-                    <li *ngFor="let product of products">
+                    <li *ngFor="let product of typesOfProducts">
                         <img [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="" (click)="changeProduct(product)">
                     </li>
                 </ul>
             </div>
 
             <div class="row desc">
-                <span class="display-4">{{ (selectedProduct ? selectedProduct.price : '0.00') | currency}}</span>
-
+                <span class="display-4">{{ (selectedProduct ? selectedProduct.price : '0.00') | currency:'LKR':'symbol-narrow'}}</span>
+            </div>
+            <div class="row types">
+                <span *ngFor="let item of sizes" [ngStyle]="{'background-color': selectedProduct.size === item ? 'royalblue' : '' }"
+                 (click)="changeProductOnSize(item)">{{ item }}</span> 
             </div>
             <div class="row">
                 <div>
@@ -39,11 +42,7 @@
                     <input type="text" class="quantity" name="" id="" min="0" placeholder="0" width="5%" [ngModel]="qty">
                     <button class="changer btn btn-info" (click)="increaseQty()">+</button>
                 </div>
-                <button type="button" class="btn btn-dark add-cart" (click)="addToCart(selectedProduct.id)">ADD TO CART</button>
-            </div>
-            <div class="row">
-                <span>Categroies: </span>
-                <span>Tags: </span>
+                <button type="button" class="btn btn-dark add-cart" (click)="addToCart(selectedProduct, qty)">ADD TO CART</button>
             </div>
             <div class="row"></div>
             <div class="row"></div>

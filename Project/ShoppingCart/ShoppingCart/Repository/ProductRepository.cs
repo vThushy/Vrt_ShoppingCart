@@ -41,6 +41,7 @@ namespace ShoppingCart.Repository
                     var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                     if (result_ != null)
                     {
+                        addProduct.BaseProduct = p.Id;
                         addProduct.Id = result_.Id;
                         addProduct.DefaultImage = result_.Image;
                         addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
@@ -86,6 +87,7 @@ namespace ShoppingCart.Repository
                 foreach (ProductDetails p in subProduct)
                 {
                     Product addProduct = new Product();
+                    addProduct.BaseProduct = mainProduct.Id;
                     addProduct.Id = p.Id;
                     addProduct.Name = mainProduct.Name;
                     addProduct.CategoryId = mainProduct.CategoryId;
@@ -138,6 +140,7 @@ namespace ShoppingCart.Repository
                         var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                         if (result_ != null)
                         {
+                            addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
@@ -159,7 +162,10 @@ namespace ShoppingCart.Repository
                         var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                         if (result_ != null)
                         {
+                            addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
+                            addProduct.DefaultImage = result_.Image;
+                            addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -192,6 +198,7 @@ namespace ShoppingCart.Repository
                         var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                         if (result_ != null)
                         {
+                            addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
@@ -217,7 +224,10 @@ namespace ShoppingCart.Repository
                         var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                         if (result_ != null)
                         {
+                            addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
+                            addProduct.DefaultImage = result_.Image;
+                            addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -257,6 +267,7 @@ namespace ShoppingCart.Repository
                         var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                         if (result_ != null)
                         {
+                            addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
@@ -300,6 +311,7 @@ namespace ShoppingCart.Repository
                             var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
                             if (result_ != null)
                             {
+                                addProduct.BaseProduct = p.Id;
                                 addProduct.Id = result_.Id;
                                 addProduct.DefaultImage = result_.Image;
                                 addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);

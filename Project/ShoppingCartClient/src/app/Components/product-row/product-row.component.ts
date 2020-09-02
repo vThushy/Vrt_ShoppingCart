@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Product } from 'src/app/Models/Product';
 import { imagePath } from 'src/app/Util/paths';
-import { FunctionalityService } from 'src/app/Util/functionality.service';
 import { UsersService } from 'src/app/Services/users.service';
 import { Router } from '@angular/router';
-import Ftest from 'src/app/Util/Functions';
 import ProductFunctions from 'src/app/Util/Functions';
 
 @Component({
@@ -16,10 +14,10 @@ import ProductFunctions from 'src/app/Util/Functions';
 export class ProductRowComponent implements OnChanges {
   imageFolderPath = imagePath.product_image_folder;
   addToCartImagePath = imagePath.product_row_addToCart;
+  removeCartImagePath = imagePath.product_row_removeFromCart;
   buyNowImagePath = imagePath.product_row_buynow;
-  favouriteImagePath = imagePath.product_row_favourite;
-  favouritedImagePath = imagePath.product_row_addToCart;
-  removeCartImagePath = imagePath.product_row_favourite;
+  favImagePath = imagePath.product_row_favourite;
+  unFavImagePath = imagePath.product_row_unFavourite;
   urlProductDetails = "/details";
 
   heading: string;
@@ -45,38 +43,46 @@ export class ProductRowComponent implements OnChanges {
     }
   }
 
-  addToFav(productId: number) {
-    if (this.usersService.isLogged()) {
-      var u = new ProductFunctions();
-      u.addToFav(productId);
-    } else {
-      this.router.navigateByUrl('/login');
-    }
-  }
 
-  addToCart(productId: number) {
+
+  addToCart(product: Product) {
     if (this.usersService.isLogged()) {
-      var u = new ProductFunctions();
-      u.addToCart(productId);
+      let f = new ProductFunctions();
+      f.addToCart(product);
       this.changeDet.markForCheck();
     } else {
       this.router.navigateByUrl('/login');
     }
   }
 
-  cartImage(productId: number) {
-    var u = new ProductFunctions();
-    if (u.checkInCart(productId)) {
+  cartImage(product: Product) {
+    let f = new ProductFunctions();
+    if (f.existInCart(product)) {
       return this.removeCartImagePath;
     }
     return this.addToCartImagePath;
   }
 
-  favImage(productId: number) {
-    var u = new ProductFunctions();
-    if (u.checkInFav(productId)) {
-      return this.favouritedImagePath;
+  addToFav(product: Product) {
+    if (this.usersService.isLogged()) {
+      let f = new ProductFunctions();
+      if (f.existInFav(product)) {
+        f.removeFromFav(product);
+      }
+      else {
+        f.addToFav(product);
+      }
+      this.changeDet.markForCheck();
+    } else {
+      this.router.navigateByUrl('/login');
     }
-    return this.favouriteImagePath;
+  }
+
+  favImage(product: Product) {
+    let f = new ProductFunctions();
+    if (f.existInFav(product)) {
+      return this.favImagePath;
+    }
+    return this.unFavImagePath;
   }
 }

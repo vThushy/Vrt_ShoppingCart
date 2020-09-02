@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import ProductFunctions from 'src/app/Util/Functions';
 
 @Component({
   selector: 'app-payment',
@@ -7,17 +8,19 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  total= 0;
+  total = 0;
   discount = 0;
+  totalAfterDiscount = 0;
 
   constructor(
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    let stringParam = this.route.snapshot.paramMap.get("total");
-    this.total = +stringParam.substring(0, stringParam.indexOf('0'))
-    this.discount = +stringParam.substring(stringParam.indexOf('0'), stringParam.length)
+    let f = new ProductFunctions();
+    this.totalAfterDiscount = f.getTotal();
+    this.discount = f.getDiscount();
+    this.total = this.totalAfterDiscount - this.discount;
   }
 
 }
