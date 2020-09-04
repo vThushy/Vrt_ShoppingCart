@@ -28,7 +28,8 @@ namespace ShoppingCart.Models
         [EnumDataType(typeof(OrderStatus), ErrorMessage = "Order Status value doesn't exist within enum")]
         public OrderStatus OrderStatus { get; set;}
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        [NotMapped]
+        public List<OrderDetail> OrderDetails { get; set; }
         #endregion
     }
 }

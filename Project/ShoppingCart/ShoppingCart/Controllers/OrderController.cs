@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -9,7 +10,6 @@ using ShoppingCart.Models;
 
 namespace ShoppingCart.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("order")]
     public class OrderController : ControllerBase
@@ -17,12 +17,14 @@ namespace ShoppingCart.Controllers
         #region class variables
         private readonly ILogger<OrderController> _logger;
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
         #endregion
 
         #region constructor
-        public OrderController(IOrderRepository orderRepository, ILogger<OrderController> logger)
+        public OrderController(IOrderRepository orderRepository, IOrderDetailsRepository orderDetailsRepository, ILogger<OrderController> logger)
         {
             _orderRepository = orderRepository;
+            _orderDetailsRepository = orderDetailsRepository;
             _logger = logger;
         }
         #endregion
@@ -34,8 +36,20 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _orderRepository.GetAllOrdersByCustomer(userName);
-                return Ok(response);
+                List<Order> orders = _orderRepository.GetAllOrdersByCustomer(userName);
+                List<Order> returnOrders = new List<Order>();
+
+                foreach (Order order in orders)
+                {
+                    if (order != null)
+                    {
+                        var orderLines = _orderDetailsRepository.GetOrderLines(order.Id);
+                        order.OrderDetails = orderLines;
+                        returnOrders.Add(order);
+                    }
+                }
+                
+                return Ok(returnOrders);
             }
             catch (SqlException e)
             {
@@ -49,12 +63,15 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _orderRepository.GetOrder(id);
-                if (response == null)
+                var order = _orderRepository.GetOrder(id);
+                if (order != null)
                 {
-                    return NotFound("Order not exist");
+                    var orderLines = _orderDetailsRepository.GetOrderLines(id);
+                    order.OrderDetails = orderLines;
+                    return Ok(order);
+
                 }
-                return Ok(response);
+                return NotFound("Order not exist");
             }
             catch (Exception e)
             {
@@ -64,7 +81,7 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddOrder([FromBody] Order order)
+        public IActionResult AddOrder([FromBody] OrderWithDetails order)
         {
             try
             {
@@ -72,8 +89,13 @@ namespace ShoppingCart.Controllers
                 {
                     return BadRequest("Order is null");
                 }
-                _orderRepository.AddOrder(order);
-                return CreatedAtAction("Get", new { id = order.Id }, order);
+                int orderId = _orderRepository.AddOrder(order.order);
+                foreach (OrderDetail o in order.orderLines)
+                {
+                    o.OrderId = orderId;
+                    _orderDetailsRepository.AddOrderLine(o);
+                }
+                return CreatedAtAction("Get", new { id = order.order.Id }, order);
             }
             catch (Exception e)
             {

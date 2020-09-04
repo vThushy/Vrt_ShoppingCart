@@ -9,7 +9,7 @@ namespace ShoppingCart.Contracts
         List<Order> GetAllOrdersByCustomer(string userName);
         List<Order> GetAllOrders();
         Order GetOrder(int id);
-        void AddOrder(Order order);
+        int AddOrder(Order order);
         void ModifyOrder(int orderId, Order newOrder);
         void RemoveOrder(int orderNo);
         #endregion

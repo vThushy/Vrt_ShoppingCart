@@ -50,10 +50,11 @@ namespace ShoppingCart
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
-            //services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
+            
             //services.AddCors(
             ////    options =>
             ////{

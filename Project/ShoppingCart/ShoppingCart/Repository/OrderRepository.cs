@@ -10,7 +10,6 @@ namespace ShoppingCart.Repository
     {
         #region class variables
         private readonly ShoppingCartDbContext _shoppingCartDbContext;
-       // private readonly OrderRepository _orderRepository;
         #endregion
 
         #region constructor
@@ -101,15 +100,20 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void AddOrder(Order order)
+        public int AddOrder(Order order)
         {
+            int id;
             try
             {
                 if (order != null)
                 {
                     _shoppingCartDbContext.Orders.Add(order);
                     _shoppingCartDbContext.SaveChanges();
+                    id = order.Id;
+                    id = order.Id;
+                    return id;
                 }
+                return 0;
             }
             catch
             {

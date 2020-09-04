@@ -20,5 +20,37 @@ namespace ShoppingCart.Repository
             _shoppingCartDbContext = shoppingCartDbContext;
         }
         #endregion
+
+        public void AddOrderLine(OrderDetail order)
+        {
+            try
+            {
+                if (order != null)
+                {
+                    _shoppingCartDbContext.OrderDetails.Add(order);
+                    _shoppingCartDbContext.SaveChanges();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public List<OrderDetail> GetOrderLines(int orderId)
+        {
+            try
+            {
+                if (orderId > 0)
+                {
+                    return _shoppingCartDbContext.OrderDetails.Where(o => (o.OrderId == orderId)).ToList();
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

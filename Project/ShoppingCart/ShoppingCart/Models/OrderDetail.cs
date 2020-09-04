@@ -24,7 +24,6 @@ namespace ShoppingCart.Models
         [Range(1, 10)]
         public int Quantity { get; set; }
 
-       public Order Order { get; set; }
         #endregion
     }
 }
