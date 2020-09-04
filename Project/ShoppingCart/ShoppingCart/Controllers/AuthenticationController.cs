@@ -16,7 +16,6 @@ namespace ShoppingCart.Controllers
         #region class variables
         private readonly ILogger<AuthenticationController> _logger;
         private readonly IUserRepository _userRepository;
-        private readonly ICustomerRepository _customerRepository;
         private readonly IConfiguration _configuration;
         #endregion
 
@@ -24,13 +23,11 @@ namespace ShoppingCart.Controllers
         public AuthenticationController(
             IUserRepository userRepository,
             ILogger<AuthenticationController> logger,
-            ICustomerRepository customerRepository,
             IConfiguration configuration)
         {
             _logger = logger;
             _userRepository = userRepository;
             _configuration = configuration;
-            _customerRepository = customerRepository;
         }
         #endregion
 
