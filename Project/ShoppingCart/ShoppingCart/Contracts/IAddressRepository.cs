@@ -6,8 +6,8 @@ namespace ShoppingCart.Contracts
     public interface IAddressRepository
     {
         #region contracts
-        void AddAddress(Address address);
-        void RemoveAddress(int addressId);
+        Address AddAddress(Address address);
+        bool RemoveAddress(int addressId);
         List<Address> GetAddressesByUser(string userName);
         Address GetAddress(int addressId);
         #endregion

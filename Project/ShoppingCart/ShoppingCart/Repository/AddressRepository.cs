@@ -53,7 +53,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void AddAddress(Address address)
+        public Address AddAddress(Address address)
         {
             try
             {
@@ -61,7 +61,9 @@ namespace ShoppingCart.Repository
                 {
                     _shoppingCartDbContext.Addresses.Add(address);
                     _shoppingCartDbContext.SaveChanges();
+                    return address;
                 }
+                return null;
             }
             catch
             {
@@ -69,7 +71,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveAddress(int addressId)
+        public bool RemoveAddress(int addressId)
         {
             try
             {
@@ -78,7 +80,9 @@ namespace ShoppingCart.Repository
                     Address address = _shoppingCartDbContext.Addresses.Where(a => a.Id == addressId).FirstOrDefault();
                     _shoppingCartDbContext.Addresses.Remove(address);
                     _shoppingCartDbContext.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch
             {
