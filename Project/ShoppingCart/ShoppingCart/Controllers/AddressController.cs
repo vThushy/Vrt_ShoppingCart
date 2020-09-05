@@ -81,8 +81,10 @@ namespace ShoppingCart.Controllers
             {
                 if (id > 0)
                 {
-                    _addressRepository.RemoveAddress(id);
-                    return Ok();
+                    if (_addressRepository.RemoveAddress(id))
+                    {
+                        return Ok();
+                    }
                 }
                 return BadRequest("Request object is null");
             }
