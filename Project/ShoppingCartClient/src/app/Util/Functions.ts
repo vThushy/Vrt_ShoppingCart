@@ -227,6 +227,7 @@ export default class ProductFunctions {
           }
           return false;
         });
+        return false;
     }
 
     getCoupon(coupon: string): Coupon{
