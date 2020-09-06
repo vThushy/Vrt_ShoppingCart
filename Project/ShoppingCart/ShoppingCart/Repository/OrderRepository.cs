@@ -55,14 +55,14 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ReleaseOrder(int orderNo)
+        public void AcceptOrder(int orderNo)
         {
             try
             {
                 if (orderNo > 0)
                 {
                     var orderNeedstoReleased = _shoppingCartDbContext.Orders.Where(o => o.Id == orderNo).FirstOrDefault();
-                    orderNeedstoReleased.OrderStatus = Enum.OrderStatus.Released;
+                    orderNeedstoReleased.OrderStatus = Enum.OrderStatus.Accepted;
                     _shoppingCartDbContext.SaveChanges();
                 }
             }
@@ -123,23 +123,23 @@ namespace ShoppingCart.Repository
 
         public void ModifyOrder(int orderId, Order newOrder)
         {
-            try
-            {
-                if (orderId > 0 && newOrder != null)
-                {
-                    Order order = _shoppingCartDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefault();
-                    order.AddressId = newOrder.AddressId;
-                    order.Discount = newOrder.Discount;
-                    order.Date = newOrder.Date;
-                    order.OrderStatus = newOrder.OrderStatus;
-                    order.OrderDetails = newOrder.OrderDetails; 
-                    _shoppingCartDbContext.SaveChanges();
-                }
-            }
-            catch
-            {
-                throw;
-            }
+            //try
+            //{
+            //    if (orderId > 0 && newOrder != null)
+            //    {
+            //        Order order = _shoppingCartDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefault();
+            //        order.AddressId = newOrder.AddressId;
+            //        order.Discount = newOrder.Discount;
+            //        order.Date = newOrder.Date;
+            //        order.OrderStatus = newOrder.OrderStatus;
+            //        order.OrderLines = newOrder.OrderLines; 
+            //        _shoppingCartDbContext.SaveChanges();
+            //    }
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
         }
 
         public void RemoveOrder(int orderNo)
