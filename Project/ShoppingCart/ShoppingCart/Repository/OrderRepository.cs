@@ -26,7 +26,7 @@ namespace ShoppingCart.Repository
             {
                 if (userName != null)
                 {
-                    List<Order> orders = _shoppingCartDbContext.Orders.Where(o => o.UserName == userName).ToList();
+                    List<Order> orders = _shoppingCartDbContext.Orders.Where(o => o.UserName == userName && o.OrderStatus != Enum.OrderStatus.Active).ToList();
                     return orders;
                 }
                 return null;
@@ -37,14 +37,14 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public Order GetActiveOrder(string userName)
+        public List<Order> GetActiveOrder(string userName)
         {
             try
             {
                 if (userName != null)
                 {
-                    Order activeOrder = _shoppingCartDbContext.Orders.Where(o => o.UserName == userName &&
-                                    o.OrderStatus == Enum.OrderStatus.Active).FirstOrDefault(); ;
+                    List<Order> activeOrder = _shoppingCartDbContext.Orders.Where(o => o.UserName == userName &&
+                                    o.OrderStatus == Enum.OrderStatus.Active).ToList();
                     return activeOrder;
                 }
                 return null;
