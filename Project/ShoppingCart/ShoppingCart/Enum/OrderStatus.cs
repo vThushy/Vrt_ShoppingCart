@@ -18,12 +18,29 @@ namespace ShoppingCart.Enum
         /// <summary>
         /// order after payment
         /// </summary>
-        Released = 1,
+        Paid = 1,
+
+
+        /// <summary>
+        /// order after payment
+        /// </summary>
+        Accepted = 2,
 
         /// <summary>
         /// 
         /// </summary>
-        Completed = 2
+        Shipped = 3,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Delivered = 4,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Completed = 5,
+
     }
 }
 
