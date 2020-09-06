@@ -22,11 +22,9 @@ namespace ShoppingCart.Models
         public string Description { get; set; }
 
         [Required]
-        [Range(1, 10)]
         public double Discount { get; set; }
 
         [Required]
-        [Range(1, 10)]
         public double Price { get; set; }
 
         [StringLength(100)]

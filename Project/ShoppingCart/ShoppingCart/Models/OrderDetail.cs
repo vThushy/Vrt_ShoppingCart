@@ -16,7 +16,6 @@ namespace ShoppingCart.Models
         public int ProductId { get; set; }
 
         [Required]
-        [Range(1, 10)]
         [DataType(DataType.Currency)]
         public double UnitPrice { get; set; }
 
