@@ -22,7 +22,7 @@ namespace ShoppingCart.Enum
 
 
         /// <summary>
-        /// order after payment
+        /// 
         /// </summary>
         Accepted = 2,
 

@@ -61,6 +61,35 @@ namespace ShoppingCart.Controllers
             }
         }
 
+        [HttpGet("active/{userName}")]
+        public IActionResult GetActiveOrdersByCustomer(string userName)
+        {
+            try
+            {
+                List<Order> orders = _orderRepository.GetActiveOrder(userName);
+                List<OrderWithDetails> returnOrders = new List<OrderWithDetails>();
+
+                foreach (Order order in orders)
+                {
+                    if (order != null)
+                    {
+                        OrderWithDetails o = new OrderWithDetails();
+                        o.order = order;
+                        List<OrderDetail> orderDetail = _orderDetailsRepository.GetOrderLines(order.Id);
+                        o.orderLines = orderDetail;
+                        returnOrders.Add(o);
+                    }
+                }
+
+                return Ok(returnOrders);
+            }
+            catch (SqlException e)
+            {
+                _logger.LogError(e.ToString());
+                return Problem(e.ToString());
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetOrder(int id)
         {

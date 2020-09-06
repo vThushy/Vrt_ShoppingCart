@@ -8,6 +8,7 @@ namespace ShoppingCart.Contracts
         #region contracts
         List<Order> GetAllOrdersByCustomer(string userName);
         List<Order> GetAllOrders();
+        List<Order> GetActiveOrder(string userName);
         Order GetOrder(int id);
         int AddOrder(Order order);
         void ModifyOrder(int orderId, Order newOrder);
