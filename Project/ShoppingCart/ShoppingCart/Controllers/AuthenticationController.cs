@@ -45,10 +45,11 @@ namespace ShoppingCart.Controllers
                     Token token = new Token(_configuration);
                     var tokenString = token.GenerateJSONWebToken();
                     _logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                    return Ok(new { customerId = user.UserName, token = tokenString });
+                    ResponseUser resSuccess = new ResponseUser(user.UserName, tokenString);
+                    return Ok(resSuccess);
                 }
-
-                return Ok(new { customerId = "", token = "" });
+                ResponseUser res = new ResponseUser("", "");
+                return Ok(res);
             }
             catch (Exception e)
             {
