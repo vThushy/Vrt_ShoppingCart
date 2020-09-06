@@ -65,4 +65,8 @@ export class UsersService {
     return this.loggedIn;
   }
 
+  public getUserName(): string{
+    return localStorage.getItem('auth_user');
+  }
+
 }
