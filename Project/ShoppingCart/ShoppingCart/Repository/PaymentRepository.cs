@@ -3,6 +3,8 @@ using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShoppingCart.Repository
 {
@@ -37,6 +39,16 @@ namespace ShoppingCart.Repository
             {
                 throw;
             }
+        }
+
+        public List<Payment> getPaymentsByUser(string userName)
+        {
+            if (userName != null)
+            {
+                int[] orders = _shoppingCartDbContext.Orders.Where(o => o.UserName == userName).Select(o => o.Id).ToArray();
+                return _shoppingCartDbContext.Payments.Where(p => orders.Contains(p.Id)).ToList();
+            }
+            return null;
         }
         #endregion
     }
