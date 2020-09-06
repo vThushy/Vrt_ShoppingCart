@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Contracts;
+using ShoppingCart.Enum;
 using ShoppingCart.Models;
 
 namespace ShoppingCart.Controllers
@@ -37,15 +38,17 @@ namespace ShoppingCart.Controllers
             try
             {
                 List<Order> orders = _orderRepository.GetAllOrdersByCustomer(userName);
-                List<Order> returnOrders = new List<Order>();
+                List<OrderWithDetails> returnOrders = new List<OrderWithDetails>();
 
                 foreach (Order order in orders)
                 {
                     if (order != null)
                     {
-                        var orderLines = _orderDetailsRepository.GetOrderLines(order.Id);
-                        order.OrderDetails = orderLines;
-                        returnOrders.Add(order);
+                        OrderWithDetails o = new OrderWithDetails();
+                        o.order = order;
+                        List<OrderDetail> orderDetail = _orderDetailsRepository.GetOrderLines(order.Id);
+                        o.orderLines= orderDetail;
+                        returnOrders.Add(o);
                     }
                 }
                 
@@ -63,11 +66,13 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var order = _orderRepository.GetOrder(id);
-                if (order != null)
+                OrderWithDetails order = new OrderWithDetails();
+                order.order = _orderRepository.GetOrder(id);
+
+                if (order.order != null)
                 {
                     var orderLines = _orderDetailsRepository.GetOrderLines(id);
-                    order.OrderDetails = orderLines;
+                    order.orderLines = orderLines;
                     return Ok(order);
 
                 }
@@ -85,17 +90,17 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                if (order == null)
+                if (order != null)
                 {
-                    return BadRequest("Order is null");
+                    int orderId = _orderRepository.AddOrder(order.order);
+                    foreach (OrderDetail o in order.orderLines)
+                    {
+                        o.OrderId = orderId;
+                        _orderDetailsRepository.AddOrderLine(o);
+                    }
+                    return Ok(orderId);
                 }
-                int orderId = _orderRepository.AddOrder(order.order);
-                foreach (OrderDetail o in order.orderLines)
-                {
-                    o.OrderId = orderId;
-                    _orderDetailsRepository.AddOrderLine(o);
-                }
-                return CreatedAtAction("Get", new { id = order.order.Id }, order);
+                return BadRequest();
             }
             catch (Exception e)
             {
