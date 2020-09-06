@@ -11,6 +11,9 @@ export const validUserAPI = loginAPI;
 export const productByCategory = baseAPI + "/category";
 export const productBySearch = baseAPI + "/filter";
 export const cartAPI = baseAPI + '/cart';
+export const PaymentAPI = baseAPI + '/payment';
+export const OrderAPI = baseAPI + '/order';
+export const OrderCustomerAPI = OrderAPI + '/customer';
 
 
 
