@@ -13,6 +13,7 @@ import { FavouriteComponent } from './Components/favourite/favourite.component';
 import { ContactComponent } from './Components/contact/contact.component';
 import { AboutComponent } from './Components/about/about.component';
 import { AuthService } from './Services/auth.service';
+import { OrderHistoryComponent } from './Components/order-history/order-history.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'details/:productId', component: ProductDetailComponent },
   { path: 'favourite', component: FavouriteComponent, canActivate: [AuthService]},
   { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent }
+  { path: 'contact', component: ContactComponent },
+  { path: 'orders', component: OrderHistoryComponent }
 ];
 
 @NgModule({
