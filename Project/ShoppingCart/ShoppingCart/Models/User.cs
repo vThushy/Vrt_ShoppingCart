@@ -22,4 +22,15 @@ namespace ShoppingCart.Models
         public string ResetCode { get; set; }
         #endregion
     }
+
+    public class ResponseUser
+    {
+        public string customerId { get; set; }
+        public string token { get; set; }
+        public ResponseUser(string _customerId, string _token)
+        {
+            customerId = _customerId;
+            token = _token;
+        }
+    }
 }
