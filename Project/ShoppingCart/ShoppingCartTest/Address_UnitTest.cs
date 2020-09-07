@@ -30,35 +30,55 @@ namespace ShoppingCartTest
             };
         }
 
-        private List<Address> SetDataForTest()
+        private Address SetAddressForTest
         {
-            var _logger = Mock.Of<ILogger<AddressController>>(); 
-
-            var addresses = new List<Address>();
-            addresses.Add(new Address()
+            get
             {
-                Id = 1,
-                UserName = "vThushy",
-                AddressType = "Home",
-                AddressLine = "Kachchceri Road",
-                City = "Jaffna",
-                State = "Northern",
-                Country = "Sri Lanka",
-                ZipCode = "40000"
-            });
-            addresses.Add(new Address()
-            {
-                Id = 2,
-                UserName = "vThushy",
-                AddressType = "Work",
-                AddressLine = "Danister silva mw",
-                City = "Dematagoda",
-                State = "Western",
-                Country = "Sri Lanka",
-                ZipCode = "17000"
-            });
+                Address address = new Address()
+                {
+                    Id = 1,
+                    UserName = "vThushy",
+                    AddressType = "Home",
+                    AddressLine = "Kachchceri Road",
+                    City = "Jaffna",
+                    State = "Northern",
+                    Country = "Sri Lanka",
+                    ZipCode = "40000"
+                };
+                return address;
+            }
+        }
 
-            return addresses;
+        private List<Address> SetListOfAddressForTest
+        {
+            get
+            {
+                var addresses = new List<Address>();
+                addresses.Add(new Address()
+                {
+                    Id = 1,
+                    UserName = "vThushy",
+                    AddressType = "Home",
+                    AddressLine = "Kachchceri Road",
+                    City = "Jaffna",
+                    State = "Northern",
+                    Country = "Sri Lanka",
+                    ZipCode = "40000"
+                });
+                addresses.Add(new Address()
+                {
+                    Id = 2,
+                    UserName = "vThushy",
+                    AddressType = "Work",
+                    AddressLine = "Danister silva mw",
+                    City = "Dematagoda",
+                    State = "Western",
+                    Country = "Sri Lanka",
+                    ZipCode = "17000"
+                });
+
+                return addresses;
+            }
         }
 
         [Fact]
@@ -90,7 +110,7 @@ namespace ShoppingCartTest
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
 
-            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetDataForTest());
+            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetListOfAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAllAddressByCustomer("vThushy");
@@ -104,7 +124,7 @@ namespace ShoppingCartTest
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
 
-            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetDataForTest());
+            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetListOfAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAllAddressByCustomer("vThushy");
@@ -125,5 +145,50 @@ namespace ShoppingCartTest
             Assert.Empty(resturnResult);
         }
 
+        [Fact]
+        public void Test_ReturnOk_WhenAddressDelete()
+        {
+            var _logger = Mock.Of<ILogger<AddressController>>();
+            List<Address> emptyAddress = new List<Address>();
+            _userRepository.Setup(r => r.RemoveAddress(1)).Returns(true);
+            _controller = new AddressController(_logger, _userRepository.Object);
+
+            IActionResult result = _controller.RemoveAddress(1);
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Test_ReturnOk_WhenAddressFoundById()
+        {
+            var _logger = Mock.Of<ILogger<AddressController>>();
+
+            _userRepository.Setup(r => r.GetAddress(1)).Returns(SetAddressForTest);
+            _controller = new AddressController(_logger, _userRepository.Object);
+
+            IActionResult result = _controller.GetAddressById(1);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void Test_ReturnAddress_WhenAddressFoundById()
+        {
+            var _logger = Mock.Of<ILogger<AddressController>>();
+
+            _userRepository.Setup(r => r.GetAddress(1)).Returns(SetAddressForTest);
+            _controller = new AddressController(_logger, _userRepository.Object);
+
+            IActionResult result = _controller.GetAddressById(1);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            Address resturnResult = okObjectResult.Value as Address;
+            Assert.Equal(SetAddressForTest.Id, resturnResult.Id);
+            Assert.Equal(SetAddressForTest.UserName, resturnResult.UserName);
+            Assert.Equal(SetAddressForTest.AddressLine, resturnResult.AddressLine);
+            Assert.Equal(SetAddressForTest.AddressType, resturnResult.AddressType);
+            Assert.Equal(SetAddressForTest.City, resturnResult.City);
+            Assert.Equal(SetAddressForTest.State, resturnResult.State);
+            Assert.Equal(SetAddressForTest.ZipCode, resturnResult.ZipCode);
+            Assert.Equal(SetAddressForTest.Country, resturnResult.Country);
+
+        }
     }
 }
