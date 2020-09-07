@@ -14,6 +14,7 @@ export const cartAPI = baseAPI + '/cart';
 export const PaymentAPI = baseAPI + '/payment';
 export const OrderAPI = baseAPI + '/order';
 export const OrderCustomerAPI = OrderAPI + '/customer';
+export const ActiveOrderCustomerAPI = OrderAPI + '/active';
 
 
 
