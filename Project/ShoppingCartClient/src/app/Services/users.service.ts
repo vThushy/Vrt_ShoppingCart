@@ -69,4 +69,8 @@ export class UsersService {
     return localStorage.getItem('auth_user');
   }
 
+  public getAuthToken(): string{
+    return localStorage.getItem('auth_token');
+  }
+
 }
