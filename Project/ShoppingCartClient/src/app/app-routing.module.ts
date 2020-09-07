@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'category/:category', component: ListCategoryComponent },
   { path: 'product/:type/:searchValue', component: ListProductComponent },
   { path: 'cart', component: CartComponent, canActivate: [AuthService]},
-  { path: 'payment', component: PaymentComponent, canActivate: [AuthService]},
+  { path: 'payment/:from', component: PaymentComponent, canActivate: [AuthService]},
   { path: 'error', component: WarningComponent },
   { path: 'details/:productId', component: ProductDetailComponent },
   { path: 'favourite', component: FavouriteComponent, canActivate: [AuthService]},
