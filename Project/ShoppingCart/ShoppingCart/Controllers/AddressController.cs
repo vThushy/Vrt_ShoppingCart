@@ -96,6 +96,30 @@ namespace ShoppingCart.Controllers
             }
         }
 
+        [HttpGet("/by-id/{id}")]
+        public IActionResult GetAddressById(int id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    Address addresses = _addressRepository.GetAddress(id);
+                    if (addresses == null)
+                    {
+                        return NotFound("Address does not exist");
+                    }
+                    return Ok(addresses);
+                }
+                return BadRequest("Request object is null");
+            }
+            catch (Exception e)
+            {
+                error = "Error in AddressController: " + e.ToString();
+                _logger.LogError(error);
+                return Problem(error);
+            }
+        }
+
         #endregion
     }
 }
