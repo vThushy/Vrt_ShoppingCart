@@ -1,8 +1,5 @@
 ﻿using ShoppingCart.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Contracts
 {
@@ -10,6 +7,7 @@ namespace ShoppingCart.Contracts
     {
         #region contracts
         bool MakeAPayment(Payment payment);
+        List<Payment> getPaymentsByUser(string userName);
         #endregion
     }
 }
