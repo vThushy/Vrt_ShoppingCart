@@ -13,32 +13,22 @@ namespace ShoppingCartTest
     {
         private Mock<IAddressRepository> _userRepository;
         AddressController _controller;
-        private Address InsertAddress;
 
         public Address_UnitTest()
         {
             _userRepository = new Mock<IAddressRepository>();
-            InsertAddress = new Address()
-            {
-                UserName = "vThushy",
-                AddressType = "Work",
-                AddressLine = "Danister silva mw",
-                City = "Dematagoda",
-                State = "Western",
-                Country = "Sri Lanka",
-                ZipCode = "17000"
-            };
         }
 
- 
+
         [Fact]
         public void Test_InsertAddressAndReturnOk()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
-            _userRepository.Setup(r => r.AddAddress(InsertAddress));
+            Datas data = new Datas();
+            _userRepository.Setup(r => r.AddAddress(data.SetAddressForTest));
             _controller = new AddressController(_logger, _userRepository.Object);
 
-            IActionResult result = _controller.AddAddress(InsertAddress);
+            IActionResult result = _controller.AddAddress(data.SetAddressForTest);
             Assert.IsType<OkObjectResult>(result);
         }
 
@@ -46,13 +36,21 @@ namespace ShoppingCartTest
         public void Test_InsertAddressAndReturn()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
-            _userRepository.Setup(r => r.AddAddress(InsertAddress));
+            Datas datas = new Datas();
+            _userRepository.Setup(r => r.AddAddress(datas.SetAddressForTest));
             AddressController _controller = new AddressController(_logger, _userRepository.Object);
 
-            IActionResult result = _controller.AddAddress(InsertAddress);
+            IActionResult result = _controller.AddAddress(datas.SetAddressForTest);
             OkObjectResult okObjectResult = result as OkObjectResult;
             Address returnResult = okObjectResult.Value as Address;
-            Assert.Equal(InsertAddress.UserName, returnResult.UserName);
+            Assert.Equal(datas.SetAddressForTest.Id, returnResult.Id);
+            Assert.Equal(datas.SetAddressForTest.UserName, returnResult.UserName);
+            Assert.Equal(datas.SetAddressForTest.AddressLine, returnResult.AddressLine);
+            Assert.Equal(datas.SetAddressForTest.AddressType, returnResult.AddressType);
+            Assert.Equal(datas.SetAddressForTest.City, returnResult.City);
+            Assert.Equal(datas.SetAddressForTest.State, returnResult.State);
+            Assert.Equal(datas.SetAddressForTest.ZipCode, returnResult.ZipCode);
+            Assert.Equal(datas.SetAddressForTest.Country, returnResult.Country);
         }
 
         [Fact]
