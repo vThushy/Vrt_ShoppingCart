@@ -21,13 +21,11 @@ namespace ShoppingCart.Models
         public string Note { get; set; }
 
         [Required]
-        [Range(1, 10)]
         [DataType(DataType.Currency)]
         public double Amount { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         #endregion
     }
