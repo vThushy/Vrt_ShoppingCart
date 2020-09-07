@@ -30,57 +30,7 @@ namespace ShoppingCartTest
             };
         }
 
-        private Address SetAddressForTest
-        {
-            get
-            {
-                Address address = new Address()
-                {
-                    Id = 1,
-                    UserName = "vThushy",
-                    AddressType = "Home",
-                    AddressLine = "Kachchceri Road",
-                    City = "Jaffna",
-                    State = "Northern",
-                    Country = "Sri Lanka",
-                    ZipCode = "40000"
-                };
-                return address;
-            }
-        }
-
-        private List<Address> SetListOfAddressForTest
-        {
-            get
-            {
-                var addresses = new List<Address>();
-                addresses.Add(new Address()
-                {
-                    Id = 1,
-                    UserName = "vThushy",
-                    AddressType = "Home",
-                    AddressLine = "Kachchceri Road",
-                    City = "Jaffna",
-                    State = "Northern",
-                    Country = "Sri Lanka",
-                    ZipCode = "40000"
-                });
-                addresses.Add(new Address()
-                {
-                    Id = 2,
-                    UserName = "vThushy",
-                    AddressType = "Work",
-                    AddressLine = "Danister silva mw",
-                    City = "Dematagoda",
-                    State = "Western",
-                    Country = "Sri Lanka",
-                    ZipCode = "17000"
-                });
-
-                return addresses;
-            }
-        }
-
+ 
         [Fact]
         public void Test_InsertAddressAndReturnOk()
         {
@@ -109,8 +59,9 @@ namespace ShoppingCartTest
         public void Test_ReturnAddresses_WhenAddressFound()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
+            Datas datas = new Datas();
 
-            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetListOfAddressForTest);
+            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(datas.SetListOfAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAllAddressByCustomer("vThushy");
@@ -123,8 +74,8 @@ namespace ShoppingCartTest
         public void Test_ReturnOk_WhenAddressFound()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
-
-            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(SetListOfAddressForTest);
+            Datas datas = new Datas();
+            _userRepository.Setup(r => r.GetAddressesByUser("vThushy")).Returns(datas.SetListOfAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAllAddressByCustomer("vThushy");
@@ -161,8 +112,8 @@ namespace ShoppingCartTest
         public void Test_ReturnOk_WhenAddressFoundById()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
-
-            _userRepository.Setup(r => r.GetAddress(1)).Returns(SetAddressForTest);
+            Datas datas = new Datas();
+            _userRepository.Setup(r => r.GetAddress(1)).Returns(datas.SetAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAddressById(1);
@@ -173,21 +124,21 @@ namespace ShoppingCartTest
         public void Test_ReturnAddress_WhenAddressFoundById()
         {
             var _logger = Mock.Of<ILogger<AddressController>>();
-
-            _userRepository.Setup(r => r.GetAddress(1)).Returns(SetAddressForTest);
+            Datas datas = new Datas();
+            _userRepository.Setup(r => r.GetAddress(1)).Returns(datas.SetAddressForTest);
             _controller = new AddressController(_logger, _userRepository.Object);
 
             IActionResult result = _controller.GetAddressById(1);
             OkObjectResult okObjectResult = result as OkObjectResult;
             Address resturnResult = okObjectResult.Value as Address;
-            Assert.Equal(SetAddressForTest.Id, resturnResult.Id);
-            Assert.Equal(SetAddressForTest.UserName, resturnResult.UserName);
-            Assert.Equal(SetAddressForTest.AddressLine, resturnResult.AddressLine);
-            Assert.Equal(SetAddressForTest.AddressType, resturnResult.AddressType);
-            Assert.Equal(SetAddressForTest.City, resturnResult.City);
-            Assert.Equal(SetAddressForTest.State, resturnResult.State);
-            Assert.Equal(SetAddressForTest.ZipCode, resturnResult.ZipCode);
-            Assert.Equal(SetAddressForTest.Country, resturnResult.Country);
+            Assert.Equal(datas.SetAddressForTest.Id, resturnResult.Id);
+            Assert.Equal(datas.SetAddressForTest.UserName, resturnResult.UserName);
+            Assert.Equal(datas.SetAddressForTest.AddressLine, resturnResult.AddressLine);
+            Assert.Equal(datas.SetAddressForTest.AddressType, resturnResult.AddressType);
+            Assert.Equal(datas.SetAddressForTest.City, resturnResult.City);
+            Assert.Equal(datas.SetAddressForTest.State, resturnResult.State);
+            Assert.Equal(datas.SetAddressForTest.ZipCode, resturnResult.ZipCode);
+            Assert.Equal(datas.SetAddressForTest.Country, resturnResult.Country);
 
         }
     }
