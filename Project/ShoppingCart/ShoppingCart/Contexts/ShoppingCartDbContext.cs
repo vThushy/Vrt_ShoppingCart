@@ -31,6 +31,10 @@ namespace ShoppingCart.Contexts
                 .Property(u => u.Gender)
                 .HasConversion<int>();
 
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+
             modelBuilder.Entity<Order>()
                 .Property(u => u.OrderStatus)
                 .HasConversion<int>();
