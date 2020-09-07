@@ -1,5 +1,6 @@
 ﻿using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
+using ShoppingCart.Enum;
 using ShoppingCart.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,14 +56,14 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void AcceptOrder(int orderNo)
+        public void OrderStatusChanged(int orderNo, OrderStatus status)
         {
             try
             {
                 if (orderNo > 0)
                 {
                     var orderNeedstoReleased = _shoppingCartDbContext.Orders.Where(o => o.Id == orderNo).FirstOrDefault();
-                    orderNeedstoReleased.OrderStatus = Enum.OrderStatus.Accepted;
+                    orderNeedstoReleased.OrderStatus = status;
                     _shoppingCartDbContext.SaveChanges();
                 }
             }
