@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +41,7 @@ namespace ShoppingCart
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                    };
                });
-            //services.ConfigureCors();
+
             services.ConfigureIISIntegration();
             services.AddDbContext<ShoppingCartDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:ShoppingDB"]));
 
@@ -54,17 +53,7 @@ namespace ShoppingCart
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-            
-            //services.AddCors(
-            ////    options =>
-            ////{
-            ////    options.AddPolicy("AllowOrigin",
-            ////        builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
-            ////}
-            //);
-
             services.AddControllers();
-           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,16 +76,6 @@ namespace ShoppingCart
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            //app.UseCors("CorsPolicy");
-            // app.UseCors(builder =
-            //app.UseCors("AllowAll");
-            // app.UseCors(option => option.WithOrigins("http://localhost:4200").AllowAnyMethod());
-
-       //   app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            //app.UseCors(Builder => Builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
-
-       
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
