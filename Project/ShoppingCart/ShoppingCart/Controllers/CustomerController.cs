@@ -74,7 +74,8 @@ namespace ShoppingCart.Controllers
                     Token token = new Token(_configuration);
                     var tokenString = token.GenerateJSONWebToken();
                     _logger.LogInformation($"User {user.UserName} login on {DateTime.UtcNow.ToLongTimeString()}");
-                    return Ok(new { customerId = user.UserName, token = tokenString });
+                    ResponseUser resSuccess = new ResponseUser(user.UserName, tokenString);
+                    return Ok(resSuccess);
                 }
                 else
                 {
@@ -89,23 +90,16 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult ModifyCustomer(int id, [FromBody] Customer customer)
+        public IActionResult ModifyCustomer(string userName, [FromBody] Customer customer)
         {
             try
             {
-                if (customer == null)
+                Customer customerToUpdate = _customerRepository.GetCustomer(userName);
+                if (customerToUpdate != null)
                 {
-                    return BadRequest("Customer is null.");
+                    _customerRepository.ModifyCustomer(userName, customer);
                 }
-
-                //Customer customerToUpdate = _customerRepository.GetCustomer(id);
-                //if (customerToUpdate == null)
-                //{
-                //    return NotFound("The customer not found!");
-                //}
-
-                //_customerRepository.ModifyCustomer(customerToUpdate, customer);
-                return NoContent();
+                return NotFound("The customer not found!");
             }
             catch (Exception e)
             {
@@ -114,26 +108,25 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult RemoveCustomer(int id)
-        //{
-        //    Customer customerToDelete = _customerRepository.GetCustomer(id);
-        //    try
-        //    {
-        //        if (customerToDelete == null)
-        //        {
-        //            return NotFound("The customer not found!");
-        //        }
-        //        _customerRepository.RemoveCustomer(customerToDelete);
-        //        _logger.LogInformation($"Customer {customerToDelete.Id} deleted on {DateTime.UtcNow.ToLongTimeString()}");
-        //        return NoContent();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _logger.LogError("Error in CustomerController: " + e.ToString());
-        //        return Problem(e.ToString());
-        //    }
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult RemoveCustomer(string userName)
+        {
+            try
+            {
+                if (userName == null)
+                {
+                    return NotFound("The customer not found!");
+                }
+                _customerRepository.RemoveCustomer(userName);
+                _logger.LogInformation($"Customer {userName} deleted on {DateTime.UtcNow.ToLongTimeString()}");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error in CustomerController: " + e.ToString());
+                return Problem(e.ToString());
+            }
+        }
 
         #endregion
     }
