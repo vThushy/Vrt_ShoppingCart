@@ -1,44 +1,176 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
-using ShoppingCart.Contexts;
 using ShoppingCart.Contracts;
 using ShoppingCart.Controllers;
 using ShoppingCart.Models;
-using ShoppingCart.Repository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-
 
 namespace ShoppingCartTest
 {
     public class Authorization_UnitTest
     {
         private AuthenticationController _controller;
+        Mock<IUserRepository> _userRepository;
 
         public Authorization_UnitTest()
         {
-            var _userRepository = new Mock<IUserRepository>();
-            var _logger = Mock.Of<ILogger<AuthenticationController>>();
-            var _configuration = Mock.Of<IConfiguration>();
-
-            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+            _userRepository = new Mock<IUserRepository>();
         }
 
         [Fact]
-        public void TestAuthenticationApiReturnOkResult()
+        public void Should_Return200Ok_When_Login_WithCorrectCredentials()
         {
-            User user = new User();
-            user.UserName = "Thushy";
-            user.Password = "Thushy";
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+            
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
 
-            var okResult = _controller.Login(user);
-
-            Assert.IsType<OkObjectResult>(okResult);
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            Assert.IsType<OkObjectResult>(result);
         }
+
+        [Fact]
+        public void Should_ReturnUser_When_Login_WithCorrectCredentials()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value;
+            Assert.IsType<ResponseUser>(val);
+        }
+
+
+        [Fact]
+        public void Should_Return200Ok_When_Login_WithWrongCredentials()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(false);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void Should_ReturnUserType_When_Login_WithWrongCredentials()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value;
+            Assert.IsType<ResponseUser>(val);
+        }
+
+        [Fact]
+        public void Should_ReturnEmptyUserName_When_Login_WithWrongCredentials()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value as ResponseUser;
+            Assert.Equal("", val.customerId);
+        }
+
+        [Fact]
+        public void Should_ReturnEmptyUserToken_When_Login_WithWrongCredentials()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.VerifyUser(data.SetUserForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.Login(data.SetUserForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value as ResponseUser;
+            Assert.Equal("", val.token);
+        }
+
+        [Fact]
+        public void Should_Return200Ok_When_ValidateUserName_WithValidUserName()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.ValidUserName(data.SetUserNameForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.ValidateUserName(data.SetUserNameForTest);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void Should_ReturnTrue_When_ValidateUserName_WithValidUserName()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.ValidUserName(data.SetUserNameForTest)).Returns(true);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.ValidateUserName(data.SetUserNameForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value;
+            Assert.Equal(true, val);
+        }
+
+        [Fact]
+        public void Should_Return200Ok_When_ValidateUserName_WithWrongUserName()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.ValidUserName(data.SetUserNameForTest)).Returns(false);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.ValidateUserName(data.SetUserNameForTest);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void Should_ReturnTrue_When_ValidateUserName_WithWrongUserName()
+        {
+            var _logger = Mock.Of<ILogger<AuthenticationController>>();
+            var _configuration = Mock.Of<IConfiguration>();
+            Datas data = new Datas();
+
+            _userRepository.Setup(r => r.ValidUserName(data.SetUserNameForTest)).Returns(false);
+            _controller = new AuthenticationController(_userRepository.Object, _logger, _configuration);
+
+            IActionResult result = _controller.ValidateUserName(data.SetUserNameForTest);
+            OkObjectResult okObjectResult = result as OkObjectResult;
+            var val = okObjectResult.Value;
+            Assert.Equal(false, val);
+        }
+
     }
 }
