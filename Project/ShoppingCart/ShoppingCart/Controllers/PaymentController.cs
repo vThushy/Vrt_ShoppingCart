@@ -32,13 +32,13 @@ namespace ShoppingCart.Controllers
         #region Methods
 
         [HttpGet("userName")]
-        public IActionResult GetPaymentsByUSer(string userName)
+        public IActionResult GetPaymentsByUser(string userName)
         {
             try
             {
                 if (userName != null)
                 {
-                    List<Payment> payments = _paymentRepository.getPaymentsByUser(userName);
+                    List<Payment> payments = _paymentRepository.GetPaymentsByUser(userName);
                     return Ok(payments);
                 }
                 return BadRequest("Payment is null.");

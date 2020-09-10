@@ -46,7 +46,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetProductWithDetails(id);
+                List<Product> response = _productRepository.GetProductWithDetails(id);
                 if (response == null)
                 {
                     return NotFound("Product does not exist");
@@ -105,7 +105,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetProductsByCategory(key, pageIndex);
+                ProductList response = _productRepository.GetProductsByCategory(key, pageIndex);
                 if (response == null)
                 {
                     return NotFound("Category does not exist!");
@@ -124,7 +124,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                var response = _productRepository.GetProductsBySearch(key, pageIndex);
+                ProductList response = _productRepository.GetProductsBySearch(key, pageIndex);
                 if (response == null)
                 {
                     return NotFound("Product does not exist!");

@@ -41,7 +41,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public List<Payment> getPaymentsByUser(string userName)
+        public List<Payment> GetPaymentsByUser(string userName)
         {
             if (userName != null)
             {

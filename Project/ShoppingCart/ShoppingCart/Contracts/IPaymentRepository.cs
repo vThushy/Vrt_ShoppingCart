@@ -7,7 +7,7 @@ namespace ShoppingCart.Contracts
     {
         #region contracts
         bool MakeAPayment(Payment payment);
-        List<Payment> getPaymentsByUser(string userName);
+        List<Payment> GetPaymentsByUser(string userName);
         #endregion
     }
 }
