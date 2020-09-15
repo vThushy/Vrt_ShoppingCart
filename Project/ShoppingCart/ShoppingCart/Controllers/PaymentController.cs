@@ -18,14 +18,19 @@ namespace ShoppingCart.Controllers
         private readonly ILogger<PaymentController> _logger;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
         #endregion
 
         #region Constructor
-        public PaymentController(IPaymentRepository paymentRepository, IOrderRepository orderRepository, ILogger<PaymentController> logger)
+        public PaymentController(IPaymentRepository paymentRepository, IOrderRepository orderRepository, 
+            ILogger<PaymentController> logger, IProductRepository productRepository, IOrderDetailsRepository orderDetailsRepository)
         {
             _logger = logger;
             _paymentRepository = paymentRepository;
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
+            _orderDetailsRepository = orderDetailsRepository;
         }
         #endregion
 
@@ -57,9 +62,14 @@ namespace ShoppingCart.Controllers
             {
                 if (payment != null)
                 {
-                    _paymentRepository.MakeAPayment(payment);
-                    _orderRepository.OrderStatusChanged(payment.OrderId, OrderStatus.Paid);
-                    return Ok("Payment made.");
+                    if (_paymentRepository.MakeAPayment(payment))
+                    {
+                        _orderRepository.OrderStatusChanged(payment.OrderId, OrderStatus.Paid);
+                        List<OrderDetail> lines = _orderDetailsRepository.GetOrderLines(payment.OrderId);
+                        _productRepository.ReduceStock(payment.OrderId,lines);
+                        return Ok("Payment made.");
+                    }
+                    return Ok("Payment not made.");
                 }
                 return BadRequest("Payment is null.");
             }
