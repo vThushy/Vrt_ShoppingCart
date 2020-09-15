@@ -47,7 +47,7 @@ export class ListProductComponent implements OnInit {
   initFirstResults() {
     this.filterType = this.route.snapshot.paramMap.get("type");
     this.searchValue = this.route.snapshot.paramMap.get("searchValue");
-    this.heading = this.searchValue.replace('_', ' ');
+    this.heading = this.searchValue.replace(/[^a-zA-Z ]/g, " ");
     this.fetchProducts();
   }
 
