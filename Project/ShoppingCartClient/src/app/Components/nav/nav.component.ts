@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   searchValue: string;
-  productSearchPath = "/product/by-search/";
+  productSearchPath = "/product/by-category/";
 
   constructor(private router: Router) { }
 

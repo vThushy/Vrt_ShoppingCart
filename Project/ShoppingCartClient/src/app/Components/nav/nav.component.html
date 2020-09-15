@@ -32,8 +32,20 @@
                   <li class="nav-item">
                     <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_short']">Shorts</a>
                   </li>
+                </ul>
+              </div>
+              <!-- Women - Casual wear - 2 -->
+              <div class="col-3">
+                <span class="text-uppercase text-white">Casual Wear</span>
+                <ul class="nav flex-column">
                   <li class="nav-item">
                     <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_skirt']">Skirts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_jean']">Jeans</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" [routerLink]="[productSearchPath, 'women_casual_jacket']">Jeans</a>
                   </li>
                 </ul>
               </div>
@@ -51,11 +63,20 @@
                   <li class="nav-item">
                     <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_shirts']">Shirts</a>
                   </li>
+                </ul>
+              </div>
+              <!-- Women - formal wear - 2-->
+              <div class="col-3">
+                <span class="text-uppercase text-white">Formal Wear</span>
+                <ul class="nav flex-column">
                   <li class="nav-item">
                     <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_shorts']">Shorts</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_skirts']">Skirts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_suits']">Skirts</a>
                   </li>
                 </ul>
               </div>
@@ -65,27 +86,29 @@
                 <span class="text-uppercase text-white">Sport Wear</span>
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link active"  [routerLink]="[productSearchPath, 'women_formal_tshirt']">T-Shirts</a>
+                    <a class="nav-link active"  [routerLink]="[productSearchPath, 'women_formal_tshirt']">Sports wear</a>
                   </li>
                 </ul>
                 <a href="">
                   <img src="" alt="" class="img-fluid">
                 </a>
-                <p class="text-white">Short image call to action</p>
-
               </div>
 
+              <!-- Women - foot wear -->
               <div class="col-3">
-                <span class="text-uppercase text-white">Formal Wear</span>
+                <span class="text-uppercase text-white">Foot Wear</span>
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'women_foot_slippers']">Slippers</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'women_foot_sandalias']">Sandalias</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_casual_shoe']">Casual Shoe</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'women_formal_formal_shoe']">Formal Shoe</a>
                   </li>
                 </ul>
               </div>
@@ -136,104 +159,84 @@
                     <a class="nav-link active"  [routerLink]="[productSearchPath, 'men_formal_tshirt']">T-Shirts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_pant']">Pants</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_shirt']">Shirts</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_shirts']">Shirts</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_pant']">Pants</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_suit']">Suits</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_skirts']">Skirts</a>
-                  </li>
-                </ul>
-              </div>
-
-              <!-- Women - sport wear -->
-              <div class="col-3">
-                <span class="text-uppercase text-white">Sport Wear</span>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link active"  [routerLink]="[productSearchPath, 'women_formal_tshirt']">T-Shirts</a>
-                  </li>
-                </ul>
-                <a href="">
-                  <img src="" alt="" class="img-fluid">
-                </a>
-                <p class="text-white">Short image call to action</p>
-
-              </div>
-
-              <div class="col-3">
-                <span class="text-uppercase text-white">Formal Wear</span>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
+                    <a class="nav-link"  [routerLink]="[productSearchPath, 'men_formal_blazer']">Blazers</a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-
-
         </div>
       </li>
+
+      <!-- Kids -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Kids
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
           <div class="container">
             <div class="row">
-              <div class="col-md-4">
-                <span class="text-uppercase text-white">Girls</span>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-4">
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Boys</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link item</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-4">
-
-                <a href="">
-                  <img src="https://dummyimage.com/200x100/ccc/000&text=image+link" alt="" class="img-fluid">
-                </a>
-                <p class="text-white">Short image call to action</p>
-
-              </div>
+                  <!-- Girls -->
+                  <div class="col-3">
+                    <span class="text-uppercase text-white">Casual Wear</span>
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_tshirt']">Kid girl T-Shirt</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_jeans']">Kid girl Jeans</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_shorts']">Kid girl Shorts</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_frock']">Kid girl frock</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_skirts']">Kid girl skirs</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_girl_nightdress']">Kid girl night dress</a>
+                      </li>
+                    </ul>
+                  </div>
+    
+                  <!-- Boys -->
+                  <div class="col-3">
+                    <span class="text-uppercase text-white">Casual Wear</span>
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_tshirt']">Kid boy T-Shirt</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_jeans']">Kid boy Jeans</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_shorts']">Kid boy Shorts</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_suit']">Kid boy suit</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_skirts']">Kid boy skirs</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" [routerLink]="[productSearchPath, 'kid_boy_nightdress']">Kid boy night dress</a>
+                      </li>
+                    </ul>
+                  </div>
             </div>
           </div>
-
-
         </div>
       </li>
 
