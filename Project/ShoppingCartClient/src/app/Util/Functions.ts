@@ -82,8 +82,10 @@ export default class ProductFunctions {
     public increaseCartItemQty(product: Product) {
         let cartItems = this.getCartProducts();
         for (let i = 0; i < cartItems.length; i++) {
-            if (cartItems[i].id == product.id) {
+            if (cartItems[i].id == product.id && cartItems[i].stock >= (cartItems[i].qty +1)) {
                 cartItems[i].qty += 1;
+            }else if(cartItems[i].id == product.id && cartItems[i].stock < (cartItems[i].qty +1)){
+                alert("Only "+  cartItems[i].stock  + " products are available!");
             }
         }
         this.setCartProductsAttr(cartItems);
