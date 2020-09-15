@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ExceptionHandlerService } from '../Util/exception-handler.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { produtAPI, newArrivalAPI, bestSellerlAPI, productByCategory, productBySearch, cartAPI } from '../Util/config';
+import { produtAPI, newArrivalAPI, bestSellerlAPI, productByCategory, productBySearch, cartAPI, similarAPI } from '../Util/config';
 import { ProductList } from '../Models/ProductList';
 import { ProductWithDetails } from '../Models/ProductDetails';
 
@@ -60,9 +60,11 @@ export class ProductsService {
     );
   }
 
-  getCartItems(productIds: string[]) {
-    const header = { 'content-type': 'application/json' };
-    return this.httpClient.post<any>(cartAPI, JSON.stringify(productIds), { 'headers': header })
-      .pipe(catchError(this.exceptionHandlerService.handleError));
+  getSimiliarProducts(category: number): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(similarAPI + '/' + category)
+      .pipe(
+        catchError(this.exceptionHandlerService.handleError)
+      );
   }
+
 }
