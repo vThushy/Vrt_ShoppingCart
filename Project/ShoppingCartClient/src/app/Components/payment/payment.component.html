@@ -38,19 +38,18 @@
                     </li>
                     <li class="nav-item">
                         <a data-toggle="pill" href="#nav-tab-bank" class="nav-link rounded-pill">
-                            Bank Transfer
+                            Pay on Delivery
                         </a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="nav-tab-card" class="tab-pane fade show active">
-                        <!-- <p class="alert alert-success"> success or error</p> -->
                         <form role="form">
                             <div class="form-group">
                                 <label for="username">Full name (on the card)</label>
                                 <input type="text" name="username" placeholder="Thusyanthy Vimalanathan" required
-                                    class="form-control">
+                                    class="form-control"  [ngModel]="cardNote">
                             </div>
                             <div class="form-group">
                                 <label for="cardNumber">Card number</label>
@@ -86,38 +85,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
-                                Confirm </button>
+                            <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                            (click)="makePay('2', cardNote)"> Confirm </button>
                         </form>
                     </div>
 
                     <div id="nav-tab-store" class="tab-pane fade">
                         <p>Store credit is easiest way to pay in our shop</p>
-
-                        <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
-                                Confirm </button>
+                        <div class="form-group">
+                            <label for="storeId">Secret Store credit code</label>
+                            <input type="text" [ngModel]='storeCreditNote' name="storeId" placeholder="PT-00-#####" required
+                                class="form-control">
+                        </div>
+                        <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                        (click)="makePay('1', storeCreditNote)"> Confirm </button>
                     </div>
 
                     <div id="nav-tab-bank" class="tab-pane fade">
-                        <h6>Bank account details</h6>
-                        <dl>
-                            <dt>Bank</dt>
-                            <dd> SAMPAT BANK</dd>
-                        </dl>
-                        <dl>
-                            <dt>Account number</dt>
-                            <dd>111111111</dd>
-                        </dl>
-                        <dl>
-                            <dt>PT CLOTHING</dt>
-                            <dd>CZ7775877975656</dd>
-                        </dl>
-                        <p class="text-muted">Please attached the depoist before you confirm!
-                        </p>
-                        <input type="file" name="" id="" required class="form-control">
-                        <br>
-                        <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
-                            Confirm </button>
+                        <h6>Pay on Delivery.</h6>
+                        <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                        (click)="makePay('0', payOnDeliveryNote)"> Confirm </button>
                     </div>
                 </div>
             </div>
