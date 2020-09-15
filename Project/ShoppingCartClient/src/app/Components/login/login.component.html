@@ -20,7 +20,7 @@
                         <article class="card-body">
                             <div class="form-group">
                                 <label>User name</label>
-                                <input type="text" class="form-control" formControlName="userName" placeholder="">
+                                <input type="text" class="form-control" formControlName="userName" placeholder="" autocomplete="username">
                                 <small *ngIf="isSubmitted && loginDetails.userName.errors"
                                     class="text-danger alert-dismissible fade show ">User name is required
                                 </small>
@@ -28,7 +28,7 @@
 
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" type="password" formControlName="password">
+                                <input class="form-control" type="password" formControlName="password" autocomplete="password">
 
                                 <small *ngIf="isSubmitted && loginDetails.password.errors"
                                     class="text-danger alert-dismissible fade show">Password is required
