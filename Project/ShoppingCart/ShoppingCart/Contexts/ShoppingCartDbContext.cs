@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShoppingCart.Enum;
 using ShoppingCart.Models;
 
 namespace ShoppingCart.Contexts
@@ -18,7 +17,6 @@ namespace ShoppingCart.Contexts
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
         public DbSet<ProductDetails> ProductDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -32,7 +32,10 @@ namespace ShoppingCart.Models
 
         [NotMapped]
         public string Size { get; set; }
-        
+
+        [NotMapped]
+        public int Stock { get; set; }
+
         [NotMapped]
         public int BaseProduct { get; set; }
         #endregion

@@ -30,7 +30,7 @@ namespace ShoppingCart.Repository
             try
             {
                 int skip = (pageIndex - 1) * _productsForPage;
-                int noOfRecords = _shoppingCartDbContext.Products.Count(); 
+                int noOfRecords = _shoppingCartDbContext.Products.Count();
                 List<Product> products = _shoppingCartDbContext.Products.Skip(skip).Take(_productsForPage).ToList();
                 List<Product> returnProducts = new List<Product>();
 
@@ -38,13 +38,14 @@ namespace ShoppingCart.Repository
                 {
                     Product addProduct = new Product();
                     addProduct = p;
-                    var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                    var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                     if (result_ != null)
                     {
                         addProduct.BaseProduct = p.Id;
                         addProduct.Id = result_.Id;
                         addProduct.DefaultImage = result_.Image;
                         addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                        addProduct.Stock = result_.Stock;
                         returnProducts.Add(addProduct);
                     }
                 }
@@ -80,7 +81,7 @@ namespace ShoppingCart.Repository
             {
 
                 Product mainProduct = _shoppingCartDbContext.Products.FirstOrDefault(p => p.Id == id);
-                List<ProductDetails> subProduct = _shoppingCartDbContext.ProductDetails.Where(p => p.ProductId == id).ToList();
+                List<ProductDetails> subProduct = _shoppingCartDbContext.ProductDetails.Where(p => p.ProductId == id && p.Stock > 0).ToList();
 
                 List<Product> returnProducts = new List<Product>();
 
@@ -96,6 +97,7 @@ namespace ShoppingCart.Repository
                     addProduct.Price = mainProduct.Price;
                     addProduct.DefaultImage = p.Image;
                     addProduct.Size = ProductSize.GetName(typeof(ProductSize), p.Size);
+                    addProduct.Stock = p.Stock;
                     returnProducts.Add(addProduct);
                 }
 
@@ -105,23 +107,6 @@ namespace ShoppingCart.Repository
             {
                 throw;
             }
-        }
-
-        public List<Product> GetProductListById(string[] productIds)
-        {
-            List<ProductDetails> products = _shoppingCartDbContext.ProductDetails.Where(p => productIds.Contains(p.Id.ToString())).ToList();
-            List<Product> returnProducts = new List<Product>();
-
-            foreach (ProductDetails p in products)
-            {
-                Product product = _shoppingCartDbContext.Products.FirstOrDefault(pro => pro.Id == p.ProductId);
-                if (product != null)
-                {
-                    product.DefaultImage = p.Image;
-                }
-                returnProducts.Add(product);
-            }
-            return returnProducts;
         }
 
         public List<Product> GetNewArrivalProducts(string category)
@@ -137,13 +122,14 @@ namespace ShoppingCart.Repository
                     {
                         Product addProduct = new Product();
                         addProduct = p;
-                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                         if (result_ != null)
                         {
                             addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                            addProduct.Stock = result_.Stock;
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -159,13 +145,14 @@ namespace ShoppingCart.Repository
                     {
                         Product addProduct = new Product();
                         addProduct = p;
-                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                         if (result_ != null)
                         {
                             addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                            addProduct.Stock = result_.Stock;
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -187,7 +174,7 @@ namespace ShoppingCart.Repository
                 {
                     int availableProductsCount = _shoppingCartDbContext.Products.Count() - 5;
                     Random random = new Random();
-                    int skip = random.Next(availableProductsCount);
+                    int skip = random.Next(availableProductsCount - 5);
                     List<Product> products = _shoppingCartDbContext.Products.OrderByDescending(p => p.Id).Skip(skip).Take(5).ToList();
                     List<Product> returnProducts = new List<Product>();
 
@@ -195,13 +182,14 @@ namespace ShoppingCart.Repository
                     {
                         Product addProduct = new Product();
                         addProduct = p;
-                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                         if (result_ != null)
                         {
                             addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                            addProduct.Stock = result_.Stock;
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -212,7 +200,7 @@ namespace ShoppingCart.Repository
                     int[] categoryId = _shoppingCartDbContext.Categories.Where(c => c.Title.StartsWith(category)).Select(c => c.Id).ToArray();
                     int availableProductsCount = _shoppingCartDbContext.Products.Where(p => categoryId.Contains(p.CategoryId)).Count() - 5;
                     Random random = new Random();
-                    int skip = random.Next(availableProductsCount);
+                    int skip = random.Next(availableProductsCount - 5);
                     List<Product> products = _shoppingCartDbContext.Products.Where(p => categoryId.Contains(p.CategoryId))
                         .OrderByDescending(p => p.Id).Skip(skip).Take(5).ToList();
                     List<Product> returnProducts = new List<Product>();
@@ -221,13 +209,14 @@ namespace ShoppingCart.Repository
                     {
                         Product addProduct = new Product();
                         addProduct = p;
-                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                         if (result_ != null)
                         {
                             addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                            addProduct.Stock = result_.Stock;
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -264,13 +253,14 @@ namespace ShoppingCart.Repository
                     {
                         Product addProduct = new Product();
                         addProduct = p;
-                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                        var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                         if (result_ != null)
                         {
                             addProduct.BaseProduct = p.Id;
                             addProduct.Id = result_.Id;
                             addProduct.DefaultImage = result_.Image;
                             addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                            addProduct.Stock = result_.Stock;
                             returnProducts.Add(addProduct);
                         }
                     }
@@ -308,13 +298,14 @@ namespace ShoppingCart.Repository
                         {
                             Product addProduct = new Product();
                             addProduct = p;
-                            var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id);
+                            var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
                             if (result_ != null)
                             {
                                 addProduct.BaseProduct = p.Id;
                                 addProduct.Id = result_.Id;
                                 addProduct.DefaultImage = result_.Image;
                                 addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                                addProduct.Stock = result_.Stock;
                                 returnProducts.Add(addProduct);
                             }
                         }
@@ -334,6 +325,37 @@ namespace ShoppingCart.Repository
                 throw;
             }
         }
+
+        public List<Product> GetSimilarProducts(int id)
+        {
+            try
+            {
+                var result = _shoppingCartDbContext.Products.Where(p => p.CategoryId == id).Take(5).ToList();
+                List<Product> returnProducts = new List<Product>();
+
+                foreach (Product p in result)
+                {
+                    Product addProduct = new Product();
+                    addProduct = p;
+                    var result_ = _shoppingCartDbContext.ProductDetails.FirstOrDefault(pr => pr.ProductId == addProduct.Id && pr.Stock > 0);
+                    if (result_ != null)
+                    {
+                        addProduct.BaseProduct = p.Id;
+                        addProduct.Id = result_.Id;
+                        addProduct.DefaultImage = result_.Image;
+                        addProduct.Size = ProductSize.GetName(typeof(ProductSize), result_.Size);
+                        addProduct.Stock = result_.Stock;
+                        returnProducts.Add(addProduct);
+                    }
+                }
+                return returnProducts;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         public void AddProduct(Product product)
         {
@@ -364,6 +386,7 @@ namespace ShoppingCart.Repository
                     product.Discount = newProduct.Discount;
                     product.Price = newProduct.Price;
                     product.DefaultImage = newProduct.DefaultImage;
+                    product.Stock = newProduct.Stock;
 
                     _shoppingCartDbContext.SaveChanges();
                 }
@@ -388,6 +411,19 @@ namespace ShoppingCart.Repository
             catch
             {
                 throw;
+            }
+        }
+
+        public void ReduceStock(int productId, List<OrderDetail> lines)
+        {
+            if (lines != null)
+            {
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    ProductDetails product = _shoppingCartDbContext.ProductDetails.FirstOrDefault(p => p.Id == lines[i].ProductId);
+                    product.Stock -= lines[i].Quantity;
+                }
+                _shoppingCartDbContext.SaveChanges();
             }
         }
         #endregion

@@ -18,6 +18,8 @@ namespace ShoppingCart.Models
         public string Attributes { get; set; }
 
         public string Image { get; set; }
+
+        public int Stock { get; set; }
         #endregion
     }
 }

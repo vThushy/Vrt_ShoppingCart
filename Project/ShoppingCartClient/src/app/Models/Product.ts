@@ -8,6 +8,7 @@ export class Product{
     defaultImage: string;
     size: string;
     qty: number
+    stock: number;
     baseProduct: number;
 
 
