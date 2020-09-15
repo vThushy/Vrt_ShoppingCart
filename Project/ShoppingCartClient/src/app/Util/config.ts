@@ -6,6 +6,7 @@ export const produtAPI = baseAPI + '/product';
 export const categoryAPI = baseAPI + "/category";
 export const newArrivalAPI = baseAPI + '/new-arrival';
 export const bestSellerlAPI = baseAPI + '/best-seller';
+export const similarAPI = baseAPI + '/similar';
 export const addressAPI = baseAPI + "/address";
 export const validUserAPI = loginAPI; 
 export const productByCategory = baseAPI + "/category";

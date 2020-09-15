@@ -138,18 +138,18 @@ namespace ShoppingCart.Controllers
             }
         }
 
-        [HttpPost("/cart")]
-        public IActionResult GetCartProducts([FromBody] string[] productIds)
+        [HttpGet]
+        [Route("/similar/{categoryId}")]
+        public IActionResult GetSimilarProducts(int categoryId)
         {
             try
             {
-                if (productIds == null)
+                var response = _productRepository.GetSimilarProducts(categoryId);
+                if (response == null)
                 {
-                    return BadRequest("Product is null.");
+                    return NotFound("New arrival products does not exist!");
                 }
-
-                List<Product> products = _productRepository.GetProductListById(productIds);
-                return Ok(new { cartItems = products });
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -157,6 +157,26 @@ namespace ShoppingCart.Controllers
                 return Problem(e.ToString());
             }
         }
+
+        //[HttpPost("/cart")]
+        //public IActionResult GetCartProducts([FromBody] string[] productIds)
+        //{
+        //    try
+        //    {
+        //        if (productIds == null)
+        //        {
+        //            return BadRequest("Product is null.");
+        //        }
+
+        //        List<Product> products = _productRepository.GetProductListById(productIds);
+        //        return Ok(new { cartItems = products });
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("\n Error: {0}", e);
+        //        return Problem(e.ToString());
+        //    }
+        //}
 
         [HttpPost]
         public IActionResult AddProduct([FromBody] Product product)

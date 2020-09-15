@@ -42,8 +42,10 @@ export class ProductDetailComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         this.previousUrl = event.url;
       });
+
     this.productId = this.route.snapshot.paramMap.get("productId");
     let uniqueIds = [];
+
     this.productService.getProduct(this.productId).subscribe(
       result => {
         result.forEach(element => {
@@ -54,7 +56,14 @@ export class ProductDetailComponent implements OnInit {
         });
         this.products = result;
         this.changeProduct(this.products[0]);
-        
+
+        this.productService.getSimiliarProducts(this.products[0].categoryId).subscribe(
+          result => {
+            this.recommendProducts = result;
+          },
+          error => {
+            this.exceptionHandlerService.handleError(error);
+          });
       },
       error => {
         this.exceptionHandlerService.handleError(error);
@@ -83,8 +92,12 @@ export class ProductDetailComponent implements OnInit {
     if (this.userService.isLogged()) {
       var u = new ProductFunctions();
       product.qty = qty;
-      u.addToCart(product);
-      this.router.navigateByUrl('/cart');
+      if(product.qty <= product.stock){
+        u.addToCart(product);
+        this.router.navigateByUrl('/cart');
+      }else{
+        alert("Only "+  product.stock  + " products are available!");
+      }
     } else {
       this.router.navigateByUrl('/login');
     }
