@@ -7,5 +7,139 @@
     </h1>
 </div>
 
+<section class="container">
+    <h3>Orders Waiting for payments.</h3>
+    <div class="alert alert-warning alert-dismissible fade show">
+        <strong>Warning!</strong> Orders which are not make Paymant more than 3 days will be removed automatically.
+    </div>
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" *ngFor="let o of activeOrders; let j = index;" [attr.id]="'accordion2_' + j">
+            <div class="panel panel-default">
+                <div class="panel-heading card-header">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" [attr.data-parent]="'#accordion2_' + j"
+                            [attr.href]="'#collapseOne2_' + j">
+
+                            Order: {{ o.order.id }}
+                            Total: {{ getTotal(o.order.id) | currency:'LKR':'symbol-narrow' }}
+                        </a>
+                        <button class="status btn btn-primary"
+                            (click)="checkout(o)">Make a Payment</button>
+                    </h4>
+                </div>
+                <div [attr.id]="'collapseOne2_' + j" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor="let orderLine of o.orderLines">
+                                {{ orderLine.productId }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <h3>Past Orders.</h3>
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" *ngFor="let o of orders; let i = index;" [attr.id]="'accordion_' + i">
+            <div class="panel panel-default">
+                <div class="panel-heading card-header">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" [attr.data-parent]="'#accordion_' + i"
+                            [attr.href]="'#collapseOne_' + i">
+
+                            Order: {{ o.order.id }}
+                            Total: {{ getTotal(o.order.id) | currency:'LKR':'symbol-narrow' }}
+                        </a>
+
+                        <a href="#!" type="button" class="card-link-secondary small text-uppercase status"
+                            data-toggle="modal" data-target="#ChangeStatusModal" (click)="setSelectedOrder(o)">
+                            <button class="status btn btn-primary">{{ getOrderStatus(o.order.orderStatus) }}</button>
+                        </a>
+                    </h4>
+                </div>
+                <div [attr.id]="'collapseOne_' + i" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor="let orderLine of o.orderLines">
+                                {{ orderLine.productId }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <app-footer></app-footer>
+<!-- 
+
+<div class="modal fade" id="ChangeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order Status.</h5>
+                <button type="button btn-primary" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container px-1 px-md-4 py-5 mx-auto">
+                    <div class="card card-status">
+                        <div class="row d-flex justify-content-between px-3 top">
+                            <div class="d-flex">
+                                <h5>ORDER <span class="text-primary font-weight-bold">{{ selectedOrder.order.id }}</span></h5>
+                            </div>
+                            <div class="d-flex flex-column text-sm-right">
+                                <p class="mb-0">Order date <span>{{ selectedOrder.order.orderedDate }}</span></p>
+                                <p>USPS <span class="font-weight-bold"></span></p>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <ul id="progressbar" class="text-center">
+                                    <li class="active step0"></li>
+                                    <li class="active step0"></li>
+                                    <li class="step0"></li>
+                                    <li class="step0"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between top">
+                            <div class="row d-flex icon-content"> <img class="icon"
+                                    src="https://i.imgur.com/9nnc9Et.png">
+                                <div class="d-flex flex-column">
+                                    <p class="font-weight-bold">Order<br>Paid</p>
+                                </div>
+                            </div>
+                            <div class="row d-flex icon-content"> <img class="icon"
+                                    src="https://i.imgur.com/u1AzR7w.png">
+                                <div class="d-flex flex-column">
+                                    <p class="font-weight-bold">Order<br>Approved</p>
+                                </div>
+                            </div>
+                            <div class="row d-flex icon-content"> <img class="icon"
+                                    src="https://i.imgur.com/TkPm63y.png">
+                                <div class="d-flex flex-column">
+                                    <p class="font-weight-bold">Order<br>Shipped</p>
+                                </div>
+                            </div>
+                            <div class="row d-flex icon-content"> <img class="icon"
+                                    src="https://i.imgur.com/HdsziHP.png">
+                                <div class="d-flex flex-column">
+                                    <p class="font-weight-bold">Order<br>Delivered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>  -->
