@@ -162,12 +162,13 @@ export default class ProductFunctions {
     }
 
     public existInFav(product: Product): boolean {
-        if (this.getFavProducts() != null) {
-            this.getFavProducts().forEach(element => {
-                if (element.id == product.id) {
-                    return true;
+        let existProducts : Product[] = this.getFavProducts()
+        if ( existProducts != null) {
+            for(let i=0; i < existProducts.length; i++){
+                if (existProducts[i].id == product.id) {
+                    return true; 
                 }
-            });
+            }
         }
         return false;
     }
@@ -186,7 +187,9 @@ export default class ProductFunctions {
     public addToFav(product: Product) {
         if (product.id != null) {
             let products: Product[] = [];
-            products = this.getFavProducts();
+            if(this.getFavProducts() != null){
+                products = this.getFavProducts();
+            }
             products.push(product);
             this.setFavProductsAttr(products);
         }

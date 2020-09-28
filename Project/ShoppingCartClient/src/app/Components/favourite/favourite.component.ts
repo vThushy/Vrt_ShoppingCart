@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class FavouriteComponent implements OnInit {
   imageFolderPath = imagePath.product_image_folder;
   favImagePath = imagePath.product_row_favourite;
+  urlProductDetails = "/details";
 
   favProducts: Product[] = [];
 

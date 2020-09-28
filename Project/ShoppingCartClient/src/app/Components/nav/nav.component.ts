@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   searchValue: string;
   productSearchPath = "/product/by-category/";
+  productFilterPath = "/product/by-filter/";
+
 
   constructor(private router: Router) { }
 
@@ -16,6 +18,6 @@ export class NavComponent implements OnInit {
   }
 
   searchProducts() {
-    this.router.navigate([this.productSearchPath, this.searchValue]);
+    this.router.navigate([this.productFilterPath, this.searchValue]);
   }
 }

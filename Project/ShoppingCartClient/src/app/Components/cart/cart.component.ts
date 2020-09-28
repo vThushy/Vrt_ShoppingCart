@@ -8,6 +8,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { imagePath } from 'src/app/Util/paths';
 import { Coupon, coupons } from 'src/app/Util/Const/Coupons';
+import { OrderService } from 'src/app/Services/order.service';
+import { Order, OrderLines, OrderWithDetails } from 'src/app/Models/Order';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-cart',
@@ -25,16 +28,18 @@ export class CartComponent implements OnInit {
   formAddNewAddress = false;
   addressId: number;
   deliveryAddress = 'Nallur, Jaffna, Sri Lanka.';
-  
+
   previousUrl: string;
   coupondiscount: Coupon[];
   couponCode: string;
-  wrongCoupon: boolean= false;
+  wrongCoupon: boolean = false;
 
   constructor(
     private datePipe: DatePipe,
     private productService: ProductsService,
     private exceptionHandlerService: ExceptionHandlerService,
+    private userService: UsersService,
+    private orderservice: OrderService,
     private router: Router,
     private changeRef: ChangeDetectorRef
   ) { }
@@ -48,11 +53,10 @@ export class CartComponent implements OnInit {
 
     var f = new ProductFunctions();
     this.date.setDate(this.date.getDate() + 3);
-
     this.cartProducts = f.getCartProducts();
   }
 
- 
+
   addressChange(addressId: number) {
     if (addressId == 0) {
       this.formAddNewAddress = true;
@@ -81,7 +85,7 @@ export class CartComponent implements OnInit {
     this.changeRef.reattach();
   }
 
-  getQty(product: number): number{
+  getQty(product: number): number {
     let f = new ProductFunctions();
     return f.getFromCart(product).qty;
   }
@@ -91,7 +95,7 @@ export class CartComponent implements OnInit {
     f.removeFromCart(product);
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/cart']);
-    }); 
+    });
   }
 
   calculateNetTotal(): number {
@@ -120,16 +124,46 @@ export class CartComponent implements OnInit {
     let f = new ProductFunctions();
     f.setTotal(this.calculateTotal());
     f.setDiscount(this.totalDiscount());
-    this.router.navigate(['/payment']);
+
+    this.orderservice.checkout(this.returnOrderDetails()).subscribe(
+      result => {
+        console.log(result);
+        localStorage.setItem('tmp-order', result);
+
+        this.router.navigate(['/payment', 'cart']);
+      },
+      error => {
+        this.exceptionHandlerService.handleError(error);
+      });
+  }
+
+  returnOrderDetails(): OrderWithDetails {
+    let f = new ProductFunctions();
+    let products: Product[] = f.getCartProducts();
+    let orderDet : OrderWithDetails = new OrderWithDetails();
+
+    let order = new Order();
+    order.userName = this.userService.getUserName();
+    order.addressId = this.addressId;
+    order.discount = this.totalDiscount();
+
+    orderDet.order = order;
+    products.forEach(element => {
+      let line: OrderLines = new OrderLines();
+      line.productId = element.id;
+      line.quantity = element.qty;
+      line.unitPrice = element.price;
+      orderDet.orderLines.push(line);
+    });
+    return orderDet;
   }
 
   addDiscount() {
-    console.log('test');
     let f = new ProductFunctions();
-    if(f.existInCoupon(this.couponCode)){
+    if (f.existInCoupon(this.couponCode)) {
       let c: Coupon = f.getCoupon(this.couponCode);
       this.coupondiscount.push(c);
-    }else{
+    } else {
       this.wrongCoupon = true;
     }
   }
@@ -137,9 +171,9 @@ export class CartComponent implements OnInit {
   removeDiscount(coupon: string) {
     let indexOfRemove: number;
     for (let i = 0; i < coupons.length; i++) {
-        if (coupons[i].coupon == coupon) {
-            indexOfRemove = i;
-        }
+      if (coupons[i].coupon == coupon) {
+        indexOfRemove = i;
+      }
     }
     coupons.splice(indexOfRemove, 1);
   }

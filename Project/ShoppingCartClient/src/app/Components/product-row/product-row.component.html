@@ -15,10 +15,10 @@
                     <img [src]="buyNowImagePath" alt="Buy now">
                 </a>
                 <a title="Add to cart" class="btn btn-primary" (click)="addToCart(product)">
-                    <img [src]=cartImage(product) alt="Add To Cart">
+                    <img [src]="cartImage(product)" alt="Add To Cart">
                 </a>
                 <a title="Favourite" class="btn btn-primary" (click)="addToFav(product)">
-                    <img [src]=favImage(product) alt="Favourite">
+                    <img [src]="favImage(product)" alt="Favourite">
                 </a>
             </div>
         </li>

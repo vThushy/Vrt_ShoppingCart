@@ -1,4 +1,5 @@
 <app-header></app-header>
+<app-nav></app-nav>
 
 <div class="jumbotron" style="text-align: center; font-weight: bold;">
     <h1 class="display-4" style="text-align: center; font-weight: bold;">
@@ -11,7 +12,9 @@
     <ul>
         <li class="card booking-card fav-cart" *ngFor="let product of favProducts">
             <div class="view overlay">
-                <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="Product Image">
+                <a [routerLink]="[urlProductDetails, product.baseProduct]">
+                    <img class="card-img-top" [src]="imageFolderPath + product.defaultImage + '.jpg'" alt="Product Image">
+                </a>
                 <a href="#!">
                     <div class="mask rgba-white-slight"></div>
                 </a>

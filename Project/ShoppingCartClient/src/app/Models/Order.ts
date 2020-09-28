@@ -16,6 +16,6 @@ export class OrderLines{
 }
 
 export class OrderWithDetails{
-    order: Order;
-    orderLines: OrderLines[];
+    order: Order = new Order();
+    orderLines: OrderLines[] = [];
 }

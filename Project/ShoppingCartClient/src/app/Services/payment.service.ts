@@ -24,8 +24,8 @@ export class PaymentService {
 
   public pay(payment: Payment) {
     const header = new HttpHeaders({
-      'Content-Type': 'application/json'
-      // 'Authorization': this.token
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${this.token}' 
     })
     return this.httpClient.post<any>(PaymentAPI, JSON.stringify(payment), { headers: header })
       .pipe(catchError(this.exceptionHandlerService.handleError));
