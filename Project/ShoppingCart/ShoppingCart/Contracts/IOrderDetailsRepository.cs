@@ -8,7 +8,7 @@ namespace ShoppingCart.Contracts
 {
     public interface IOrderDetailsRepository
     {
-        void AddOrderLine(OrderDetail order);
+        OrderDetail AddOrderLine(OrderDetail order);
 
         List<OrderDetail> GetOrderLines(int orderId);
     }

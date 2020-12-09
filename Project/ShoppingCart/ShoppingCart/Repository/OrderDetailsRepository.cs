@@ -21,7 +21,7 @@ namespace ShoppingCart.Repository
         }
         #endregion
 
-        public void AddOrderLine(OrderDetail order)
+        public OrderDetail AddOrderLine(OrderDetail order)
         {
             try
             {
@@ -29,7 +29,9 @@ namespace ShoppingCart.Repository
                 {
                     _shoppingCartDbContext.OrderDetails.Add(order);
                     _shoppingCartDbContext.SaveChanges();
+                    return order;
                 }
+                return null;
             }
             catch
             {

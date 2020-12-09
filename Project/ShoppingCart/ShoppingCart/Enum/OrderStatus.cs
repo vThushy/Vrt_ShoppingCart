@@ -41,6 +41,14 @@ namespace ShoppingCart.Enum
         /// </summary>
         Completed = 5,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        NULL = 10,
+
+
+
+
     }
 }
 

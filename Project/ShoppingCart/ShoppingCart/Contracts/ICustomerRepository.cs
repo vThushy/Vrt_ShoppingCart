@@ -10,9 +10,9 @@ namespace ShoppingCart.Contracts
     {
         #region contracts
         Customer GetCustomer(string userName);
-        void AddCustomer(Customer customer);
-        void ModifyCustomer(string userName, Customer newCustomer);
-        void RemoveCustomer(string userName);
+        Customer AddCustomer(Customer customer);
+        Customer ModifyCustomer(string userName, Customer newCustomer);
+        Boolean RemoveCustomer(string userName);
         #endregion
     }
 }

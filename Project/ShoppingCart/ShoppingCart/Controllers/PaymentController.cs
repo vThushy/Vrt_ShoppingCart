@@ -66,7 +66,7 @@ namespace ShoppingCart.Controllers
                     {
                         _orderRepository.OrderStatusChanged(payment.OrderId, OrderStatus.Paid);
                         List<OrderDetail> lines = _orderDetailsRepository.GetOrderLines(payment.OrderId);
-                        _productRepository.ReduceStock(payment.OrderId,lines);
+                        _productRepository.ReduceStock(lines);
                         return Ok("Payment made.");
                     }
                     return Ok("Payment not made.");

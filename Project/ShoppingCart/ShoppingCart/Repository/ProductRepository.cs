@@ -357,7 +357,7 @@ namespace ShoppingCart.Repository
         }
 
 
-        public void AddProduct(Product product)
+        public Product AddProduct(Product product)
         {
             try
             {
@@ -365,7 +365,9 @@ namespace ShoppingCart.Repository
                 {
                     _shoppingCartDbContext.Products.Add(product);
                     _shoppingCartDbContext.SaveChanges();
+                    return product; 
                 }
+                return null;
             }
             catch
             {
@@ -373,7 +375,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ModifyProduct(int productId, Product newProduct)
+        public Product ModifyProduct(int productId, Product newProduct)
         {
             try
             {
@@ -389,7 +391,9 @@ namespace ShoppingCart.Repository
                     product.Stock = newProduct.Stock;
 
                     _shoppingCartDbContext.SaveChanges();
+                    return newProduct;
                 }
+                return null;
             }
             catch
             {
@@ -397,7 +401,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveProduct(int productId)
+        public Boolean RemoveProduct(int productId)
         {
             try
             {
@@ -406,7 +410,9 @@ namespace ShoppingCart.Repository
                     Product product = _shoppingCartDbContext.Products.Where(p => p.Id == productId).FirstOrDefault();
                     _shoppingCartDbContext.Products.Remove(product);
                     _shoppingCartDbContext.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch
             {
@@ -414,7 +420,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ReduceStock(int productId, List<OrderDetail> lines)
+        public Boolean ReduceStock(List<OrderDetail> lines)
         {
             if (lines != null)
             {
@@ -424,7 +430,9 @@ namespace ShoppingCart.Repository
                     product.Stock -= lines[i].Quantity;
                 }
                 _shoppingCartDbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
         #endregion
     }

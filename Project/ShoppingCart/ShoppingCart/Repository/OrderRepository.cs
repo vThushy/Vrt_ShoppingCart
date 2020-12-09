@@ -2,6 +2,7 @@
 using ShoppingCart.Contracts;
 using ShoppingCart.Enum;
 using ShoppingCart.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,7 +57,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void OrderStatusChanged(int orderNo, OrderStatus status)
+        public OrderStatus OrderStatusChanged(int orderNo, OrderStatus status)
         {
             try
             {
@@ -65,7 +66,9 @@ namespace ShoppingCart.Repository
                     var orderNeedstoReleased = _shoppingCartDbContext.Orders.Where(o => o.Id == orderNo).FirstOrDefault();
                     orderNeedstoReleased.OrderStatus = status;
                     _shoppingCartDbContext.SaveChanges();
+                    return status;
                 }
+                return Enum.OrderStatus.NULL;
             }
             catch
             {
@@ -122,42 +125,40 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ModifyOrder(int orderId, Order newOrder)
+        public Order ModifyOrder(int orderId, Order newOrder)
         {
-            //try
-            //{
-            //    if (orderId > 0 && newOrder != null)
-            //    {
-            //        Order order = _shoppingCartDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefault();
-            //        order.AddressId = newOrder.AddressId;
-            //        order.Discount = newOrder.Discount;
-            //        order.Date = newOrder.Date;
-            //        order.OrderStatus = newOrder.OrderStatus;
-            //        order.OrderLines = newOrder.OrderLines; 
-            //        _shoppingCartDbContext.SaveChanges();
-            //    }
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
+            try
+            {
+                if (orderId > 0 && newOrder != null)
+                {
+                    Order order = _shoppingCartDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefault();
+                    order.AddressId = newOrder.AddressId;
+                    order.Discount = newOrder.Discount;
+                    order.Date = newOrder.Date;
+                    order.OrderStatus = newOrder.OrderStatus;
+                    _shoppingCartDbContext.SaveChanges();
+                    return order;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public void RemoveOrder(int orderNo)
+        public Boolean RemoveOrder(int orderNo)
         {
             try
             {
                 if (orderNo > 0)
                 {
                     Order order = _shoppingCartDbContext.Orders.Where(o => o.Id == orderNo).FirstOrDefault();
-                    //   var orderDetail = _shoppingCartDbContext.OrderDetails.Where(d => d.OrderId == orderNo).ToList();
                     _shoppingCartDbContext.Orders.Remove(order);
-                    //foreach (OrderDetail o in orderDetail)
-                    //{
-                    //    _shoppingCartDbContext.OrderDetails.Remove(o);
-                    //}
                     _shoppingCartDbContext.SaveChanges();
+                    return true; 
                 }
+                return false;
             }
             catch
             {

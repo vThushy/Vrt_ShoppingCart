@@ -17,10 +17,10 @@ namespace ShoppingCart.Contracts
         ProductList GetProductsBySearch(string searchKey, int pageIndex);
         ProductList GetProductsByCategory(string searchCategory, int pageIndex);
         List<Product> GetSimilarProducts(int categoryId);
-        void AddProduct(Product product);
-        void ModifyProduct(int productId, Product newProduct);
-        void RemoveProduct(int productId);
-        void ReduceStock(int orderId, List<OrderDetail> lines);
+        Product AddProduct(Product product);
+        Product ModifyProduct(int productId, Product newProduct);
+        Boolean RemoveProduct(int productId);
+        Boolean ReduceStock(List<OrderDetail> lines);
         #endregion
     }
 }

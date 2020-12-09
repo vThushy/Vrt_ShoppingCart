@@ -23,7 +23,7 @@ namespace ShoppingCart.Repository
         #endregion
 
         #region methods
-        public void AddUser(User user)
+        public User AddUser(User user)
         {
             try
             {
@@ -32,7 +32,9 @@ namespace ShoppingCart.Repository
                     user.Password = Hashing.ConvertToHash(user.Password);
                     _shoppingCartDbContext.Users.Add(user);
                     _shoppingCartDbContext.SaveChanges();
+                    return user;
                 }
+                return null;
             }
             catch
             {
@@ -79,7 +81,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ChangePassword(User user)
+        public Boolean ChangePassword(User user)
         {
             try
             {
@@ -88,7 +90,9 @@ namespace ShoppingCart.Repository
                     var foundUser = _shoppingCartDbContext.Users.FirstOrDefault(u => (u.UserName == user.UserName));
                     foundUser.Password = Hashing.ConvertToHash(user.Password);
                     _shoppingCartDbContext.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch
             {
@@ -96,7 +100,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveUser(string userName)
+        public Boolean RemoveUser(string userName)
         {
             try
             {
@@ -105,7 +109,9 @@ namespace ShoppingCart.Repository
                     User user = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
                     _shoppingCartDbContext.Remove(user);
                     _shoppingCartDbContext.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch
             {
@@ -113,15 +119,20 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void SendResetCode(string userName)
+        public string SendResetCode(string userName)
         {
             try
             {
-                string toMail = _shoppingCartDbContext.Customers.FirstOrDefault(c => c.UserName == userName).Email;
-                string resetCode = ResetCodeGen.ResetCodeGenerator(toMail);
-                User resetUser = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
-                resetUser.ResetCode = resetCode;
-                _shoppingCartDbContext.SaveChanges();
+                if (userName != null)
+                {
+                    string toMail = _shoppingCartDbContext.Customers.FirstOrDefault(c => c.UserName == userName).Email;
+                    string resetCode = ResetCodeGen.ResetCodeGenerator(toMail);
+                    User resetUser = _shoppingCartDbContext.Users.FirstOrDefault(u => u.UserName == userName);
+                    resetUser.ResetCode = resetCode;
+                    _shoppingCartDbContext.SaveChanges();
+                    return resetCode;
+                }
+                return null;
             }
             catch
             {

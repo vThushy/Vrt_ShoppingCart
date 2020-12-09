@@ -2,6 +2,7 @@
 using System.Linq;
 using ShoppingCart.Contracts;
 using ShoppingCart.Models;
+using System;
 
 namespace ShoppingCart.Repository
 {
@@ -32,7 +33,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void AddCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
             try
             {
@@ -40,7 +41,9 @@ namespace ShoppingCart.Repository
                 {
                     _shoppingCartDbContext.Customers.Add(customer);
                     _shoppingCartDbContext.SaveChanges();
+                    return customer;
                 }
+                return null;
             }
             catch
             {
@@ -48,7 +51,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void ModifyCustomer(string userName, Customer updateCustomer)
+        public Customer ModifyCustomer(string userName, Customer updateCustomer)
         {
             try
             {
@@ -63,7 +66,9 @@ namespace ShoppingCart.Repository
                     customer.Phone = updateCustomer.Phone;
 
                     _shoppingCartDbContext.SaveChanges();
+                    return updateCustomer;
                 }
+                return null;
             }
             catch
             {
@@ -71,7 +76,7 @@ namespace ShoppingCart.Repository
             }
         }
 
-        public void RemoveCustomer(string userName)
+        public Boolean RemoveCustomer(string userName)
         {
             try
             {
@@ -80,7 +85,9 @@ namespace ShoppingCart.Repository
                     Customer customer = _shoppingCartDbContext.Customers.Where(c => c.UserName == userName).FirstOrDefault();
                     _shoppingCartDbContext.Customers.Remove(customer);
                     _shoppingCartDbContext.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch
             {

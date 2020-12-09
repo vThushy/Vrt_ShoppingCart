@@ -1,4 +1,6 @@
-﻿using ShoppingCart.Models;
+﻿using ShoppingCart.Enum;
+using ShoppingCart.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ShoppingCart.Contracts
@@ -9,11 +11,11 @@ namespace ShoppingCart.Contracts
         List<Order> GetAllOrdersByCustomer(string userName);
         List<Order> GetAllOrders();
         List<Order> GetActiveOrder(string userName);
-        void OrderStatusChanged(int orderNo, Enum.OrderStatus status);
+        OrderStatus OrderStatusChanged(int orderNo, Enum.OrderStatus status);
         Order GetOrder(int id);
         int AddOrder(Order order);
-        void ModifyOrder(int orderId, Order newOrder);
-        void RemoveOrder(int orderNo);
+        Order ModifyOrder(int orderId, Order newOrder);
+        Boolean RemoveOrder(int orderNo);
         #endregion
     }
 }
